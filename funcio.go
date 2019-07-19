@@ -75,7 +75,7 @@ func TermuxDialogText(td TDialogText) {
 		buf.WriteString(" -n")
 	}
 
-	ExecAndListen(buf.string())
+	ExecAndListen(buf.String())
 }
 
 func TermuxDialogTime(td TDialogTime) {
