@@ -78,6 +78,11 @@ func TermuxDialogText(td TDialogText) {
 	ExecAndListen(buf.string())
 }
 
+func TermuxDialogTime(td TDialogTime) {
+	TermuxDialog := fmt.Sprintf("termux-dialog time -t %s", td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
