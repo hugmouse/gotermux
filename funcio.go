@@ -8,7 +8,7 @@ import (
 )
 
 func TermuxDialog(title string)  {
-	TermuxDialog := fmt.Sprintf("termux-dialog %s", title)
+	TermuxDialog := fmt.Sprintf("termux-dialog -t %s", title)
 	ExecAndListen(TermuxDialog)
 }
 
