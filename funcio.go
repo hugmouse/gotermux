@@ -2,6 +2,7 @@ package gotermuxwrapper
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os/exec"
@@ -75,7 +76,7 @@ func TermuxDialogText(td TDialogText) {
 		buf.WriteString(" -n")
 	}
 
-	ExecAndListen(buf.string())
+	ExecAndListen(buf.String())
 }
 
 func TermuxDialogTime(td TDialogTime) {
@@ -83,6 +84,16 @@ func TermuxDialogTime(td TDialogTime) {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxBatteryStatus(t TBattery) TBattery {
+	status := ExecAndListen("termux-battery-status")
+
+	err := json.Unmarshal([]byte(status), &t)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return t
+}
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)

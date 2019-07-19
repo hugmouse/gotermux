@@ -1,11 +1,11 @@
 package gotermuxwrapper
 
 type TBattery struct {
-	Health      string
-	Percentage  uint
-	Plugged     string
-	Status      string
-	Temperature float64
+	Health      string  `json:"Health"`
+	Percentage  uint    `json:"Percentage"`
+	Plugged     string  `json:"Plugged"`
+	Status      string  `json:"Status"`
+	Temperature float64 `json:"Temperature"`
 }
 
 //type AutoExposureModes struct {
