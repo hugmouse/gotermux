@@ -60,7 +60,7 @@ type TDialogDatePattern struct {
 	Month   uint
 	Year    uint
 	KHours  uint // %k - range 0-23
-	Minuts  uint
+	Minutes  uint
 	Seconds uint
 }
 type TDialogDate struct {
