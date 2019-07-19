@@ -15,14 +15,15 @@ var (
 )
 
 func TermuxDialog(title string) {
-	ExecAndListen(TD, []string{title})
+	ExecAndListen(TD, []string{
+		"-t", title})
 }
 
 func TermuxDialogConfirm(td TDialogConfirm) {
 	ExecAndListen(TD, []string{
 		"confirm",
 		"-i", td.Hint,
-		"-s", td.Title,
+		"-t", td.Title,
 	})
 }
 
