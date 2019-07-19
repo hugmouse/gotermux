@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"strings"
 )
 
 func TermuxDialog(title string)  {
@@ -14,6 +15,11 @@ func TermuxDialog(title string)  {
 
 func TermuxDialogConfirm(td TDialogConfirm)  {
 	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint,td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
+func TermuxDialogCheckbox(td TDialogCheckbox) {
+	TermuxDialog := fmt.Sprintf("termux-dialog checkbox -v %s -t %s", strings.Join(td.Values, ","), td.Title)
 	ExecAndListen(TermuxDialog)
 }
 
