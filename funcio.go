@@ -9,83 +9,125 @@ import (
 	"strings"
 )
 
+var (
+	TD = "termux-dialog"
+)
+
 func TermuxDialog(title string) {
-	TermuxDialog := fmt.Sprintf("termux-dialog -t %s", title)
-	ExecAndListen(TermuxDialog)
+	ExecAndListen(TD, []string{title})
 }
 
 func TermuxDialogConfirm(td TDialogConfirm) {
-	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint, td.Title)
-	ExecAndListen(TermuxDialog)
+	ExecAndListen(TD, []string{
+		"confirm",
+		"-i", td.Hint,
+		"-s", td.Title,
+	})
 }
 
 func TermuxDialogCheckbox(td TDialogCheckbox) {
-	TermuxDialog := fmt.Sprintf("termux-dialog checkbox -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+	values := strings.Join(td.Values, ",")
+	ExecAndListen(TD, []string{
+		"checkbox",
+		"-v", values,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogCounter(td TDialogCounter) {
-	TermuxDialog := fmt.Sprintf("termux-dialog counter -r %d,%d,%d -t %s", td.Min, td.Max, td.Start, td.Title)
-	ExecAndListen(TermuxDialog)
+	values := fmt.Sprintf("%d,%d,%d", td.Min, td.Max, td.Start)
+	ExecAndListen(TD, []string{
+		"counter",
+		"-r", values,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogDate(td TDialogDate) {
-	TermuxDialog := fmt.Sprintf("termux-dialog date -d \"%d-%d-%d %d:%d:%d\" -t %s", td.Day, td.Month, td.Year, td.KHours, td.Minuts, td.Seconds, td.Title)
-	ExecAndListen(TermuxDialog)
+	date := fmt.Sprintf("\"%d-%d-%d %d:%d:%d\"", td.Day, td.Month, td.Year, td.KHours, td.Minutes, td.Seconds)
+	ExecAndListen(TD, []string{
+		"date",
+		"-d", date,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogeWithoutDate(td TDialog) {
-	TermuxDialog := fmt.Sprintf("termux-dialog date -t %s", td.Title)
-	ExecAndListen(TermuxDialog)
+	ExecAndListen(TD, []string{
+		"date",
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogRadio(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog radio -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+	values := strings.Join(td.Values, ",")
+	ExecAndListen(TD, []string{
+		"radio",
+		"-v", values,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogSheet(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog sheet -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+	values := strings.Join(td.Values, ",")
+	ExecAndListen(TD, []string{
+		"sheet",
+		"-v", values,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogSpinner(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog spinner -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+	values := strings.Join(td.Values, ",")
+	ExecAndListen(TD, []string{
+		"sheet",
+		"-v", values,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogSpeech(td TDialogSpeech) {
-	TermuxDialog := fmt.Sprintf("termux-dialog speech -i %s -t %s", td.Hint, td.Title)
-	ExecAndListen(TermuxDialog)
+	ExecAndListen(TD, []string{
+		"speech",
+		"-i", td.Hint,
+		"-t", td.Title,
+	})
 }
 
 func TermuxDialogText(td TDialogText) {
-	var buf bytes.Buffer
-
-	buf.WriteString(fmt.Sprintf("termux-dialog text -i %s -t %s", td.Hint, td.Title))
-
 	if td.MultipleLine == true && td.NumberInput == true {
 		log.Fatalln("Cannot use multilines with input numbers (see wiki.termux.com/wiki/Termux-dialog)")
 	}
 
+	command := []string{
+		"text",
+		"-i", td.Hint,
+		"-t", td.Title,
+	}
+
 	if td.MultipleLine == true {
-		buf.WriteString(" -m")
+		command = append(command, "-m")
 	}
 
 	if td.NumberInput == true {
-		buf.WriteString(" -n")
+		command = append(command, "-n")
 	}
 
-	ExecAndListen(buf.String())
+	ExecAndListen(TD, command)
 }
 
 func TermuxDialogTime(td TDialogTime) {
-	TermuxDialog := fmt.Sprintf("termux-dialog time -t %s", td.Title)
-	ExecAndListen(TermuxDialog)
+	ExecAndListen(TD, []string{
+		"time",
+		"-t", td.Title,
+	})
 }
 
-func TermuxBatteryStatus(t TBattery) TBattery {
-	status := ExecAndListen("termux-battery-status")
+func TermuxBatteryStatus() TBattery {
+	t := TBattery{}
+	status := ExecAndListen("termux-battery-status", nil)
+
+	log.Println(status)
 
 	err := json.Unmarshal([]byte(status), &t)
 	if err != nil {
@@ -95,8 +137,8 @@ func TermuxBatteryStatus(t TBattery) TBattery {
 	return t
 }
 
-func ExecAndListen(command string) string {
-	cmd := exec.Command(command)
+func ExecAndListen(command string, args []string) string {
+	cmd := exec.Command(command, args...)
 	stdout, err := cmd.StdoutPipe()
 	buf := new(bytes.Buffer)
 
