@@ -38,6 +38,21 @@ func TermuxDialogeWithoutDate(td TDialog) {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxDialogRadio(td TDialogRadio) {
+	TermuxDialog := fmt.Sprintf("termux-dialog radio -v %s -t %s", strings.Join(td.Values, ","), td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
+func TermuxDialogSheet(td TDialogRadio) {
+	TermuxDialog := fmt.Sprintf("termux-dialog sheet -v %s -t %s", strings.Join(td.Values, ","), td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
+func TermuxDialogSpinner(td TDialogRadio) {
+	TermuxDialog := fmt.Sprintf("termux-dialog spinner -v %s -t %s", strings.Join(td.Values, ","), td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
