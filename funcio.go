@@ -58,6 +58,26 @@ func TermuxDialogSpeech(td TDialogSpeech) {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxDialogText(td TDialogText) {
+	var buf bytes.Buffer
+
+	buf.WriteString(fmt.Sprintf("termux-dialog text -i %s -t %s", td.Hint, td.Title))
+
+	if td.MultipleLine == true && td.NumberInput == true {
+		log.Fatalln("Cannot use multilines with input numbers (see wiki.termux.com/wiki/Termux-dialog)")
+	}
+
+	if td.MultipleLine == true {
+		buf.WriteString(" -m")
+	}
+
+	if td.NumberInput == true {
+		buf.WriteString(" -n")
+	}
+
+	ExecAndListen(buf.string())
+}
+
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
