@@ -12,6 +12,11 @@ func TermuxDialog(title string)  {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxDialogConfirm(td TDialogConfirm)  {
+	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint,td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
 func ExecAndListen(command string) string  {
 	cmd := exec.Command(command)
 	stdout, err := cmd.StdoutPipe()
