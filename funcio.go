@@ -8,7 +8,7 @@ import (
 )
 
 func TermuxDialog(title string)  {
-	TermuxDialog := fmt.Sprintf("Termux-dialog %s", title)
+	TermuxDialog := fmt.Sprintf("termux-dialog %s", title)
 	ExecAndListen(TermuxDialog)
 }
 
@@ -16,7 +16,6 @@ func ExecAndListen(command string) string  {
 	cmd := exec.Command(command)
 	stdout, err := cmd.StdoutPipe()
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(stdout)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -30,7 +29,11 @@ func ExecAndListen(command string) string  {
 	//It must have been started by Start
 	if err := cmd.Wait(); err != nil {
 		log.Fatal(err)
+	} else {
+		buf.ReadFrom(stdout)
 	}
 
-	return buf.String()
+	str := buf.String()
+
+	return str
 }
