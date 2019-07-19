@@ -138,6 +138,8 @@ func TermuxBatteryStatus() TBattery {
 }
 
 func ExecAndListen(command string, args []string) string {
+	log.Println(command, args)
+
 	cmd := exec.Command(command, args...)
 	stdout, err := cmd.StdoutPipe()
 	buf := new(bytes.Buffer)
@@ -153,12 +155,15 @@ func ExecAndListen(command string, args []string) string {
 	//Wait waits for the command to exit
 	//It must have been started by Start
 	if err := cmd.Wait(); err != nil {
-		log.Fatal(err)
-	} else {
-		buf.ReadFrom(stdout)
+		log.Fatalln(err)
+	}
+
+	n , err := buf.ReadFrom(stdout)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
 	str := buf.String()
-
+	log.Printf("BUFFER: %d, %s", n, str)
 	return str
 }
