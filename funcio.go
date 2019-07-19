@@ -53,6 +53,11 @@ func TermuxDialogSpinner(td TDialogRadio) {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxDialogSpeech(td TDialogSpeech) {
+	TermuxDialog := fmt.Sprintf("termux-dialog speech -i %s -t %s", td.Hint, td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
