@@ -82,7 +82,7 @@ func TermuxDialogSheet(td TDialogRadio) {
 func TermuxDialogSpinner(td TDialogRadio) {
 	values := strings.Join(td.Values, ",")
 	ExecAndListen(TD, []string{
-		"sheet",
+		"spinner",
 		"-v", values,
 		"-t", td.Title,
 	})
