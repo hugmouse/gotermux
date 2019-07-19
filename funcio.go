@@ -78,11 +78,14 @@ func TermuxDialogText(td TDialogText) {
 	ExecAndListen(buf.String())
 }
 
+func TermuxBatteryStatus() string {
+	return ExecAndListen("termux-battery-status")
+}
+
 func TermuxDialogTime(td TDialogTime) {
 	TermuxDialog := fmt.Sprintf("termux-dialog time -t %s", td.Title)
 	ExecAndListen(TermuxDialog)
 }
-
 
 func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
