@@ -23,6 +23,11 @@ func TermuxDialogCheckbox(td TDialogCheckbox) {
 	ExecAndListen(TermuxDialog)
 }
 
+func TermuxDialogCounter(td TDialogCounter) {
+	TermuxDialog := fmt.Sprintf("termux-dialog counter -r %d,%d,%d -t %s", td.Min, td.Max, td.Start, td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
 func ExecAndListen(command string) string  {
 	cmd := exec.Command(command)
 	stdout, err := cmd.StdoutPipe()
