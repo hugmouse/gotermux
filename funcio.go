@@ -128,9 +128,7 @@ func TermuxBatteryStatus() TBattery {
 	t := TBattery{}
 	status := ExecAndListen("termux-battery-status", nil)
 
-	log.Println(status)
-
-	err := json.Unmarshal([]byte(status), &t)
+	err := json.Unmarshal(status, &t)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -138,7 +136,8 @@ func TermuxBatteryStatus() TBattery {
 	return t
 }
 
-func ExecAndListen(command string, args []string) string {
+func ExecAndListen(command string, args []string) []byte {
+	log.Printf("Arguments: %+v\n", args)
 	cmd := exec.Command(command, args...)
 	cmdOutput := &bytes.Buffer{}
 	cmd.Stdout = cmdOutput
@@ -146,5 +145,5 @@ func ExecAndListen(command string, args []string) string {
 	if err != nil {
 		os.Stderr.WriteString(err.Error())
 	}
-	return string(cmdOutput.Bytes())
+	return cmdOutput.Bytes()
 }
