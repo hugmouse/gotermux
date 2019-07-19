@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-func TermuxDialog(title string)  {
+func TermuxDialog(title string) {
 	TermuxDialog := fmt.Sprintf("termux-dialog -t %s", title)
 	ExecAndListen(TermuxDialog)
 }
 
-func TermuxDialogConfirm(td TDialogConfirm)  {
-	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint,td.Title)
+func TermuxDialogConfirm(td TDialogConfirm) {
+	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint, td.Title)
 	ExecAndListen(TermuxDialog)
 }
 
@@ -28,7 +28,18 @@ func TermuxDialogCounter(td TDialogCounter) {
 	ExecAndListen(TermuxDialog)
 }
 
-func ExecAndListen(command string) string  {
+func TermuxDialogDate(td TDialogDate) {
+	TermuxDialog := fmt.Sprintf("termux-dialog date -d \"%d-%d-%d %d:%d:%d\" -t %s", td.Day, td.Month, td.Year, td.KHours, td.Minuts, td.Seconds, td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
+func TermuxDialogeWithoutDate(td TDialog) {
+	TermuxDialog := fmt.Sprintf("termux-dialog date -t %s", td.Title)
+	ExecAndListen(TermuxDialog)
+}
+
+
+func ExecAndListen(command string) string {
 	cmd := exec.Command(command)
 	stdout, err := cmd.StdoutPipe()
 	buf := new(bytes.Buffer)
