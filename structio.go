@@ -8,10 +8,6 @@ type TBattery struct {
 	Temperature float64 `json:"Temperature"`
 }
 
-//type AutoExposureModes struct {
-//
-//}
-
 type TPhysicalSize struct {
 	Width  float64
 	Height float64
@@ -20,7 +16,6 @@ type TPhysicalSize struct {
 type TCamera struct {
 	ID     int
 	Facing string
-	// Struct of struct, jpeg bluya
 	FocalLengths float64
 	TPhysicalSize
 }

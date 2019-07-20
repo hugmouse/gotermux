@@ -14,89 +14,99 @@ var (
 	TD = "termux-dialog"
 )
 
-func TermuxDialog(title string) {
-	ExecAndListen(TD, []string{
+func TermuxDialog(title string) []byte {
+	executed := ExecAndListen(TD, []string{
 		"-t", title})
+	return executed
 }
 
-func TermuxDialogConfirm(td TDialogConfirm) {
-	ExecAndListen(TD, []string{
+func TermuxDialogConfirm(td TDialogConfirm) []byte {
+	executed := ExecAndListen(TD, []string{
 		"confirm",
 		"-i", td.Hint,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogCheckbox(td TDialogCheckbox) {
+func TermuxDialogCheckbox(td TDialogCheckbox) []byte {
 	values := strings.Join(td.Values, ",")
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"checkbox",
 		"-v", values,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogCounter(td TDialogCounter) {
+func TermuxDialogCounter(td TDialogCounter) []byte {
 	values := fmt.Sprintf("%d,%d,%d", td.Min, td.Max, td.Start)
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"counter",
 		"-r", values,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogDate(td TDialogDate) {
+func TermuxDialogDate(td TDialogDate) []byte {
 	date := fmt.Sprintf("\"%d-%d-%d %d:%d:%d\"", td.Day, td.Month, td.Year, td.KHours, td.Minutes, td.Seconds)
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"date",
 		"-d", date,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogeWithoutDate(td TDialog) {
-	ExecAndListen(TD, []string{
+func TermuxDialogeWithoutDate(td TDialog) []byte {
+	executed := ExecAndListen(TD, []string{
 		"date",
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogRadio(td TDialogRadio) {
+func TermuxDialogRadio(td TDialogRadio) []byte {
 	values := strings.Join(td.Values, ",")
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"radio",
 		"-v", values,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogSheet(td TDialogRadio) {
+func TermuxDialogSheet(td TDialogRadio) []byte {
 	values := strings.Join(td.Values, ",")
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"sheet",
 		"-v", values,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogSpinner(td TDialogRadio) {
+func TermuxDialogSpinner(td TDialogRadio) []byte {
 	values := strings.Join(td.Values, ",")
-	ExecAndListen(TD, []string{
+	executed := ExecAndListen(TD, []string{
 		"spinner",
 		"-v", values,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogSpeech(td TDialogSpeech) {
-	ExecAndListen(TD, []string{
+func TermuxDialogSpeech(td TDialogSpeech) []byte {
+	executed := ExecAndListen(TD, []string{
 		"speech",
 		"-i", td.Hint,
 		"-t", td.Title,
 	})
+	return executed
 }
 
-func TermuxDialogText(td TDialogText) {
+func TermuxDialogText(td TDialogText) []byte {
 	if td.MultipleLine == true && td.NumberInput == true {
 		log.Fatalln("Cannot use multilines with input numbers (see wiki.termux.com/wiki/Termux-dialog)")
 	}
@@ -115,14 +125,16 @@ func TermuxDialogText(td TDialogText) {
 		command = append(command, "-n")
 	}
 
-	ExecAndListen(TD, command)
+	executed := ExecAndListen(TD, command)
+	return executed
 }
 
-func TermuxDialogTime(td TDialogTime) {
-	ExecAndListen(TD, []string{
+func TermuxDialogTime(td TDialogTime) []byte {
+	executed := ExecAndListen(TD, []string{
 		"time",
 		"-t", td.Title,
 	})
+	return executed
 }
 
 func TermuxBatteryStatus() TBattery {
