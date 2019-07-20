@@ -1,5 +1,11 @@
 package gotermuxwrapper
 
+type TResult struct {
+	code  int8   `json:"Code"`
+	text  string `json:"Text"`
+	error string `json:"Error"`
+}
+
 type TBattery struct {
 	Health      string  `json:"Health"`
 	Percentage  uint    `json:"Percentage"`
@@ -91,8 +97,3 @@ type TDialogTime struct {
 	TDialog
 }
 
-type TResult struct {
-	code  int8   `json:"code"`
-	text  string `json:"text"`
-	error string `json:"error"`
-}

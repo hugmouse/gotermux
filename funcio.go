@@ -98,6 +98,8 @@ func TermuxDialogWithoutDate(td TDialog) TResult {
 	if err != nil {
 		log.Println(err)
 	}
+	log.Printf("NotPointer. %+v", RT)
+	log.Printf("Pointer. %+v", &RT)
 	return RT
 }
 
