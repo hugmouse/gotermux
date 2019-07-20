@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -14,14 +15,15 @@ var (
 )
 
 func TermuxDialog(title string) {
-	ExecAndListen(TD, []string{title})
+	ExecAndListen(TD, []string{
+		"-t", title})
 }
 
 func TermuxDialogConfirm(td TDialogConfirm) {
 	ExecAndListen(TD, []string{
 		"confirm",
 		"-i", td.Hint,
-		"-s", td.Title,
+		"-t", td.Title,
 	})
 }
 
@@ -80,7 +82,7 @@ func TermuxDialogSheet(td TDialogRadio) {
 func TermuxDialogSpinner(td TDialogRadio) {
 	values := strings.Join(td.Values, ",")
 	ExecAndListen(TD, []string{
-		"sheet",
+		"spinner",
 		"-v", values,
 		"-t", td.Title,
 	})
@@ -127,9 +129,7 @@ func TermuxBatteryStatus() TBattery {
 	t := TBattery{}
 	status := ExecAndListen("termux-battery-status", nil)
 
-	log.Println(status)
-
-	err := json.Unmarshal([]byte(status), &t)
+	err := json.Unmarshal(status, &t)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -137,28 +137,14 @@ func TermuxBatteryStatus() TBattery {
 	return t
 }
 
-func ExecAndListen(command string, args []string) string {
+func ExecAndListen(command string, args []string) []byte {
+	log.Printf("Arguments: %+v\n", args)
 	cmd := exec.Command(command, args...)
-	stdout, err := cmd.StdoutPipe()
-	buf := new(bytes.Buffer)
-
+	cmdOutput := &bytes.Buffer{}
+	cmd.Stdout = cmdOutput
+	err := cmd.Run()
 	if err != nil {
-		log.Fatalln(err)
+		os.Stderr.WriteString(err.Error())
 	}
-
-	if err := cmd.Start(); err != nil {
-		log.Fatalln(err)
-	}
-
-	//Wait waits for the command to exit
-	//It must have been started by Start
-	if err := cmd.Wait(); err != nil {
-		log.Fatal(err)
-	} else {
-		buf.ReadFrom(stdout)
-	}
-
-	str := buf.String()
-
-	return str
+	return cmdOutput.Bytes()
 }
