@@ -14,8 +14,8 @@ type TPhysicalSize struct {
 }
 
 type TCamera struct {
-	ID     int
-	Facing string
+	ID           int
+	Facing       string
 	FocalLengths float64
 	TPhysicalSize
 }
@@ -55,7 +55,7 @@ type TDialogDatePattern struct {
 	Month   uint
 	Year    uint
 	KHours  uint // %k - range 0-23
-	Minutes  uint
+	Minutes uint
 	Seconds uint
 }
 type TDialogDate struct {
@@ -89,4 +89,10 @@ type TDialogText struct {
 
 type TDialogTime struct {
 	TDialog
+}
+
+type TResult struct {
+	code  int8   `json:"code"`
+	text  string `json:"text"`
+	error string `json:"error"`
 }
