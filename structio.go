@@ -1,9 +1,9 @@
 package gotermuxwrapper
 
 type TResult struct {
-	code  int8   `json:"Code"`
-	text  string `json:"Text"`
-	error string `json:"Error"`
+	Code  int8   `json:"Code"`
+	Text  string `json:"Text"`
+	Error string `json:"Error"`
 }
 
 type TBattery struct {
