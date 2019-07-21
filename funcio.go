@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -217,6 +218,24 @@ func TermuxBatteryStatus() TBattery {
 	}
 
 	return t
+}
+
+// TermuxBrightness sets the display brightness.
+// Note that this may not work if automatic brightness control is enabled.
+func TermuxBrightness(val uint8) []byte {
+	u := strconv.FormatUint(uint64(val), 10)
+	json := ExecAndListen("termux-brightness", []string{
+		u})
+	return json
+}
+
+// TermuxCallLog prints the phone call history.
+func TermuxCallLog(limit, offset uint) []byte {
+	json := ExecAndListen("termux-call-log", []string{
+		"-l", string(limit),
+		"-o", string(offset),
+	})
+	return json
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"
