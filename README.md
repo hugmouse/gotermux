@@ -48,21 +48,26 @@ TermuxBatteryStatus()
   - [x] dialog-text
   - [x] dialog-time
 
-- [ ] termux-download
+- [x] termux-download
 
 - [ ] termux-fingerprint
 
-- [ ] termux-infrared-frequencies
+- [x] termux-infrared-frequencies
 
-- [ ] termux-infrared-transmit
+- [x] termux-infrared-transmit
 
 - [ ] termux-job-scheduler
 
-- [ ] termux-location
+- [x] termux-location
 
-- [ ] termux-media-player
+- [x] termux-media-player
+  - [x] termux-media-player play <file>
+  - [x] termux-media-player play (resume)
+  - [x] termux-media-player info
+  - [x] termux-media-player pause
+  - [x] termux-media-player stop
 
-- [ ] termux-media-scan
+- [x] termux-media-scan
 
 - [ ] termux-microphone-record
 

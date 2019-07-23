@@ -224,9 +224,9 @@ func TermuxBatteryStatus() TBattery {
 // Note that this may not work if automatic brightness control is enabled.
 func TermuxBrightness(val uint8) []byte {
 	u := strconv.FormatUint(uint64(val), 10)
-	json := ExecAndListen("termux-brightness", []string{
+	executed := ExecAndListen("termux-brightness", []string{
 		u})
-	return json
+	return executed
 }
 
 // TODO: test it out on <9 android and somehow downgrade Termux API
@@ -296,11 +296,12 @@ func TermuxInfraredFrequencies() string {
 // TermuxInfraredTransmit transmits an infrared pattern
 func TermuxInfraredTransmit(timings []uint) string {
 
-	// this is cool, but readability is shit
-	// values := strings.Trim(strings.Replace(fmt.Sprint(timings), " ", ",", -1), "[]")
-
-	data, _ := json.Marshal(timings) // [1,2,3]
-	values := strings.Trim(string(data), "[]") // 1,2,3
+	// this is cool, but readability is shit and performance too
+	// uint -> string
+	// [1 2 3 4 5]
+	// [1,2,3,4,5]
+	//  1,2,3,4,5
+	values := strings.Trim(strings.Replace(fmt.Sprint(timings), " ", ",", -1), "[]")
 
 	executed := ExecAndListen("termux-infrared-transmit", []string{
 		"-f", values,
@@ -346,8 +347,26 @@ func TermuxMediaPlayerPause() {
 }
 
 // TermuxMediaPlayerInfo displays current playback information
-func TermuxMediaPlayerInfo() string{
+func TermuxMediaPlayerInfo() string {
 	executed := ExecAndListen("termux-media-player", []string{"info"})
+	return string(executed)
+}
+
+// TermuxMediaPlayerScan scans the specified file(s) and add to the media content provider
+// recur - scans directories recursively [set True to use]
+// verbose - verbose mode [set True to use]
+func TermuxMediaPlayerScan(recur, verbose bool) string {
+
+	var command []string
+
+	if recur == true {
+		command = append(command, "-r")
+	}
+	if verbose == true {
+		command = append(command, "-v")
+	}
+
+	executed := ExecAndListen("termux-media-scan", command)
 	return string(executed)
 }
 
@@ -361,7 +380,7 @@ func ExecAndListen(command string, args []string) []byte {
 	err := cmd.Run()
 	if err != nil {
 		_, err := os.Stderr.WriteString(err.Error())
-		if err !=nil {
+		if err != nil {
 			log.Fatalln("I really don't know how you done this. But you did.", err)
 		}
 	}
