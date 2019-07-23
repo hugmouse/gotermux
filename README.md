@@ -1,7 +1,108 @@
 # Go Termux Wrapper
 ### Simple wrapper around Termux API
 
-# WIP!
+# Work In Progress
 This package is still in development. 
 
-So most likely it is that nothing is working right now!
+# Codestyle
+Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
+
+Example: 
+```shell
+// Termux CMD:
+termux-battery-status
+// Golang: 
+TermuxBatteryStatus()
+```
+
+# TODO
+### More project related:
+- [ ] Add examples
+- [ ] Add better description of API, in contrast to the officiall in Termux
+
+### Termux API:
+- [x] termux-battery-status
+
+- [x] termux-brightness
+
+- [x] termux-call-log
+
+- [ ] termux-camera-info
+
+- [ ] termux-camera-photo
+
+- [x] termux-clipboard-get
+
+- [x] termux-clipboard-set
+
+- [x] termux-contact-list
+
+- [x] termux-dialog
+  - [x] dialog-confirm
+  - [x] dialog-checkbox
+  - [x] dialog-counter
+  - [x] dialog-date
+  - [x] dialog-sheet
+  - [x] dialog-spinner
+  - [x] dialog-speech
+  - [x] dialog-text
+  - [x] dialog-time
+
+- [ ] termux-download
+
+- [ ] termux-fingerprint
+
+- [ ] termux-infrared-frequencies
+
+- [ ] termux-infrared-transmit
+
+- [ ] termux-job-scheduler
+
+- [ ] termux-location
+
+- [ ] termux-media-player
+
+- [ ] termux-media-scan
+
+- [ ] termux-microphone-record
+
+- [ ] termux-notification
+
+- [ ] termux-notification-remove
+
+- [ ] termux-sensor
+
+- [ ] termux-share
+
+- [ ] termux-sms-list
+
+- [ ] termux-sms-send
+
+- [ ] termux-storage-get
+
+- [ ] termux-telephony-call
+
+- [ ] termux-telephony-cellinfo
+
+- [ ] termux-telephony-deviceinfo
+
+- [ ] termux-toast
+
+- [ ] termux-torch
+
+- [ ] termux-tts-engines
+
+- [ ] termux-tts-speak
+
+- [ ] termux-vibrate
+
+- [ ] termux-volume
+
+- [ ] termux-wallpaper
+
+- [ ] termux-wifi-connectioninfo
+
+- [ ] termux-wifi-enable
+
+- [ ] termux-wifi-scaninfo
+
