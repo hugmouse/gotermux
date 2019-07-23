@@ -233,7 +233,7 @@ func TermuxBrightness(val uint8) []byte {
 // TermuxCallLog prints the phone call history
 // Not working on >=9 android
 // Works only in 0.32v of Termux API
-// See: https://github.com/termux/termux-api/commit/de44896a01111506590a258f0267400af067b778#diff-99a2dbdeb4c1195cba0edb66ea510428
+// See: github.com/termux/termux-api/commit/de44896a01111506590a258f0267400af067b778#diff-99a2dbdeb4c1195cba0edb66ea510428
 func TermuxCallLog(limit, offset uint) TCalls {
 	c := TCalls{}
 	executed := ExecAndListen("termux-call-log", []string{
@@ -248,7 +248,7 @@ func TermuxCallLog(limit, offset uint) TCalls {
 	return c
 }
 
-// TermuxClipbboardGet gets the system clipboard text
+// TermuxClipboardGet gets the system clipboard text
 func TermuxClipboardGet() string {
 	executed := ExecAndListen("termux-clipboard-get", nil)
 	return string(executed)
@@ -265,6 +265,91 @@ func TermuxClipboardSet(clipboard string) {
 	}
 }
 
+// TermuxContactList returns list of contacts
+func TermuxContactList() TCalls {
+	c := TCalls{}
+	executed := ExecAndListen("termux-contact-list", nil)
+	err := json.Unmarshal(executed, &c)
+	if err != nil {
+		log.Println(err)
+	}
+	return c
+}
+
+// TermuxDownload downloads a resource using the system download manager
+// Returns nothing. See: wiki.termux.com/wiki/Termux-download
+func TermuxDownload(description, title string) {
+	ExecAndListen("termux-download", []string{
+		"-d", description,
+		"-t", title,
+	})
+}
+
+// TODO: parse result into struct
+// TermuxInfraredFrequencies query the infrared transmitter's supported carrier frequencies
+func TermuxInfraredFrequencies() string {
+	executed := ExecAndListen("termux-infrared-frequencies", nil)
+	return string(executed)
+}
+
+// TODO: check source for RETURN result
+// TermuxInfraredTransmit transmits an infrared pattern
+func TermuxInfraredTransmit(timings []uint) string {
+
+	// this is cool, but readability is shit
+	// values := strings.Trim(strings.Replace(fmt.Sprint(timings), " ", ",", -1), "[]")
+
+	data, _ := json.Marshal(timings) // [1,2,3]
+	values := strings.Trim(string(data), "[]") // 1,2,3
+
+	executed := ExecAndListen("termux-infrared-transmit", []string{
+		"-f", values,
+	})
+	return string(executed)
+}
+
+// TODO: live update or something like this
+// TermuxLocation gets device location
+func TermuxLocation(location TLocation) TLocationResult {
+	result := TLocationResult{}
+	executed := ExecAndListen("termux-location", []string{
+		"-p", location.Provider,
+		"-r", location.Request,
+	})
+	err := json.Unmarshal(executed, &result)
+	if err != nil {
+		log.Println(err)
+	}
+	return result
+}
+
+// TermuxMediaPlayerPlayFile plays specified media file
+func TermuxMediaPlayerPlayFile(path string) {
+	ExecAndListen("termux-media-player", []string{
+		"play", path,
+	})
+}
+
+// TermuxMediaPlayerResume resumes playback if paused
+func TermuxMediaPlayerResume() {
+	ExecAndListen("termux-media-player", []string{"play"})
+}
+
+// TermuxMediaPlayerStop quits playback
+func TermuxMediaPlayerStop() {
+	ExecAndListen("termux-media-player", []string{"stop"})
+}
+
+// TermuxMediaPlayerPause pauses playback
+func TermuxMediaPlayerPause() {
+	ExecAndListen("termux-media-player", []string{"pause"})
+}
+
+// TermuxMediaPlayerInfo displays current playback information
+func TermuxMediaPlayerInfo() string{
+	executed := ExecAndListen("termux-media-player", []string{"info"})
+	return string(executed)
+}
 
 // ExecAndListen is a function, that build around "exec.Command()"
 // returns cmd output

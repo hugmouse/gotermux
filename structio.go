@@ -31,8 +31,12 @@ type TClipboard struct {
 }
 
 type TContact struct {
-	Name   string
-	Number string
+	Name string `json:"Name"`
+	Number string `json:"Number"`
+}
+
+type TContacts struct {
+	Contact []TContact
 }
 
 type TDialog struct {
@@ -107,4 +111,20 @@ type TCall struct {
 
 type TCalls struct {
 	Calls []TCall
+}
+
+type TLocation struct {
+	Provider string
+	Request string
+}
+
+type TLocationResult struct {
+	Latitude float64 `json:"Latitude"`
+	Longitude float64`json:"Longitude"`
+	Altitude float64`json:"Altitude"`
+	Accuracy float64`json:"Accuracy"`
+	Bearing float64`json:"Bearing"`
+	Speed float64`json:"Speed"`
+	ElapsedMS uint64`json:"ElapsedMs"`
+	Provider string`json:"Provider"`
 }
