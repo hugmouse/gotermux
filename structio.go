@@ -97,3 +97,14 @@ type TDialogTime struct {
 	TDialog
 }
 
+type TCall struct {
+	Name string `json:"Name"`
+	PhoneNumber string `json:"Phonenumber"`
+	Type string `json:"Type"`
+	Date string `json:"Date"`
+	Duration string `json:"Duration"`
+}
+
+type TCalls struct {
+	Calls []TCall
+}
