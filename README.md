@@ -18,7 +18,7 @@ TermuxBatteryStatus()
 # TODO
 ### More project related:
 - [ ] Add examples
-- [ ] Add better description of API, in contrast to the officiall in Termux
+- [ ] Add better description of API, in contrast to the official in Termux
 
 ### Termux API:
 - [x] termux-battery-status

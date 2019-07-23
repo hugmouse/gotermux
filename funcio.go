@@ -57,6 +57,7 @@ func TermuxDialogCheckbox(td TDialogCheckbox) TResult {
 }
 
 // TermuxDialogCounter spawns new dialog with pick function in it
+//
 // User can pick a number in specified range
 func TermuxDialogCounter(td TDialogCounter) TResult {
 	values := fmt.Sprintf("%d,%d,%d", td.Min, td.Max, td.Start)
@@ -73,6 +74,7 @@ func TermuxDialogCounter(td TDialogCounter) TResult {
 }
 
 // TermuxDialogDate spawns new dialog with pick function in it
+//
 // User can pick a date, but this function returns only that date that you provide
 func TermuxDialogDate(td TDialogDate) TResult {
 	date := fmt.Sprintf("\"%d-%d-%d %d:%d:%d\"", td.Day, td.Month, td.Year, td.KHours, td.Minutes, td.Seconds)
@@ -89,6 +91,7 @@ func TermuxDialogDate(td TDialogDate) TResult {
 }
 
 // TermuxDialogWithoutDate spawns new dialog with pick function in it
+//
 // User can pick a date
 func TermuxDialogWithoutDate(td TDialog) TResult {
 	executed := ExecAndListen(TD, []string{
@@ -103,6 +106,7 @@ func TermuxDialogWithoutDate(td TDialog) TResult {
 }
 
 // TermuxDialogRadio spawns new dialog with pick function in it
+//
 // User can pick a single value from radio buttons
 func TermuxDialogRadio(td TDialogRadio) TResult {
 	values := strings.Join(td.Values, ",")
@@ -119,6 +123,7 @@ func TermuxDialogRadio(td TDialogRadio) TResult {
 }
 
 // TermuxDialogSheet spawns new dialog with pick function in it
+//
 // User can pick a value from sliding bottom sheet
 func TermuxDialogSheet(td TDialogRadio) TResult {
 	values := strings.Join(td.Values, ",")
@@ -135,6 +140,7 @@ func TermuxDialogSheet(td TDialogRadio) TResult {
 }
 
 // TermuxDialogSpinner spawns new dialog with pick function in it
+//
 // User can pick a single value from a dropdown spinner
 func TermuxDialogSpinner(td TDialogRadio) TResult {
 	values := strings.Join(td.Values, ",")
@@ -193,6 +199,7 @@ func TermuxDialogText(td TDialogText) TResult {
 }
 
 // TermuxDialogTime spawns new dialog with pick function in it
+//
 // User can pick a time value
 func TermuxDialogTime(td TDialogTime) TResult {
 	executed := ExecAndListen(TD, []string{
@@ -221,6 +228,7 @@ func TermuxBatteryStatus() TBattery {
 }
 
 // TermuxBrightness sets the display brightness.
+//
 // Note that this may not work if automatic brightness control is enabled.
 func TermuxBrightness(val uint8) []byte {
 	u := strconv.FormatUint(uint64(val), 10)
@@ -230,9 +238,13 @@ func TermuxBrightness(val uint8) []byte {
 }
 
 // TODO: test it out on <9 android and somehow downgrade Termux API
+//
 // TermuxCallLog prints the phone call history
+//
 // Not working on >=9 android
+//
 // Works only in 0.32v of Termux API
+//
 // See: github.com/termux/termux-api/commit/de44896a01111506590a258f0267400af067b778#diff-99a2dbdeb4c1195cba0edb66ea510428
 func TermuxCallLog(limit, offset uint) TCalls {
 	c := TCalls{}
@@ -277,6 +289,7 @@ func TermuxContactList() TCalls {
 }
 
 // TermuxDownload downloads a resource using the system download manager
+//
 // Returns nothing. See: wiki.termux.com/wiki/Termux-download
 func TermuxDownload(description, title string) {
 	ExecAndListen("termux-download", []string{
@@ -286,6 +299,7 @@ func TermuxDownload(description, title string) {
 }
 
 // TODO: parse result into struct
+//
 // TermuxInfraredFrequencies query the infrared transmitter's supported carrier frequencies
 func TermuxInfraredFrequencies() string {
 	executed := ExecAndListen("termux-infrared-frequencies", nil)
@@ -293,6 +307,7 @@ func TermuxInfraredFrequencies() string {
 }
 
 // TODO: check source for RETURN result
+//
 // TermuxInfraredTransmit transmits an infrared pattern
 func TermuxInfraredTransmit(timings []uint) string {
 
@@ -310,6 +325,7 @@ func TermuxInfraredTransmit(timings []uint) string {
 }
 
 // TODO: live update or something like this
+//
 // TermuxLocation gets device location
 func TermuxLocation(location TLocation) TLocationResult {
 	result := TLocationResult{}
@@ -353,7 +369,9 @@ func TermuxMediaPlayerInfo() string {
 }
 
 // TermuxMediaPlayerScan scans the specified file(s) and add to the media content provider
+//
 // recur - scans directories recursively [set True to use]
+//
 // verbose - verbose mode [set True to use]
 func TermuxMediaPlayerScan(recur, verbose bool) string {
 
@@ -371,6 +389,7 @@ func TermuxMediaPlayerScan(recur, verbose bool) string {
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"
+//
 // returns cmd output
 func ExecAndListen(command string, args []string) []byte {
 	log.Printf("Arguments: %+v\n", args)
