@@ -248,6 +248,24 @@ func TermuxCallLog(limit, offset uint) TCalls {
 	return c
 }
 
+// TermuxClipbboardGet gets the system clipboard text
+func TermuxClipboardGet() string {
+	executed := ExecAndListen("termux-clipboard-get", nil)
+	return string(executed)
+}
+
+// TermuxClipboardSet sets the system clipboard text
+func TermuxClipboardSet(clipboard string) {
+	if len(clipboard) > 0 {
+		ExecAndListen("termux-clipboard-set", []string{
+			clipboard,
+		})
+	} else {
+		log.Println("Clipboard is empty!")
+	}
+}
+
+
 // ExecAndListen is a function, that build around "exec.Command()"
 // returns cmd output
 func ExecAndListen(command string, args []string) []byte {
