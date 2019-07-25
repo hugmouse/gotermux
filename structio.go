@@ -1,8 +1,14 @@
 package gotermuxwrapper
 
+type TValue struct {
+	Index uint `json:"Index"`
+	Text string `json:"Text"`
+}
+
 type TResult struct {
 	Code  int8   `json:"Code"`
 	Text  string `json:"Text"`
+	Values []TValue `json:"Values"`
 	Error string `json:"Error"`
 }
 
