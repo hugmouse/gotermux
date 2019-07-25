@@ -5,89 +5,221 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
-func TermuxDialog(title string) {
-	TermuxDialog := fmt.Sprintf("termux-dialog -t %s", title)
-	ExecAndListen(TermuxDialog)
+var (
+	TD = "termux-dialog"
+	RT = TResult{}
+)
+
+// TermuxDialog spawns new dialog with only title in it
+func TermuxDialog(title string) TResult {
+	executed := ExecAndListen(TD, []string{
+		"-t", title})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogConfirm(td TDialogConfirm) {
-	TermuxDialog := fmt.Sprintf("termux-dialog confirm -i %s -t %s", td.Hint, td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogConfirm spawns new confirmation dialog
+func TermuxDialogConfirm(td TDialogConfirm) TResult {
+	executed := ExecAndListen(TD, []string{
+		"confirm",
+		"-i", td.Hint,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogCheckbox(td TDialogCheckbox) {
-	TermuxDialog := fmt.Sprintf("termux-dialog checkbox -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogCheckbox spawns new dialog with multiple values using checkboxes
+func TermuxDialogCheckbox(td TDialogCheckbox) TResult {
+	values := strings.Join(td.Values, ",")
+	executed := ExecAndListen(TD, []string{
+		"checkbox",
+		"-v", values,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogCounter(td TDialogCounter) {
-	TermuxDialog := fmt.Sprintf("termux-dialog counter -r %d,%d,%d -t %s", td.Min, td.Max, td.Start, td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogCounter spawns new dialog with pick function in it
+//
+// User can pick a number in specified range
+func TermuxDialogCounter(td TDialogCounter) TResult {
+	values := fmt.Sprintf("%d,%d,%d", td.Min, td.Max, td.Start)
+	executed := ExecAndListen(TD, []string{
+		"counter",
+		"-r", values,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogDate(td TDialogDate) {
-	TermuxDialog := fmt.Sprintf("termux-dialog date -d \"%d-%d-%d %d:%d:%d\" -t %s", td.Day, td.Month, td.Year, td.KHours, td.Minuts, td.Seconds, td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogDate spawns new dialog with pick function in it
+//
+// User can pick a date, but this function returns only that date that you provide
+func TermuxDialogDate(td TDialogDate) TResult {
+	date := fmt.Sprintf("\"%d-%d-%d %d:%d:%d\"", td.Day, td.Month, td.Year, td.KHours, td.Minutes, td.Seconds)
+	executed := ExecAndListen(TD, []string{
+		"date",
+		"-d", date,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogeWithoutDate(td TDialog) {
-	TermuxDialog := fmt.Sprintf("termux-dialog date -t %s", td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogWithoutDate spawns new dialog with pick function in it
+//
+// User can pick a date
+func TermuxDialogWithoutDate(td TDialog) TResult {
+	executed := ExecAndListen(TD, []string{
+		"date",
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogRadio(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog radio -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogRadio spawns new dialog with pick function in it
+//
+// User can pick a single value from radio buttons
+func TermuxDialogRadio(td TDialogRadio) TResult {
+	values := strings.Join(td.Values, ",")
+	executed := ExecAndListen(TD, []string{
+		"radio",
+		"-v", values,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogSheet(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog sheet -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogSheet spawns new dialog with pick function in it
+//
+// User can pick a value from sliding bottom sheet
+func TermuxDialogSheet(td TDialogRadio) TResult {
+	values := strings.Join(td.Values, ",")
+	executed := ExecAndListen(TD, []string{
+		"sheet",
+		"-v", values,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogSpinner(td TDialogRadio) {
-	TermuxDialog := fmt.Sprintf("termux-dialog spinner -v %s -t %s", strings.Join(td.Values, ","), td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogSpinner spawns new dialog with pick function in it
+//
+// User can pick a single value from a dropdown spinner
+func TermuxDialogSpinner(td TDialogRadio) TResult {
+	values := strings.Join(td.Values, ",")
+	executed := ExecAndListen(TD, []string{
+		"spinner",
+		"-v", values,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogSpeech(td TDialogSpeech) {
-	TermuxDialog := fmt.Sprintf("termux-dialog speech -i %s -t %s", td.Hint, td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogSpeech spawns a new dialog that can obtain speech using device microphone
+func TermuxDialogSpeech(td TDialogSpeech) TResult {
+	executed := ExecAndListen(TD, []string{
+		"speech",
+		"-i", td.Hint,
+		"-t", td.Title,
+	})
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogText(td TDialogText) {
-	var buf bytes.Buffer
-
-	buf.WriteString(fmt.Sprintf("termux-dialog text -i %s -t %s", td.Hint, td.Title))
-
+// TermuxDialogText spawns a new dialog with input text (default if no widget specified)
+func TermuxDialogText(td TDialogText) TResult {
 	if td.MultipleLine == true && td.NumberInput == true {
 		log.Fatalln("Cannot use multilines with input numbers (see wiki.termux.com/wiki/Termux-dialog)")
 	}
 
+	command := []string{
+		"text",
+		"-i", td.Hint,
+		"-t", td.Title,
+	}
+
 	if td.MultipleLine == true {
-		buf.WriteString(" -m")
+		command = append(command, "-m")
 	}
 
 	if td.NumberInput == true {
-		buf.WriteString(" -n")
+		command = append(command, "-n")
 	}
 
-	ExecAndListen(buf.String())
+	executed := ExecAndListen(TD, command)
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxDialogTime(td TDialogTime) {
-	TermuxDialog := fmt.Sprintf("termux-dialog time -t %s", td.Title)
-	ExecAndListen(TermuxDialog)
+// TermuxDialogTime spawns new dialog with pick function in it
+//
+// User can pick a time value
+func TermuxDialogTime(td TDialogTime) TResult {
+	executed := ExecAndListen(TD, []string{
+		"time",
+		"-t", td.Title,
+	})
+
+	err := json.Unmarshal(executed, &RT)
+	if err != nil {
+		log.Println(err)
+	}
+	return RT
 }
 
-func TermuxBatteryStatus(t TBattery) TBattery {
-	status := ExecAndListen("termux-battery-status")
+// TermuxBatteryStatus returns the status of the device battery
+func TermuxBatteryStatus() TBattery {
+	t := TBattery{}
+	status := ExecAndListen("termux-battery-status", nil)
 
-	err := json.Unmarshal([]byte(status), &t)
+	err := json.Unmarshal(status, &t)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -95,28 +227,181 @@ func TermuxBatteryStatus(t TBattery) TBattery {
 	return t
 }
 
-func ExecAndListen(command string) string {
-	cmd := exec.Command(command)
-	stdout, err := cmd.StdoutPipe()
-	buf := new(bytes.Buffer)
+// TermuxBrightness sets the display brightness.
+//
+// Note that this may not work if automatic brightness control is enabled.
+func TermuxBrightness(val uint8) []byte {
+	u := strconv.FormatUint(uint64(val), 10)
+	executed := ExecAndListen("termux-brightness", []string{
+		u})
+	return executed
+}
 
+// TODO: test it out on <9 android and somehow downgrade Termux API
+//
+// TermuxCallLog prints the phone call history
+//
+// Not working on >=9 android
+//
+// Works only in 0.32v of Termux API
+//
+// See: github.com/termux/termux-api/commit/de44896a01111506590a258f0267400af067b778#diff-99a2dbdeb4c1195cba0edb66ea510428
+func TermuxCallLog(limit, offset uint) TCalls {
+	c := TCalls{}
+	executed := ExecAndListen("termux-call-log", []string{
+		"-l", string(limit),
+		"-o", string(offset),
+	})
+	err := json.Unmarshal(executed, &c)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
-	if err := cmd.Start(); err != nil {
-		log.Fatalln(err)
-	}
+	return c
+}
 
-	//Wait waits for the command to exit
-	//It must have been started by Start
-	if err := cmd.Wait(); err != nil {
-		log.Fatal(err)
+// TermuxClipboardGet gets the system clipboard text
+func TermuxClipboardGet() string {
+	executed := ExecAndListen("termux-clipboard-get", nil)
+	return string(executed)
+}
+
+// TermuxClipboardSet sets the system clipboard text
+func TermuxClipboardSet(clipboard string) {
+	if len(clipboard) > 0 {
+		ExecAndListen("termux-clipboard-set", []string{
+			clipboard,
+		})
 	} else {
-		buf.ReadFrom(stdout)
+		log.Println("Clipboard is empty!")
+	}
+}
+
+// TermuxContactList returns list of contacts
+func TermuxContactList() TCalls {
+	c := TCalls{}
+	executed := ExecAndListen("termux-contact-list", nil)
+	err := json.Unmarshal(executed, &c)
+	if err != nil {
+		log.Println(err)
+	}
+	return c
+}
+
+// TermuxDownload downloads a resource using the system download manager
+//
+// Returns nothing. See: wiki.termux.com/wiki/Termux-download
+func TermuxDownload(description, title string) {
+	ExecAndListen("termux-download", []string{
+		"-d", description,
+		"-t", title,
+	})
+}
+
+// TODO: parse result into struct
+//
+// TermuxInfraredFrequencies query the infrared transmitter's supported carrier frequencies
+func TermuxInfraredFrequencies() string {
+	executed := ExecAndListen("termux-infrared-frequencies", nil)
+	return string(executed)
+}
+
+// TODO: check source for RETURN result
+//
+// TermuxInfraredTransmit transmits an infrared pattern
+func TermuxInfraredTransmit(timings []uint) string {
+
+	// this is cool, but readability is shit and performance too
+	// uint -> string
+	// [1 2 3 4 5]
+	// [1,2,3,4,5]
+	//  1,2,3,4,5
+	values := strings.Trim(strings.Replace(fmt.Sprint(timings), " ", ",", -1), "[]")
+
+	executed := ExecAndListen("termux-infrared-transmit", []string{
+		"-f", values,
+	})
+	return string(executed)
+}
+
+// TODO: live update or something like this
+//
+// TermuxLocation gets device location
+func TermuxLocation(location TLocation) TLocationResult {
+	result := TLocationResult{}
+	executed := ExecAndListen("termux-location", []string{
+		"-p", location.Provider,
+		"-r", location.Request,
+	})
+	err := json.Unmarshal(executed, &result)
+	if err != nil {
+		log.Println(err)
+	}
+	return result
+}
+
+// TermuxMediaPlayerPlayFile plays specified media file
+func TermuxMediaPlayerPlayFile(path string) {
+	ExecAndListen("termux-media-player", []string{
+		"play", path,
+	})
+}
+
+// TermuxMediaPlayerResume resumes playback if paused
+func TermuxMediaPlayerResume() {
+	ExecAndListen("termux-media-player", []string{"play"})
+}
+
+// TermuxMediaPlayerStop quits playback
+func TermuxMediaPlayerStop() {
+	ExecAndListen("termux-media-player", []string{"stop"})
+}
+
+// TermuxMediaPlayerPause pauses playback
+func TermuxMediaPlayerPause() {
+	ExecAndListen("termux-media-player", []string{"pause"})
+}
+
+// TermuxMediaPlayerInfo displays current playback information
+func TermuxMediaPlayerInfo() string {
+	executed := ExecAndListen("termux-media-player", []string{"info"})
+	return string(executed)
+}
+
+// TermuxMediaPlayerScan scans the specified file(s) and add to the media content provider
+//
+// recur - scans directories recursively [set True to use]
+//
+// verbose - verbose mode [set True to use]
+func TermuxMediaPlayerScan(recur, verbose bool) string {
+
+	var command []string
+
+	if recur == true {
+		command = append(command, "-r")
+	}
+	if verbose == true {
+		command = append(command, "-v")
 	}
 
-	str := buf.String()
+	executed := ExecAndListen("termux-media-scan", command)
+	return string(executed)
+}
 
-	return str
+// ExecAndListen is a function, that build around "exec.Command()"
+//
+// returns cmd output
+func ExecAndListen(command string, args []string) []byte {
+	log.Printf("Arguments: %+v\n", args)
+	cmd := exec.Command(command, args...)
+	cmdOutput := &bytes.Buffer{}
+	cmd.Stdout = cmdOutput
+	err := cmd.Run()
+	if err != nil {
+		_, err := os.Stderr.WriteString(err.Error())
+		if err != nil {
+			log.Fatalln("I really don't know how you done this. But you did.", err)
+		}
+	}
+	return cmdOutput.Bytes()
 }

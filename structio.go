@@ -1,5 +1,17 @@
 package gotermuxwrapper
 
+type TValue struct {
+	Index uint `json:"Index"`
+	Text string `json:"Text"`
+}
+
+type TResult struct {
+	Code  int8   `json:"Code"`
+	Text  string `json:"Text"`
+	Values []TValue `json:"Values"`
+	Error string `json:"Error"`
+}
+
 type TBattery struct {
 	Health      string  `json:"Health"`
 	Percentage  uint    `json:"Percentage"`
@@ -8,19 +20,14 @@ type TBattery struct {
 	Temperature float64 `json:"Temperature"`
 }
 
-//type AutoExposureModes struct {
-//
-//}
-
 type TPhysicalSize struct {
 	Width  float64
 	Height float64
 }
 
 type TCamera struct {
-	ID     int
-	Facing string
-	// Struct of struct, jpeg bluya
+	ID           int
+	Facing       string
 	FocalLengths float64
 	TPhysicalSize
 }
@@ -30,8 +37,12 @@ type TClipboard struct {
 }
 
 type TContact struct {
-	Name   string
-	Number string
+	Name   string `json:"Name"`
+	Number string `json:"Number"`
+}
+
+type TContacts struct {
+	Contact []TContact
 }
 
 type TDialog struct {
@@ -60,7 +71,7 @@ type TDialogDatePattern struct {
 	Month   uint
 	Year    uint
 	KHours  uint // %k - range 0-23
-	Minuts  uint
+	Minutes uint
 	Seconds uint
 }
 type TDialogDate struct {
@@ -94,4 +105,32 @@ type TDialogText struct {
 
 type TDialogTime struct {
 	TDialog
+}
+
+type TCall struct {
+	Name        string `json:"Name"`
+	PhoneNumber string `json:"Phonenumber"`
+	Type        string `json:"Type"`
+	Date        string `json:"Date"`
+	Duration    string `json:"Duration"`
+}
+
+type TCalls struct {
+	Calls []TCall
+}
+
+type TLocation struct {
+	Provider string
+	Request  string
+}
+
+type TLocationResult struct {
+	Latitude  float64 `json:"Latitude"`
+	Longitude float64 `json:"Longitude"`
+	Altitude  float64 `json:"Altitude"`
+	Accuracy  float64 `json:"Accuracy"`
+	Bearing   float64 `json:"Bearing"`
+	Speed     float64 `json:"Speed"`
+	ElapsedMS uint64  `json:"ElapsedMs"`
+	Provider  string  `json:"Provider"`
 }
