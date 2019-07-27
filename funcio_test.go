@@ -44,3 +44,18 @@ func TestTermuxDialogConfirm(t *testing.T) {
 	}
 
 }
+
+func TestTermuxDialogCheckbox(t *testing.T) {
+	resultYES := TermuxDialogCheckbox(TestCheckbox)
+	if resultYES.Code != -1 || resultYES.Text != "[value]" {
+		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-1, \"[value]\" \".", resultYES.Code, resultYES.Text)
+	}
+	if resultYES.Values[0].Index != 0 || resultYES.Values[0].Text != "value" {
+		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"0, \"value\" \".", resultYES.Values[0].Index, resultYES.Values[0].Text)
+	}
+
+	resultNO := TermuxDialogCheckbox(TestCheckbox)
+	if resultNO.Code != -2 || len(resultNO.Text) != 0 {
+		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNO.Code, resultNO.Text)
+	}
+}
