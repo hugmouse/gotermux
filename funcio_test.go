@@ -12,7 +12,7 @@ var (
 		TDialog{Title},
 	}
 	TestCheckbox = TDialogCheckbox{
-		[]string{"Value"},
+		[]string{"value"},
 		TDialog{Title},
 	}
 	TestDialog = TDialogCounter{
@@ -54,21 +54,14 @@ func TestTermuxDialogConfirm(t *testing.T) {
 func TestTermuxDialogCheckbox(t *testing.T) {
 
 	resultYes := TermuxDialogCheckbox(TestCheckbox)
-	if resultYes.Code != -1 || resultYes.Text != "[value]" {
-		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"-1, \"[value]\" \".", resultYes.Code, resultYes.Text)
-	}
 	if resultYes.Values[0].Index != 0 || resultYes.Values[0].Text != "value" {
 		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"0, \"value\" \".", resultYes.Values[0].Index, resultYes.Values[0].Text)
 	}
 
-	resultNo := TermuxDialogCheckbox(TestCheckbox)
-	if resultNo.Code != -2 || len(resultNo.Text) != 0 {
-		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNo.Code, resultNo.Text)
-	}
 }
 
 func TestTermuxDialogCounter(t *testing.T) {
-	ughs := []struct {
+	tests := []struct {
 		Min int
 		Max int
 		Start int
@@ -81,15 +74,15 @@ func TestTermuxDialogCounter(t *testing.T) {
 		{0,2,0,-2,""},
 	}
 
-	for _, ugh := range ughs {
+	for _, test := range tests {
 		result := TermuxDialogCounter(TDialogCounter{
-			ugh.Min,
-			ugh.Max,
-			ugh.Start,
-			TDialog{"Just press \"ok\""},
+			test.Min,
+			test.Max,
+			test.Start,
+			TDialog{"Just press \"ok\". On the 4th test press \"Cancel\""},
 		})
-		if result.Code != ugh.WantedCode || result.Text != ugh.WantedString {
-			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\" want: \"%d, \"%s\" \".", result.Code, result.Text, ugh.WantedCode, ugh.WantedString)
+		if result.Code != test.WantedCode || result.Text != test.WantedString {
+			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\" want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedString)
 		}
 	}
 	

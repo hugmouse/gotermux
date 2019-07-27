@@ -392,7 +392,7 @@ func TermuxMediaPlayerScan(recur, verbose bool) string {
 //
 // returns cmd output
 func ExecAndListen(command string, args []string) []byte {
-	log.Printf("Arguments: %+v\n", args)
+	//log.Printf("Arguments: %+v\n", args)
 	cmd := exec.Command(command, args...)
 	cmdOutput := &bytes.Buffer{}
 	cmd.Stdout = cmdOutput
