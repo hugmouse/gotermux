@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	Title = "test"
-	Hint = "Press \"Yes\" then \"No\""
+	Title       = "test"
+	Hint        = "Press \"Yes\" then \"No\""
 	TestConfirm = TDialogConfirm{
 		Hint,
 		TDialog{Title},
@@ -15,47 +15,82 @@ var (
 		[]string{"Value"},
 		TDialog{Title},
 	}
+	TestDialog = TDialogCounter{
+		0,
+		2,
+		1,
+		TDialog{Title},
+	}
 )
 
 func TestTermuxDialog(t *testing.T) {
 
-	resultYES := TermuxDialog(Title)
-	if resultYES.Code != -1 || len(resultYES.Text) != 0 {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-1, \"\" \".", resultYES.Code, resultYES.Text)
+	resultYes := TermuxDialog(Title)
+	if resultYes.Code != -1 || len(resultYes.Text) != 0 {
+		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-1, \"\" \".", resultYes.Code, resultYes.Text)
 	}
 
-	resultNO := TermuxDialog(Title)
-	if resultNO.Code != -2 || len(resultNO.Text) != 0 {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNO.Code, resultNO.Text)
+	resultNo := TermuxDialog(Title)
+	if resultNo.Code != -2 || len(resultNo.Text) != 0 {
+		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNo.Code, resultNo.Text)
 	}
 
 }
 
 func TestTermuxDialogConfirm(t *testing.T) {
 
-	resultYES := TermuxDialogConfirm(TestConfirm)
-	if resultYES.Code != 0 || resultYES.Text != "yes" {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"0, \"yes\" \".", resultYES.Code, resultYES.Text)
+	resultYes := TermuxDialogConfirm(TestConfirm)
+	if resultYes.Code != 0 || resultYes.Text != "yes" {
+		t.Errorf("TermuxDialogConfirm() was incorrect, got: \"%d, %s\" want: \"0, \"yes\" \".", resultYes.Code, resultYes.Text)
 	}
 
-	resultNO := TermuxDialogConfirm(TestConfirm)
-	if resultNO.Code != 0 || resultNO.Text != "no" {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"0, \"no\" \".", resultNO.Code, resultNO.Text)
+	resultNo := TermuxDialogConfirm(TestConfirm)
+	if resultNo.Code != 0 || resultNo.Text != "no" {
+		t.Errorf("TermuxDialogConfirm() was incorrect, got: \"%d, %s\" want: \"0, \"no\" \".", resultNo.Code, resultNo.Text)
 	}
 
 }
 
 func TestTermuxDialogCheckbox(t *testing.T) {
-	resultYES := TermuxDialogCheckbox(TestCheckbox)
-	if resultYES.Code != -1 || resultYES.Text != "[value]" {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-1, \"[value]\" \".", resultYES.Code, resultYES.Text)
+
+	resultYes := TermuxDialogCheckbox(TestCheckbox)
+	if resultYes.Code != -1 || resultYes.Text != "[value]" {
+		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"-1, \"[value]\" \".", resultYes.Code, resultYes.Text)
 	}
-	if resultYES.Values[0].Index != 0 || resultYES.Values[0].Text != "value" {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"0, \"value\" \".", resultYES.Values[0].Index, resultYES.Values[0].Text)
+	if resultYes.Values[0].Index != 0 || resultYes.Values[0].Text != "value" {
+		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"0, \"value\" \".", resultYes.Values[0].Index, resultYes.Values[0].Text)
 	}
 
-	resultNO := TermuxDialogCheckbox(TestCheckbox)
-	if resultNO.Code != -2 || len(resultNO.Text) != 0 {
-		t.Errorf("TermuxDialog() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNO.Code, resultNO.Text)
+	resultNo := TermuxDialogCheckbox(TestCheckbox)
+	if resultNo.Code != -2 || len(resultNo.Text) != 0 {
+		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"-2, \"\" \".", resultNo.Code, resultNo.Text)
 	}
+}
+
+func TestTermuxDialogCounter(t *testing.T) {
+	ughs := []struct {
+		Min int
+		Max int
+		Start int
+		WantedCode int8
+		WantedString string
+	}{
+		{0, 2, 1, -1, "1"},
+		{0, 2, 2, -1, "2"},
+		{0, 2, 0,-1, "0"},
+		{0,2,0,-2,""},
+	}
+
+	for _, ugh := range ughs {
+		result := TermuxDialogCounter(TDialogCounter{
+			ugh.Min,
+			ugh.Max,
+			ugh.Start,
+			TDialog{"Just press \"ok\""},
+		})
+		if result.Code != ugh.WantedCode || result.Text != ugh.WantedString {
+			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\" want: \"%d, \"%s\" \".", result.Code, result.Text, ugh.WantedCode, ugh.WantedString)
+		}
+	}
+	
 }
