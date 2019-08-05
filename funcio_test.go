@@ -100,11 +100,10 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 			TDialog{"Read carefully"},
 		}})
 
-		// Very different from this two functions
-		//resultSheet := TermuxDialogSheet(TDialogSheet{TDialogCheckbox{
-		//	test.Value,
-		//	TDialog{"Read carefully"},
-		//}})
+		resultSheet := TermuxDialogSheet(TDialogSheet{TDialogCheckbox{
+			test.Value,
+			TDialog{"Read carefully"},
+		}})
 
 		resultSpinner := TermuxDialogSpinner(TDialogSpinner{TDialogCheckbox{
 			test.Value,
@@ -115,12 +114,13 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 			t.Errorf("TermuxDialogRadio() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultRadio.Code, resultRadio.Text, test.WantedCode, test.WantedText)
 		}
 
-		// -2 = cancel. 0 = clicked on sheet. -1 = never received such an answer.
-		//if resultSheet.Code != 0 || resultSheet.Text != test.WantedText {
-		//	t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, 0, test.WantedText)
-		//}
+		//-2 = cancel. 0 = clicked on sheet. -1 = never received such an answer.
+		if resultSheet.Code != 0 || resultSheet.Text != "Do NOT check me!" {
+			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, 0, test.WantedText)
+		}
 
-		if resultSpinner.Code != test.WantedCode || resultSpinner.Text != test.WantedText {
+		//
+		if resultSpinner.Code != test.WantedCode || resultSpinner.Text != "Do NOT check me!" {
 			t.Errorf("TermuxDialogSpinner() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSpinner.Code, resultSpinner.Text, test.WantedCode, test.WantedText)
 		}
 	}
@@ -143,7 +143,7 @@ func TestTermuxDialogSpeech(t *testing.T) {
 			TDialog{"Read carefully"},
 		}})
 		if result.Code != test.WantedCode || result.Text != test.WantedText {
-			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedText)
+			t.Errorf("TermuxDialogSpeech was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedText)
 		}
 	}
 }
