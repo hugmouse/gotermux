@@ -113,7 +113,7 @@ func TestTermuxDialogDate(t *testing.T) {
 			TDialog{"Just press \"OK\""},
 		})
 		if result.Code != test.WantedCode || result.Text != test.WantedText {
-			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \"", result.Code, result.Text, test.WantedCode, test.WantedText)
+			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\"", result.Code, result.Text, test.WantedCode, test.WantedText)
 		}
 	}
 }
@@ -144,7 +144,7 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 		WantedIndex uint
 	}{
 		{[]string{"Check me!"}, "Check me!", -1, 0},
-		{[]string{"Do NOT check me!"}, "Do NOT check me!", -1, 0},
+		{[]string{"Do NOT check me!"}, "", -1, 0},
 	}
 	for _, test := range tests {
 		resultRadio := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
@@ -167,8 +167,8 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 		}
 
 		// How funny is that? Thanks for absolutely different result code, Termux API!
-		if resultSheet.Code != 0 || resultSheet.Text != test.WantedText {
-			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, 0, test.WantedText)
+		if resultSheet.Code != -2 || resultSheet.Text != test.WantedText {
+			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, -2, test.WantedText)
 		}
 
 		if resultSpinner.Code != test.WantedCode || resultSpinner.Text != test.WantedText {
