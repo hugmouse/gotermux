@@ -125,7 +125,7 @@ func TermuxDialogRadio(td TDialogRadio) TResult {
 // TermuxDialogSheet spawns new dialog with pick function in it
 //
 // User can pick a value from sliding bottom sheet
-func TermuxDialogSheet(td TDialogRadio) TResult {
+func TermuxDialogSheet(td TDialogSheet) TResult {
     values := strings.Join(td.Values, ",")
     executed := ExecAndListen(TD, []string{
         "sheet",
@@ -142,7 +142,7 @@ func TermuxDialogSheet(td TDialogRadio) TResult {
 // TermuxDialogSpinner spawns new dialog with pick function in it
 //
 // User can pick a single value from a dropdown spinner
-func TermuxDialogSpinner(td TDialogRadio) TResult {
+func TermuxDialogSpinner(td TDialogSpinner) TResult {
     values := strings.Join(td.Values, ",")
     executed := ExecAndListen(TD, []string{
         "spinner",

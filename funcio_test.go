@@ -142,7 +142,7 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 		WantedIndex uint
 	}{
 		{[]string{"Check me!"}, "Check me!", -1, 0},
-		{[]string{"Do NOT check me!"}, "", -1, null},
+		{[]string{"Do NOT check me!"}, "", -1, 0},
 	}
 	for _, test := range tests {
 		resultRadio := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
