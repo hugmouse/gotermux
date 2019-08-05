@@ -83,6 +83,7 @@ func TestTermuxDialogCounter(t *testing.T) {
 
 }
 
+// TODO: Rewrite this function due bad code of this function in API
 func TestTermuxDialogDate(t *testing.T) {
 	tests := []struct {
 		Day        uint
@@ -94,8 +95,9 @@ func TestTermuxDialogDate(t *testing.T) {
 		WantedText string
 		WantedCode int8
 	}{
-		{01, 01, 2000, 12, 00, 00, "01-01-2000 12:00:00", -1},
-		{1, 1, 2000, 12, 02, 02, "1-1-2000 12:02:02", -1},
+		// Here. "WantedText".
+		{01, 01, 2000, 12, 00, 00, "1-1-2000 12:0:0", -1},
+		{1, 1, 2000, 12, 02, 02, "1-1-2000 12:2:2", -1},
 	}
 
 	for _, test := range tests {
@@ -142,7 +144,7 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 		WantedIndex uint
 	}{
 		{[]string{"Check me!"}, "Check me!", -1, 0},
-		{[]string{"Do NOT check me!"}, "", -1, 0},
+		{[]string{"Do NOT check me!"}, "Do NOT check me!", -1, 0},
 	}
 	for _, test := range tests {
 		resultRadio := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
@@ -164,8 +166,9 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 			t.Errorf("TermuxDialogRadio() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultRadio.Code, resultRadio.Text, test.WantedCode, test.WantedText)
 		}
 
-		if resultSheet.Code != test.WantedCode || resultSheet.Text != test.WantedText {
-			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, test.WantedCode, test.WantedText)
+		// How funny is that? Thanks for absolutely different result code, Termux API!
+		if resultSheet.Code != 0 || resultSheet.Text != test.WantedText {
+			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, 0, test.WantedText)
 		}
 
 		if resultSpinner.Code != test.WantedCode || resultSpinner.Text != test.WantedText {
