@@ -133,7 +133,8 @@ func TestTermuxDialogDate(t *testing.T) {
 //	}
 //}
 
-func TestTermuxDialogRadio(t *testing.T) {
+// Because they're the same
+func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 	tests := []struct {
 		Value       []string
 		WantedText  string
@@ -141,16 +142,34 @@ func TestTermuxDialogRadio(t *testing.T) {
 		WantedIndex uint
 	}{
 		{[]string{"Check me!"}, "Check me!", -1, 0},
-		{[]string{"Do NOT check me!"}, nil, -1, nil},
+		{[]string{"Do NOT check me!"}, "", -1, null},
 	}
 	for _, test := range tests {
-		result := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
+		resultRadio := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
 			test.Value,
 			TDialog{"Read carefully"},
-		},
-		})
-		if result.Code != test.WantedCode || result.Text != test.WantedText {
-			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedText)
+		}})
+
+		resultSheet := TermuxDialogSheet(TDialogSheet{TDialogCheckbox{
+			test.Value,
+			TDialog{"Read carefully"},
+		}})
+
+		resultSpinner := TermuxDialogSpinner(TDialogSpinner{TDialogCheckbox{
+			test.Value,
+			TDialog{"Read carefully"},
+		}})
+
+		if resultRadio.Code != test.WantedCode || resultRadio.Text != test.WantedText {
+			t.Errorf("TermuxDialogRadio() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultRadio.Code, resultRadio.Text, test.WantedCode, test.WantedText)
+		}
+
+		if resultSheet.Code != test.WantedCode || resultSheet.Text != test.WantedText {
+			t.Errorf("TermuxDialogSheet() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSheet.Code, resultSheet.Text, test.WantedCode, test.WantedText)
+		}
+
+		if resultSpinner.Code != test.WantedCode || resultSpinner.Text != test.WantedText {
+			t.Errorf("TermuxDialogSpinner() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", resultSpinner.Code, resultSpinner.Text, test.WantedCode, test.WantedText)
 		}
 	}
 }
