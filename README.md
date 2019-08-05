@@ -19,7 +19,7 @@ TermuxBatteryStatus()
 ### More project related:
 - [ ] Add examples
 - [ ] Add better description of API, in contrast to the official in Termux
-
+- [ ] Make test coverage >50%
 ### Termux API:
 - [x] termux-battery-status
 
@@ -41,7 +41,7 @@ TermuxBatteryStatus()
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
-  - [x] dialog-date
+  - [ ] dialog-date
   - [x] dialog-sheet
   - [x] dialog-spinner
   - [x] dialog-speech
@@ -111,3 +111,15 @@ TermuxBatteryStatus()
 
 - [ ] termux-wifi-scaninfo
 
+### Termux API tests:
+
+- [x] termux-dialog
+  - [x] dialog-confirm
+  - [x] dialog-checkbox
+  - [x] dialog-counter
+  - [ ] dialog-date
+  - [x] dialog-sheet
+  - [x] dialog-spinner
+  - [x] dialog-speech
+  - [ ] dialog-text
+  - [ ] dialog-time

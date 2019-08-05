@@ -73,42 +73,7 @@ func TermuxDialogCounter(td TDialogCounter) TResult {
     return RT
 }
 
-// TermuxDialogDate spawns new dialog with pick function in it
-//
-// Do not use for now. Broken as hell.
-//
-// Due interesting code of this function (Termux API) you can give it anything in `-d` flag. Like "nil" and this is going to be valid.
-//
-// User can pick a date, but this function returns only that date that you provide
-//
-func TermuxDialogDate(td TDialogDate) TResult {
-    date := fmt.Sprintf("\"%d-%d-%d %d:%d:%d\"", td.Day, td.Month, td.Year, td.KHours, td.Minutes, td.Seconds)
-    executed := ExecAndListen(TD, []string{
-        "date",
-        "-d", date,
-        "-t", td.Title,
-    })
-    err := json.Unmarshal(executed, &RT)
-    if err != nil {
-        log.Println(err)
-    }
-    return RT
-}
-
-// TermuxDialogWithoutDate spawns new dialog with pick function in it
-//
-// User can pick a date
-func TermuxDialogWithoutDate(td TDialog) TResult {
-    executed := ExecAndListen(TD, []string{
-        "date",
-        "-t", td.Title,
-    })
-    err := json.Unmarshal(executed, &RT)
-    if err != nil {
-        log.Println(err)
-    }
-    return RT
-}
+// TODO: Rewrite TermuxDialogDate
 
 // TermuxDialogRadio spawns new dialog with pick function in it
 //

@@ -83,59 +83,6 @@ func TestTermuxDialogCounter(t *testing.T) {
 
 }
 
-// TODO: Rewrite this function due bad code of this function in API
-// Broken as hell.
-//func TestTermuxDialogDate(t *testing.T) {
-//	tests := []struct {
-//		Day        uint
-//		Month      uint
-//		Year       uint
-//		Khour      uint
-//		Minutes    uint
-//		Seconds    uint
-//		WantedText string
-//		WantedCode int8
-//	}{
-//		// Here. "WantedText".
-//		{01, 01, 2000, 12, 00, 00, "1-1-2000 12:0:0", -1},
-//		{1, 1, 2000, 12, 02, 02, "1-1-2000 12:2:2", -1},
-//	}
-//
-//	for _, test := range tests {
-//		result := TermuxDialogDate(TDialogDate{
-//			TDialogDatePattern{
-//				test.Day,
-//				test.Month,
-//				test.Year,
-//				test.Khour,
-//				test.Minutes,
-//				test.Seconds,
-//			},
-//			TDialog{"Just press \"OK\""},
-//		})
-//		if result.Code != test.WantedCode || result.Text != test.WantedText {
-//			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\"", result.Code, result.Text, test.WantedCode, test.WantedText)
-//		}
-//	}
-//}
-
-// TODO: do time.Now() and make format like in Termux output.
-//func TestTermuxDialogDateWithoutDate(t *testing.T) {
-//	tests := []struct{
-//		WantedText string
-//		WantedCode int8
-//	} {
-//
-//	}
-//
-//	for _, test := range tests {
-//		result := TermuxDialogWithoutDate(TDialog{"Just press \"OK\""})
-//		if result.Code != test.WantedCode || result.Text != test.WantedText {
-//			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \"", result.Code, result.Text, test.WantedCode, test.WantedText)
-//		}
-//	}
-//}
-
 // Because they're the same
 func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 	tests := []struct {
@@ -186,7 +133,7 @@ func TestTermuxDialogSpeech(t *testing.T) {
 		WantedCode  int8
 		WantedIndex uint
 	}{
-		{"Say \"a\"", "Check me!", 0, 0},
+		{"Say \"a\"", "a", 0, 0},
 		{"Do NOT say anything!", "", 0, 0},
 	}
 
