@@ -7,20 +7,6 @@ import (
 var (
 	Title       = "test"
 	Hint        = "Press \"Yes\" then \"No\""
-	TestConfirm = TDialogConfirm{
-		Hint,
-		TDialog{Title},
-	}
-	TestCheckbox = TDialogCheckbox{
-		[]string{"value"},
-		TDialog{Title},
-	}
-	TestDialog = TDialogCounter{
-		0,
-		2,
-		1,
-		TDialog{Title},
-	}
 )
 
 func TestTermuxDialog(t *testing.T) {
@@ -39,12 +25,18 @@ func TestTermuxDialog(t *testing.T) {
 
 func TestTermuxDialogConfirm(t *testing.T) {
 
-	resultYes := TermuxDialogConfirm(TestConfirm)
+	resultYes := TermuxDialogConfirm(TDialogConfirm{
+		Hint,
+		TDialog{Title},
+	})
 	if resultYes.Code != 0 || resultYes.Text != "yes" {
 		t.Errorf("TermuxDialogConfirm() was incorrect, got: \"%d, %s\" want: \"0, \"yes\" \".", resultYes.Code, resultYes.Text)
 	}
 
-	resultNo := TermuxDialogConfirm(TestConfirm)
+	resultNo := TermuxDialogConfirm(TDialogConfirm{
+		Hint,
+		TDialog{Title},
+	})
 	if resultNo.Code != 0 || resultNo.Text != "no" {
 		t.Errorf("TermuxDialogConfirm() was incorrect, got: \"%d, %s\" want: \"0, \"no\" \".", resultNo.Code, resultNo.Text)
 	}
@@ -53,7 +45,10 @@ func TestTermuxDialogConfirm(t *testing.T) {
 
 func TestTermuxDialogCheckbox(t *testing.T) {
 
-	resultYes := TermuxDialogCheckbox(TestCheckbox)
+	resultYes := TermuxDialogCheckbox(TDialogCheckbox{
+		[]string{"value"},
+		TDialog{Title},
+	})
 	if resultYes.Values[0].Index != 0 || resultYes.Values[0].Text != "value" {
 		t.Errorf("TermuxDialogCheckbox() was incorrect, got: \"%d, %s\" want: \"0, \"value\" \".", resultYes.Values[0].Index, resultYes.Values[0].Text)
 	}
@@ -82,8 +77,58 @@ func TestTermuxDialogCounter(t *testing.T) {
 			TDialog{"Just press \"ok\". On the 4th test press \"Cancel\""},
 		})
 		if result.Code != test.WantedCode || result.Text != test.WantedString {
-			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\" want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedString)
+			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedString)
 		}
 	}
 	
 }
+
+func TestTermuxDialogDate(t *testing.T) {
+	tests := []struct{
+		Day uint
+		Month uint
+		Year uint
+		Khour uint
+		Minutes uint
+		Seconds uint
+		WantedText string
+		WantedCode int8
+	} {
+		{01,01,2000,12,00,00, "01-01-2000 12:00:00", -1 },
+		{1,1,2000,12,00,00, "1-1-2000 12:00:00", -1 },
+	}
+
+	for _, test := range tests {
+		result := TermuxDialogDate(TDialogDate{
+			TDialogDatePattern{
+				test.Day,
+				test.Month,
+				test.Year,
+				test.Khour,
+				test.Minutes,
+				test.Seconds,
+			},
+			TDialog{"Just press \"OK\""},
+		})
+		if result.Code != test.WantedCode || result.Text != test.WantedText {
+			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \"", result.Code, result.Text, test.WantedCode, test.WantedText)
+		}
+	}
+}
+
+// TODO: do time.Now() and make format like in Termux output.
+//func TestTermuxDialogDateWithoutDate(t *testing.T) {
+//	tests := []struct{
+//		WantedText string
+//		WantedCode int8
+//	} {
+//
+//	}
+//
+//	for _, test := range tests {
+//		result := TermuxDialogWithoutDate(TDialog{"Just press \"OK\""})
+//		if result.Code != test.WantedCode || result.Text != test.WantedText {
+//			t.Errorf("TermuxDialogDate() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \"", result.Code, result.Text, test.WantedCode, test.WantedText)
+//		}
+//	}
+//}
