@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	Title       = "test"
-	Hint        = "Press \"Yes\" then \"No\""
+	Title = "test"
+	Hint  = "Press \"Yes\" then \"No\""
 )
 
 func TestTermuxDialog(t *testing.T) {
@@ -57,16 +57,16 @@ func TestTermuxDialogCheckbox(t *testing.T) {
 
 func TestTermuxDialogCounter(t *testing.T) {
 	tests := []struct {
-		Min int
-		Max int
-		Start int
-		WantedCode int8
+		Min          int
+		Max          int
+		Start        int
+		WantedCode   int8
 		WantedString string
 	}{
 		{0, 2, 1, -1, "1"},
 		{0, 2, 2, -1, "2"},
-		{0, 2, 0,-1, "0"},
-		{0,2,0,-2,""},
+		{0, 2, 0, -1, "0"},
+		{0, 2, 0, -2, ""},
 	}
 
 	for _, test := range tests {
@@ -80,22 +80,22 @@ func TestTermuxDialogCounter(t *testing.T) {
 			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedString)
 		}
 	}
-	
+
 }
 
 func TestTermuxDialogDate(t *testing.T) {
-	tests := []struct{
-		Day uint
-		Month uint
-		Year uint
-		Khour uint
-		Minutes uint
-		Seconds uint
+	tests := []struct {
+		Day        uint
+		Month      uint
+		Year       uint
+		Khour      uint
+		Minutes    uint
+		Seconds    uint
 		WantedText string
 		WantedCode int8
-	} {
-		{01,01,2000,12,00,00, "01-01-2000 12:00:00", -1 },
-		{1,1,2000,12,00,00, "1-1-2000 12:00:00", -1 },
+	}{
+		{01, 01, 2000, 12, 00, 00, "01-01-2000 12:00:00", -1},
+		{1, 1, 2000, 12, 02, 02, "1-1-2000 12:02:02", -1},
 	}
 
 	for _, test := range tests {
@@ -132,3 +132,25 @@ func TestTermuxDialogDate(t *testing.T) {
 //		}
 //	}
 //}
+
+func TestTermuxDialogRadio(t *testing.T) {
+	tests := []struct {
+		Value       []string
+		WantedText  string
+		WantedCode  int8
+		WantedIndex uint
+	}{
+		{[]string{"Check me!"}, "Check me!", -1, 0},
+		{[]string{"Do NOT check me!"}, nil, -1, nil},
+	}
+	for _, test := range tests {
+		result := TermuxDialogRadio(TDialogRadio{TDialogCheckbox{
+			test.Value,
+			TDialog{"Read carefully"},
+		},
+		})
+		if result.Code != test.WantedCode || result.Text != test.WantedText {
+			t.Errorf("TermuxDialogCounter() was incorrect, got: \"%d, %s\". Want: \"%d, \"%s\" \".", result.Code, result.Text, test.WantedCode, test.WantedText)
+		}
+	}
+}

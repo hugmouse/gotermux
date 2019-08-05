@@ -1,15 +1,16 @@
 package gotermuxwrapper
 
 type TValue struct {
-	Index uint `json:"Index"`
-	Text string `json:"Text"`
+	Index uint   `json:"Index"`
+	Text  string `json:"Text"`
 }
 
 type TResult struct {
-	Code  int8   `json:"Code"`
-	Text  string `json:"Text"`
+	Code   int8     `json:"Code"`
+	Text   string   `json:"Text"`
+	Index  uint     `json:"Index"`
 	Values []TValue `json:"Values"`
-	Error string `json:"Error"`
+	Error  string   `json:"Error"`
 }
 
 type TBattery struct {
