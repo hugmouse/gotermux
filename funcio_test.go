@@ -1,4 +1,4 @@
-package gotermuxwrapper
+package gotermux
 
 import (
 	"testing"

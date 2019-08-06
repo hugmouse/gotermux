@@ -1,4 +1,4 @@
-package gotermuxwrapper
+package gotermux
 
 type TValue struct {
 	Index uint   `json:"Index"`

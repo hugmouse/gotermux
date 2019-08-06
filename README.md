@@ -1,5 +1,7 @@
-# Go Termux Wrapper
-### Simple wrapper around Termux API
+# GoTermux
+`Simple wrapper around Termux API`
+
+Currently in active development!
 
 # Work In Progress
 This package is still in development. 
@@ -15,11 +17,18 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
+# Installing
+```shell
+go get -u github.com/hugmouse/gotermux
+```
+
 # TODO
+
 ### More project related:
 - [ ] Add examples
 - [ ] Add better description of API, in contrast to the official in Termux
 - [ ] Make test coverage >50%
+
 ### Termux API:
 - [x] termux-battery-status
 
