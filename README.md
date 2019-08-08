@@ -1,12 +1,11 @@
 # GoTermux
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugmouse/gotermux&amp;utm_campaign=Badge_Grade)
+
 `Simple wrapper around Termux API`
 
 Currently in active development!
 
-# Work In Progress
-This package is still in development. 
-
-# Codestyle
+## Codestyle
 Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
 
 Example: 
@@ -17,18 +16,18 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-# Installing
+## Installing
 ```shell
 go get -u github.com/hugmouse/gotermux
 ```
 
-# TODO
+## TODO
 
-### More project related:
+### More project related
 - [ ] Add examples
 - [ ] Add better description of API, in contrast to the official in Termux
 
-### Termux API:
+### Termux API
 - [x] termux-battery-status
 
 - [x] termux-brightness
@@ -119,7 +118,7 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-wifi-scaninfo
 
-### Termux API tests:
+## Termux API tests
 
 - [x] termux-dialog
   - [x] dialog-confirm
