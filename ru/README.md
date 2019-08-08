@@ -36,7 +36,7 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-battery-status
 
-- [x] termux-яркость
+- [x] termux-brightness
 
 - [x] termux-call-log
 
@@ -86,11 +86,11 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-microphone-record
 
-- [ ] termux-уведомление
+- [ ] termux-sensor
 
 - [ ] termux-messages-remove
 
-- [ ] termux-сенсор
+- [ ] termux-sensor
 
 - [x] termux-share
 
