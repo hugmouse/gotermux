@@ -16,6 +16,14 @@ var (
     RT = TResult{}
 )
 
+type ShareAction uint8
+
+const (
+    TShareView ShareAction = iota
+    TShareEdit
+    TShareSend
+)
+
 // TermuxDialog spawns new dialog with only title in it
 func TermuxDialog(title string) TResult {
     executed := ExecAndListen(TD, []string{
@@ -358,6 +366,32 @@ func TermuxMediaPlayerScan(recur, verbose bool) string {
 
     executed := ExecAndListen("termux-media-scan", command)
     return string(executed)
+}
+
+func TermuxShare(td TShare) string {
+    command := []string{"-a"}
+
+    switch td.Action {
+    default:
+    case TShareView:
+        command = append(command, "view")
+        break
+    case TShareEdit:
+        command = append(command, "edit")
+        break
+    case TShareSend:
+        command = append(command, "send")
+    }
+
+    if td.Default == true {
+        command = append(command, "-d")
+    }
+
+    if td.Title != "" {
+        command = append(command, "-t", td.Title)
+    }
+
+    return string(ExecAndListen("termux-share", command))
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"

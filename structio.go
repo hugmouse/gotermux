@@ -135,3 +135,10 @@ type TLocationResult struct {
 	ElapsedMS uint64  `json:"ElapsedMs"`
 	Provider  string  `json:"Provider"`
 }
+
+type TShare struct {
+	Action      ShareAction
+	ContentType string
+	Default     bool
+	TDialog
+}
