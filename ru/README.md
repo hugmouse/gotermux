@@ -128,4 +128,14 @@ go get -u github.com/hugmouse/gotermux
 
 ## Тесты функций Termux API
 
-- - [x] termux-dialog  - [x] dialog-confirm  - [x] dialog-checkbox  - [x] dialog-counter  - [ ] dialog-date  - [x] dialog-sheet  - [x] dialog-spinner  - [x] dialog-speech  - [ ] dialog-text  - [ ] dialog-time
+- [x] termux-dialog
+
+  - [x] dialog-confirm
+  - [x] dialog-checkbox
+  - [x] dialog-counter
+  - [ ] dialog-date
+  - [x] dialog-sheet
+  - [x] dialog-spinner
+  - [x] dialog-speech
+  - [ ] dialog-text
+  - [ ] dialog-time
