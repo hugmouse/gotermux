@@ -4,13 +4,13 @@
 
 `Обертка вокруг Termux API`
 
-Currently in active development!
+В настоящее время в активной разработке!
 
 ## Codestyle
 
 Вызов команды termux из golang выглядит так же, как в termux cmd, но без тире (-).
 
-Example:
+Пример:
 
 ```shell
 // Termux CMD:
@@ -19,7 +19,7 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-## Installing
+## Установка
 
 ```shell
 go get -u github.com/hugmouse/gotermux
@@ -36,7 +36,7 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-battery-status
 
-- [x] termux-brightness
+- [x] termux-яркость
 
 - [x] termux-call-log
 
