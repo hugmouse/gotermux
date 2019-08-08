@@ -1,4 +1,9 @@
+<p>
+    <img src="https://raw.githubusercontent.com/hugmouse/gotermux/Development/icon/logo.webp.webp" height="156">
+</p>
+
 # GoTermux
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugmouse/gotermux&amp;utm_campaign=Badge_Grade)
 
 `Simple wrapper around Termux API`
