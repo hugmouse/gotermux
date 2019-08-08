@@ -27,7 +27,6 @@ go get -u github.com/hugmouse/gotermux
 ### More project related:
 - [ ] Add examples
 - [ ] Add better description of API, in contrast to the official in Termux
-- [ ] Make test coverage >50%
 
 ### Termux API:
 - [x] termux-battery-status
@@ -86,9 +85,9 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-sensor
 
-- [ ] termux-share
+- [x] termux-share
 
-- [ ] termux-sms-list
+- [ ] termux-sms-list 
 
 - [ ] termux-sms-send
 
@@ -108,7 +107,7 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-tts-speak
 
-- [ ] termux-vibrate
+- [x] termux-vibrate
 
 - [ ] termux-volume
 
