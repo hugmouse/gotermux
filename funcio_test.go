@@ -127,7 +127,7 @@ func TestTermuxDialogRadioSheetSpinner(t *testing.T) {
 
 func TestTermuxDialogSpeech(t *testing.T) {
 	tests := []struct {
-		Hint string
+		Hint        string
 		WantedText  string
 		WantedCode  int8
 		WantedIndex uint

@@ -12,8 +12,8 @@ import (
 )
 
 var (
-    TD = "termux-dialog"
-    RT = TResult{}
+    TD  = "termux-dialog"
+    RT  = TResult{}
 )
 
 type ShareAction uint8
@@ -368,10 +368,10 @@ func TermuxMediaPlayerScan(recur, verbose bool) string {
     return string(executed)
 }
 
-func TermuxShare(td TShare) string {
+func TermuxShare(t TShare) string {
     command := []string{"-a"}
 
-    switch td.Action {
+    switch t.Action {
     default:
     case TShareView:
         command = append(command, "view")
@@ -383,15 +383,25 @@ func TermuxShare(td TShare) string {
         command = append(command, "send")
     }
 
-    if td.Default == true {
+    if t.Default == true {
         command = append(command, "-d")
     }
 
-    if td.Title != "" {
-        command = append(command, "-t", td.Title)
+    if t.Title != "" {
+        command = append(command, "-t", t.Title)
     }
 
     return string(ExecAndListen("termux-share", command))
+}
+
+func TermuxVibrate(t TVibrate) {
+    command := []string{"-t", string(t.Duration)}
+
+    if t.SilentModeIgnore == true {
+        command = append(command, "-f")
+    }
+
+    ExecAndListen("termux-vibrate", command)
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"

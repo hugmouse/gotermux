@@ -142,3 +142,8 @@ type TShare struct {
 	Default     bool
 	TDialog
 }
+
+type TVibrate struct {
+	Duration uint
+	SilentModeIgnore bool
+}
