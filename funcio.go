@@ -12,16 +12,19 @@ import (
 )
 
 var (
-    TD  = "termux-dialog"
-    RT  = TResult{}
+    TD  = "termux-dialog" // Just for saving some space
+    RT  = TResult{}       // Same thing as above
 )
 
+// ShareAction from termux-share
+//
+// Used for TShareView/TShareEdit/TShareSend constants
 type ShareAction uint8
 
 const (
-    TShareView ShareAction = iota
-    TShareEdit
-    TShareSend
+    TShareView ShareAction = iota // TermuxShare's action "View" flag
+    TShareEdit                    // TermuxShare's action "Edit" flag
+    TShareSend                    // TermuxShare's action "Send" flag
 )
 
 // TermuxDialog spawns new dialog with only title in it
@@ -247,10 +250,10 @@ func TermuxClipboardGet() string {
 }
 
 // TermuxClipboardSet sets the system clipboard text
-func TermuxClipboardSet(clipboard string) {
-    if len(clipboard) > 0 {
+func TermuxClipboardSet(clip TClipboard) {
+    if len(clip.Text) > 0 {
         ExecAndListen("termux-clipboard-set", []string{
-            clipboard,
+            clip.Text,
         })
     } else {
         log.Println("Clipboard is empty!")
@@ -368,6 +371,7 @@ func TermuxMediaPlayerScan(recur, verbose bool) string {
     return string(executed)
 }
 
+// TermuxShare shares a file specified as argument or the text received on stdin
 func TermuxShare(t TShare) string {
     command := []string{"-a"}
 
@@ -394,6 +398,7 @@ func TermuxShare(t TShare) string {
     return string(ExecAndListen("termux-share", command))
 }
 
+// TermuxVibrate vibrate the device
 func TermuxVibrate(t TVibrate) {
     command := []string{"-t", string(t.Duration)}
 
