@@ -11,6 +11,7 @@ import (
     "strings"
 )
 
+// Some vars. Gonna rid of them someday, but not today!
 var (
     TD  = "termux-dialog" // Just for saving some space
     RT  = TResult{}       // Same thing as above
@@ -21,6 +22,7 @@ var (
 // Used for TShareView/TShareEdit/TShareSend constants
 type ShareAction uint8
 
+// Some constants for better readability when you going to use functions
 const (
     TShareView ShareAction = iota // TermuxShare's action "View" flag
     TShareEdit                    // TermuxShare's action "Edit" flag
@@ -258,17 +260,17 @@ func TermuxDownload(description, title string) {
     })
 }
 
-// TODO: parse result into struct
-//
 // TermuxInfraredFrequencies query the infrared transmitter's supported carrier frequencies
+//
+// TODO: parse result into struct
 func TermuxInfraredFrequencies() string {
     executed := ExecAndListen("termux-infrared-frequencies", nil)
     return string(executed)
 }
 
-// TODO: check source for RETURN result
-//
 // TermuxInfraredTransmit transmits an infrared pattern
+//
+// TODO: check source for RETURN result
 func TermuxInfraredTransmit(timings []uint) string {
 
     // this is cool, but readability is shit and performance too
@@ -284,9 +286,9 @@ func TermuxInfraredTransmit(timings []uint) string {
     return string(executed)
 }
 
-// TODO: live update or something like this
-//
 // TermuxLocation gets device location
+//
+// TODO: live update or something like this
 func TermuxLocation(location TLocation) TLocationResult {
     result := TLocationResult{}
     executed := ExecAndListen("termux-location", []string{
