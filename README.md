@@ -21,7 +21,24 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-## Installing
+## Installing Termux API
+Use [F-droid](https://f-droid.org/packages/com.termux.api/) or [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) to install Termux API.
+
+**Do not mix installations of Termux and Addons between Google Play and F-Droid**.
+
+To **use** Termux API you also need to install the [termux-api](https://github.com/termux/termux-api-package) package:
+```shell
+pkg install termux-api
+```
+
+## Installing the package
+First of all you need install golang:
+```shell
+pkg install golang
+```
+
+And then: 
+
 ```shell
 go get -u github.com/hugmouse/gotermux
 ```
