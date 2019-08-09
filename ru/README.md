@@ -51,16 +51,15 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-contact-list
 
 - [x] termux-dialog
-
-    - [x] dialog-confirm
-    - [x] dialog-checkbox
-    - [x] dialog-counter
-    - [ ] dialog-date
-    - [x] dialog-sheet
-    - [x] dialog-spinner
-    - [x] dialog-speech
-    - [x] dialog-text
-    - [x] dialog-time
+  - [x] dialog-confirm
+  - [x] dialog-checkbox
+  - [x] dialog-counter
+  - [ ] dialog-date
+  - [x] dialog-sheet
+  - [x] dialog-spinner
+  - [x] dialog-speech
+  - [x] dialog-text
+  - [x] dialog-time
 
 - [x] termux-download
 
@@ -75,12 +74,11 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-location
 
 - [x] termux-media-player
-
-    - [x] termux-media-player play
-    - [x] termux-media-player play (resume)
-    - [x] termux-media-player info
-    - [x] termux-media-player pause
-    - [x] termux-media-player stop
+  - [x] termux-media-player play
+  - [x] termux-media-player play (resume)
+  - [x] termux-media-player info
+  - [x] termux-media-player pause
+  - [x] termux-media-player stop
 
 - [x] termux-media-scan
 
@@ -129,7 +127,6 @@ go get -u github.com/hugmouse/gotermux
 ## Тесты функций Termux API
 
 - [x] termux-dialog
-
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
