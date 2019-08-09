@@ -101,18 +101,6 @@ type TDialogTime struct {
     TDialogTitle // Name of the window
 }
 
-type TCall struct {
-    Name        string `json:"Name"`
-    PhoneNumber string `json:"Phonenumber"`
-    Type        string `json:"Type"`
-    Date        string `json:"Date"`
-    Duration    string `json:"Duration"`
-}
-
-type TCalls struct {
-    Calls []TCall
-}
-
 type TLocation struct {
     Provider string
     Request  string

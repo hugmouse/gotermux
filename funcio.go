@@ -220,29 +220,6 @@ func TermuxBrightness(val uint8) []byte {
     return executed
 }
 
-// TODO: test it out on <9 android and somehow downgrade Termux API
-//
-// TermuxCallLog prints the phone call history
-//
-// Not working on >=9 android
-//
-// Works only in 0.32v of Termux API
-//
-// See: github.com/termux/termux-api/commit/de44896a01111506590a258f0267400af067b778#diff-99a2dbdeb4c1195cba0edb66ea510428
-func TermuxCallLog(limit, offset uint) TCalls {
-    c := TCalls{}
-    executed := ExecAndListen("termux-call-log", []string{
-        "-l", string(limit),
-        "-o", string(offset),
-    })
-    err := json.Unmarshal(executed, &c)
-    if err != nil {
-        log.Println(err)
-    }
-
-    return c
-}
-
 // TermuxClipboardGet gets the system clipboard text
 func TermuxClipboardGet() string {
     executed := ExecAndListen("termux-clipboard-get", nil)
