@@ -101,30 +101,36 @@ type TDialogTime struct {
     TDialogTitle // Name of the window
 }
 
+// TLocation used in TermuxLocation function
+//
+// Still in development
 type TLocation struct {
-    Provider string
-    Request  string
+    Provider string // location provider [gps/network/passive]
+    Request  string // kind of request to make [once/last/updates]
 }
 
+// TLocationResult is a return of a TLocation function
 type TLocationResult struct {
-    Latitude  float64 `json:"Latitude"`
-    Longitude float64 `json:"Longitude"`
-    Altitude  float64 `json:"Altitude"`
-    Accuracy  float64 `json:"Accuracy"`
-    Bearing   float64 `json:"Bearing"`
-    Speed     float64 `json:"Speed"`
-    ElapsedMS uint64  `json:"ElapsedMs"`
-    Provider  string  `json:"Provider"`
+    Latitude  float64 `json:"Latitude"` // The latitude, in degrees
+    Longitude float64 `json:"Longitude"` // The longitude, in degrees.
+    Altitude  float64 `json:"Altitude"` // The altitude if available, in meters above the WGS 84 reference ellipsoid
+    Accuracy  float64 `json:"Accuracy"` // The estimated horizontal accuracy of this location, radial, in meters
+    Bearing   float64 `json:"Bearing"` // Bearing is the horizontal direction of travel of this device, and is not related to the device orientation
+    Speed     float64 `json:"Speed"` // Speed in meters/second over ground
+    ElapsedMS uint64  `json:"ElapsedMs"` // Uncertainty of elapsed real-time of fix
+    Provider  string  `json:"Provider"` // The name of the provider that generated this fix
 }
 
+// TShare used in TermuxShare function
 type TShare struct {
-    Action      ShareAction
-    ContentType string
-    Default     bool
-    TDialogTitle
+    Action      ShareAction // which action to performed on the shared content
+    ContentType string // content-type to use (default: guessed from file extension, text/plain for stdin
+    Default     bool // share to the default receiver if one is selected instead of showing a chooser
+    TDialogTitle // Name of the window
 }
 
+// TVibrate used in TermuxVibrate function
 type TVibrate struct {
-    Duration uint
-    SilentModeIgnore bool
+    Duration uint // the duration to vibrate in ms
+    SilentModeIgnore bool // force vibration even in silent mode
 }
