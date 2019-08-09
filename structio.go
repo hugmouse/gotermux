@@ -1,136 +1,136 @@
-package gotermuxwrapper
+package gotermux
 
+// TValue used in TResult's struct
+//
+// Some functions returns multiple values with "Index" and "Text" fields
 type TValue struct {
-	Index uint `json:"Index"`
-	Text string `json:"Text"`
+    Index uint   `json:"Index"`
+    Text  string `json:"Text"`
 }
 
+// TResult returns some defaults fields that Termux API provides to us
 type TResult struct {
-	Code  int8   `json:"Code"`
-	Text  string `json:"Text"`
-	Values []TValue `json:"Values"`
-	Error string `json:"Error"`
+    Code   int8     `json:"Code"` // -2, -1 or 0 in rare cases
+    Text   string   `json:"Text"` // Usually just information about action
+    Index  uint     `json:"Index"` // With new update returns index of himself
+    Values []TValue `json:"Values"` // Some functions returns multiple results
+    Error  string   `json:"Error"` // Usually if there is an error - it's single element of all struct
 }
 
+// TBattery is a structure for return values from TermuxBatteryStatus
 type TBattery struct {
-	Health      string  `json:"Health"`
-	Percentage  uint    `json:"Percentage"`
-	Plugged     string  `json:"Plugged"`
-	Status      string  `json:"Status"`
-	Temperature float64 `json:"Temperature"`
+    Health      string  `json:"Health"` // Different statuses: COLD, DEAD, GOOD, OVERHEAT, OVER_VOLTAGE, UNKNOWN and UNSPECIFIED_FAILURE
+    Percentage  uint    `json:"Percentage"` // How charged your battery is
+    Plugged     string  `json:"Plugged"` // Different statuses: UNPLUGGED, PLUGGED_AC, PLUGGED_USB, PLUGGED_WIRELESS and PLUGGED_+int (0 means it is on battery other constants are different types of power sources)
+    Status      string  `json:"Status"` // Different statuses: CHARGING, DISCHARGING, FULL, NOT_CHARGING, UNKNOWN
+    Temperature float64 `json:"Temperature"` // Just temperature of your battery
 }
 
-type TPhysicalSize struct {
-	Width  float64
-	Height float64
-}
-
-type TCamera struct {
-	ID           int
-	Facing       string
-	FocalLengths float64
-	TPhysicalSize
-}
-
+// TClipboard used for TermuxClipboardSet function
 type TClipboard struct {
-	Text string
+    Text string // string that goes into clipboard
 }
 
+// TContact is a single contact from your phone, used in TContacts
 type TContact struct {
-	Name   string `json:"Name"`
-	Number string `json:"Number"`
+    Name   string `json:"Name"` // Name of your contact
+    Number string `json:"Number"` // Number of your contact
 }
 
+// TContacts used for TermuxContactList, list of contacts in your phone
 type TContacts struct {
-	Contact []TContact
+    Contact []TContact // Slice of your contacts
 }
 
-type TDialog struct {
-	Title string
+// TDialogTitle represents Title in TermuxDialog, used in every single TDialog function
+type TDialogTitle struct {
+    Title string // Name of the window
 }
 
+// TDialogConfirm used in TDialogConfirm function
 type TDialogConfirm struct {
-	Hint string
-	TDialog
+    Hint string // Like a placeholder - what your user see in input box
+    TDialogTitle // Name of the window
 }
 
+// TDialogCheckbox used in TDialogCheckbox function
 type TDialogCheckbox struct {
-	Values []string
-	TDialog
+    Values []string // Values that your user can select
+    TDialogTitle // Name of the window
 }
 
+// TDialogCounter used id TDialogCounter function
 type TDialogCounter struct {
-	Min   int
-	Max   int
-	Start int
-	TDialog
+    Min   int // Minimum value
+    Max   int // Maximum value
+    Start int // The default value is where the counting starts
+    TDialogTitle // Name of the window
 }
 
-type TDialogDatePattern struct {
-	Day     uint
-	Month   uint
-	Year    uint
-	KHours  uint // %k - range 0-23
-	Minutes uint
-	Seconds uint
-}
-type TDialogDate struct {
-	TDialogDatePattern
-	TDialog
-}
-
+// TDialogRadio have same struct as TDialogCheckbox
 type TDialogRadio struct {
-	TDialogCheckbox
+    TDialogCheckbox // Multiple values, but with radio buttons
 }
 
+// TDialogSheet have same struct as TDialogCheckbox
 type TDialogSheet struct {
-	TDialogCheckbox
+    TDialogCheckbox // Multiple values, but with sheet button
 }
 
+// TDialogSpinner have same struct as TDialogCheckbox
 type TDialogSpinner struct {
-	TDialogCheckbox
+    TDialogCheckbox // Multiple values, but with spinner button, where user can pick one
 }
 
+// TDialogSpeech have same struct as TDialogConfirm
 type TDialogSpeech struct {
-	TDialogConfirm
+    TDialogConfirm // In that case there is no input box, just gray text in the middle
 }
 
+// TDialogText used in TDialogText function
 type TDialogText struct {
-	Hint          string
-	MultipleLine  bool
-	NumberInput   bool
-	PasswordInput bool
-	TDialog
+    Hint          string // Like a placeholder - what your user see in input box
+    MultipleLine  bool // Multiple lines instead of single
+    NumberInput   bool // Enter input as numbers
+    PasswordInput bool // Enter input as password
+    TDialogTitle // Name of the window
 }
 
+// TDialogTime used in TDialogTime function, but it's just have the same struct as TDialogTitle
 type TDialogTime struct {
-	TDialog
+    TDialogTitle // Name of the window
 }
 
-type TCall struct {
-	Name        string `json:"Name"`
-	PhoneNumber string `json:"Phonenumber"`
-	Type        string `json:"Type"`
-	Date        string `json:"Date"`
-	Duration    string `json:"Duration"`
-}
-
-type TCalls struct {
-	Calls []TCall
-}
-
+// TLocation used in TermuxLocation function
+//
+// Still in development
 type TLocation struct {
-	Provider string
-	Request  string
+    Provider string // location provider [gps/network/passive]
+    Request  string // kind of request to make [once/last/updates]
 }
 
+// TLocationResult is a return of a TLocation function
 type TLocationResult struct {
-	Latitude  float64 `json:"Latitude"`
-	Longitude float64 `json:"Longitude"`
-	Altitude  float64 `json:"Altitude"`
-	Accuracy  float64 `json:"Accuracy"`
-	Bearing   float64 `json:"Bearing"`
-	Speed     float64 `json:"Speed"`
-	ElapsedMS uint64  `json:"ElapsedMs"`
-	Provider  string  `json:"Provider"`
+    Latitude  float64 `json:"Latitude"` // The latitude, in degrees
+    Longitude float64 `json:"Longitude"` // The longitude, in degrees.
+    Altitude  float64 `json:"Altitude"` // The altitude if available, in meters above the WGS 84 reference ellipsoid
+    Accuracy  float64 `json:"Accuracy"` // The estimated horizontal accuracy of this location, radial, in meters
+    Bearing   float64 `json:"Bearing"` // Bearing is the horizontal direction of travel of this device, and is not related to the device orientation
+    Speed     float64 `json:"Speed"` // Speed in meters/second over ground
+    ElapsedMS uint64  `json:"ElapsedMs"` // Uncertainty of elapsed real-time of fix
+    Provider  string  `json:"Provider"` // The name of the provider that generated this fix
+}
+
+// TShare used in TermuxShare function
+type TShare struct {
+    Action      ShareAction // which action to performed on the shared content
+    ContentType string // content-type to use (default: guessed from file extension, text/plain for stdin
+    Default     bool // share to the default receiver if one is selected instead of showing a chooser
+    TDialogTitle // Name of the window
+}
+
+// TVibrate used in TermuxVibrate function
+type TVibrate struct {
+    Duration uint // the duration to vibrate in ms
+    SilentModeIgnore bool // force vibration even in silent mode
 }

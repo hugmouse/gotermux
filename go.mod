@@ -1,3 +1,3 @@
-module github.com/hugmouse/gotermuxwrapper
+module github.com/hugmouse/gotermux
 
 go 1.12

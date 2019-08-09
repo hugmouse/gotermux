@@ -4,16 +4,18 @@
 
 # GoTermux
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugmouse/gotermux&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&utm_medium=referral&utm_content=hugmouse/gotermux&utm_campaign=Badge_Grade)
 
-`Simple wrapper around Termux API`
+`Обертка вокруг Termux API`
 
-Currently in active development!
+В настоящее время в активной разработке!
 
 ## Codestyle
-Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
 
-Example: 
+Вызов команды termux из golang выглядит так же, как в termux cmd, но без тире (-).
+
+Пример:
+
 ```shell
 // Termux CMD:
 termux-battery-status
@@ -21,23 +23,23 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-## Installing Termux API
-Use [F-droid](https://f-droid.org/packages/com.termux.api/) or [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) to install Termux API.
+## Установка Termux API
+Используйте [F-droid](https://f-droid.org/packages/com.termux.api/) или [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) для установки Termux API.
 
-**Do not mix installations of Termux and Addons between Google Play and F-Droid**.
+**Не смешивайте установки Termux и его аддонов между Google Play и F-Droid**.
 
-To **use** Termux API you also need to install the [termux-api](https://github.com/termux/termux-api-package) package:
+Чтобы использовать [termux-api](https://github.com/termux/termux-api-package) вам так же нужно установить пакет внутри Termux:
 ```shell
 pkg install termux-api
 ```
 
-## Installing the package
-First of all you need install golang:
+## Установка пакета
+Сначала вам нужно установить Golang:
 ```shell
 pkg install golang
 ```
 
-And then: 
+И потом:
 
 ```shell
 go get -u github.com/hugmouse/gotermux
@@ -45,11 +47,13 @@ go get -u github.com/hugmouse/gotermux
 
 ## TODO
 
-### More project related
-- [ ] Add examples
-- [ ] Add better description of API, in contrast to the official in Termux
+### По проекту
 
-### Termux API
+- [ ] Добавить примеры
+- [ ] Добавить более подробное описание функций
+
+### По Termux API
+
 - [x] termux-battery-status
 
 - [x] termux-brightness
@@ -90,7 +94,7 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-location
 
 - [x] termux-media-player
-  - [x] termux-media-player play <file>
+  - [x] termux-media-player play
   - [x] termux-media-player play (resume)
   - [x] termux-media-player info
   - [x] termux-media-player pause
@@ -100,15 +104,15 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-microphone-record
 
-- [ ] termux-notification
+- [ ] termux-sensor
 
-- [ ] termux-notification-remove
+- [ ] termux-messages-remove
 
 - [ ] termux-sensor
 
 - [x] termux-share
 
-- [ ] termux-sms-list 
+- [ ] termux-sms-list
 
 - [ ] termux-sms-send
 
@@ -124,9 +128,9 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-torch
 
-- [ ] termux-tts-engines
+- [ ] termux-tts-engine
 
-- [ ] termux-tts-speak
+- [ ] termux-telephony-call
 
 - [x] termux-vibrate
 
@@ -140,16 +144,15 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-wifi-scaninfo
 
-## Termux API tests
+## Тесты функций Termux API
 
 - [x] termux-dialog
-
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
   - [ ] dialog-date
   - [x] dialog-sheet
   - [x] dialog-spinner
-  - [x] dialog-speech
   - [ ] dialog-text
+  - [x] dialog-speech
   - [ ] dialog-time
