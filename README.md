@@ -143,6 +143,7 @@ go get -u github.com/hugmouse/gotermux
 ## Termux API tests
 
 - [x] termux-dialog
+
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
