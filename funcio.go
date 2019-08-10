@@ -239,17 +239,6 @@ func TermuxClipboardSet(clip TClipboard) {
 	}
 }
 
-// TermuxContactList returns list of contacts
-func TermuxContactList() TCalls {
-	c := TCalls{}
-	executed := ExecAndListen("termux-contact-list", nil)
-	err := json.Unmarshal(executed, &c)
-	if err != nil {
-		log.Println(err)
-	}
-	return c
-}
-
 // TermuxDownload downloads a resource using the system download manager
 //
 // Returns nothing. See: wiki.termux.com/wiki/Termux-download
@@ -380,6 +369,24 @@ func TermuxVibrate(t TVibrate) {
 	}
 
 	ExecAndListen("termux-vibrate", command)
+}
+
+// GetTermuxVolume returns shows information about each audio stream
+func GetTermuxVolume() []TAudioStream {
+	var t []TAudioStream
+	command := ExecAndListen("termux-volume", nil)
+	err := json.Unmarshal(command, &t)
+	if err != nil {
+		log.Println(err)
+	}
+	return t
+}
+
+// SetTermuxVolume sets volume for audio stream
+func SetTermuxVolume(v TAudioStream) {
+	ExecAndListen("termux-volume", []string{
+		v.Stream, string(v.Volume),
+	})
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"

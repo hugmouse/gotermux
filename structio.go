@@ -134,3 +134,10 @@ type TVibrate struct {
 	Duration         uint // the duration to vibrate in ms
 	SilentModeIgnore bool // force vibration even in silent mode
 }
+
+// TAudioStream used in TermuxValue function
+type TAudioStream struct {
+	Stream    string `json:"Stream"` // Valid audio streams are: alarm, music, notification, ring, system, call
+	Volume    uint   `json:"Volume"` // current volume
+	MaxVolume uint   `json:"Max_volume"`
+}
