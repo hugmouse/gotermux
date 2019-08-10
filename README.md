@@ -49,7 +49,7 @@ go get -u github.com/hugmouse/gotermux
 
 ### More project related
 - [ ] Add examples
-- [ ] Add better description of API, in contrast to the official in Termux
+- [ ] Add better description of API
 
 ### Termux API
 - [x] termux-battery-status
@@ -132,11 +132,11 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-vibrate
 
-- [ ] termux-volume
+- [x] termux-volume
 
 - [ ] termux-wallpaper
 
-- [ ] termux-wifi-connectioninfo
+- [x] termux-wifi-connectioninfo
 
 - [ ] termux-wifi-enable
 

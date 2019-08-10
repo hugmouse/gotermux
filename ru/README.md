@@ -135,11 +135,11 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-vibrate
 
-- [ ] termux-volume
+- [x] termux-volume
 
 - [ ] termux-wallpaper
 
-- [ ] termux-wifi-connectioninfo
+- [x] termux-wifi-connectioninfo
 
 - [ ] termux-wifi-enable
 
