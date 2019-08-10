@@ -37,11 +37,6 @@ type TContact struct {
 	Number string `json:"Number"` // Number of your contact
 }
 
-// TContacts used for TermuxContactList, list of contacts in your phone
-type TContacts struct {
-	Contact []TContact // Slice of your contacts
-}
-
 // TDialogTitle represents Title in TermuxDialog, used in every single TDialog function
 type TDialogTitle struct {
 	Title string // Name of the window

@@ -400,6 +400,17 @@ func TermuxWifiConnectionInfo() TConnection {
 	return t
 }
 
+// TermuxConctactList returns list of all contacts
+func TermuxContactList() []TContact {
+	var c []TContact
+	command := ExecAndListen("termux-contact-list", nil)
+	err := json.Unmarshal(command, &c)
+	if err != nil {
+		log.Println(err)
+	}
+	return c
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output
