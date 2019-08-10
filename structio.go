@@ -138,6 +138,28 @@ type TVibrate struct {
 // TAudioStream used in TermuxValue function
 type TAudioStream struct {
 	Stream    string `json:"Stream"` // Valid audio streams are: alarm, music, notification, ring, system, call
-	Volume    uint   `json:"Volume"` // current volume
+	Volume    uint   `json:"Volume"` // Current volume
 	MaxVolume uint   `json:"Max_volume"`
+}
+
+// TConnection used in TermuxWifiConnectionInfo
+//
+// Note that NetworkID can be -1 if there is no currently connected network or if the caller has insufficient permissions to access the network ID
+//
+// If the SSID can be decoded as UTF-8, it will be returned surrounded by double quotation marks. Otherwise, it is returned as a string of hex digits
+//
+// The SSID may be <unknown ssid>, if there is no network currently connected or if the caller has insufficient permissions to access the SSID
+//
+// Supplicant states: ASSOCIATED, ASSOCIATING, AUTHENTICATING, COMPLETED, DISCONNECTED, DORMANT, FOUR_WAY_HANDSHAKE, GROUP_HANDSHAKE, INACTIVE, INTERFACE_DISABLED, INVALID, SCANNING and UNINITIALIZED
+type TConnection struct {
+	BSSID           string `json:"Bssid"`           // Basic service set identifier
+	FrequencyMhz    int    `json:"Frequency_mhz"`   // The current frequency
+	IP              string `json:"Ip"`              // IPV4 only
+	LinkSpeedMbps   uint   `json:"Link_speed_mbps"` // The current link speed
+	MACAddress      string `json:"Mac_address"`
+	NetworkID       int    `json:"Network_id"`       // Each configured network has a unique small integer ID, used to identify the network
+	RSSI            int    `json:"Rssi"`             // The received signal strength indicator of the current 802.11 network, in dBm
+	SSID            string `json:"Ssid"`             // The service set identifier
+	HiddenSSID      bool   `json:"Ssid_hidden"`      // True if this network does not broadcast its SSID, so an SSID-specific probe request must be used for scans
+	SupplicantState string `json:"Supplicant_state"` // The detailed state of the supplicant's negotiation with an access point
 }

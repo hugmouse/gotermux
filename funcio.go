@@ -389,6 +389,17 @@ func SetTermuxVolume(v TAudioStream) {
 	})
 }
 
+// TermuxWifiConnectionInfo returns information about your current wifi connection
+func TermuxWifiConnectionInfo() TConnection {
+	var t TConnection
+	command := ExecAndListen("termux-wifi-connectioninfo", nil)
+	err := json.Unmarshal(command, &t)
+	if err != nil {
+		log.Println(err)
+	}
+	return t
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output
