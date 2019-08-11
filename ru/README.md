@@ -83,8 +83,6 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-download
 
-- [ ] termux-fingerprint
-
 - [x] termux-infrared-frequencies
 
 - [x] termux-infrared-transmit
@@ -112,13 +110,11 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-share
 
-- [ ] termux-storage-get
-
-- [ ] termux-telephony-call
+- [x] termux-telephony-call
 
 - [x] termux-telephony-cellinfo
 
-- [ ] termux-telephony-deviceinfo
+- [x] termux-telephony-deviceinfo
 
 - [ ] termux-toast
 
@@ -159,3 +155,13 @@ go get -u github.com/hugmouse/gotermux
 
 - termux-sms-list
 - termux-sms-send
+
+## Штуки, которые я не могу протестировать и запустить на своем смартфоне
+
+**Так как я не могу их протестировать - то я не могу это враппнуть так, чтобы оно работало.**
+
+Поэтому следующих API в моем пакете нет:
+
+- termux-storage-get
+
+- termux-fingerprint (по неизвестным мне причинам)
