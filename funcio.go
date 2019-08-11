@@ -515,6 +515,17 @@ func TermuxTelephonyCellInfo() []TCellInfo {
 	return tci
 }
 
+// TermuxTelephonyDeviceInfo gets information about the telephony device
+func TermuxTelephonyDeviceInfo() TDevice {
+    var t TDevice
+    command := ExecAndListen("termux-telephony-deviceinfo", nil)
+    err := json.Unmarshal(command, &t)
+    if err != nil {
+        log.Println(err)
+    }
+    return t
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output

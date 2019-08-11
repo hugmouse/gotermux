@@ -213,3 +213,25 @@ type TCellInfo struct {
 	NetworkID     int     `json:"network"`        // Network Id 0..65535
 	SystemID      int     `json:"system"`         // System Id 0..32767
 }
+
+// TDevice used in TermuxTelephonyDeviceInfo function
+type TDevice struct {
+	DataEnabled           string `json:"data_enabled"`            // Whether mobile data is enabled or not per user setting
+	DataActivity          string `json:"data_activity"`           // A constant indicating the current data connection state (cellular) [disconnected/connected/connecting/suspended]
+	DataState             string `json:"data_state"`              // States: DISCONNECTED, CONNECTING, CONNECTED, SUSPENDED
+	DeviceID              string `json:"device_id"`               // The unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones
+	DeviceSoftwareVersion string `json:"device_software_version"` // The software version number for the device, for example, the IMEI/SV for GSM phones
+	PhoneCount            int    `json:"phone_count"`             // 0 - if none of voice, sms, data is not supported / 1 - Single standby mode / 2 - for Dual standby mode / 3 - for Tri standby mode
+	PhoneType             string `json:"phone_type"`              //  This indicates the type of radio used to transmit voice calls [CDMA/GSM/NONE/SIP]
+	NetworkOperator       string `json:"network_operator"`        // The numeric name (MCC+MNC) of current registered operator
+	NetworkOperatorName   string `json:"network_operator_name"`   // The alphabetic name of current registered operator
+	NetworkCountryISO     string `json:"network_country_iso"`     // The ISO country code equivalent of the MCC (Mobile Country Code) of the current registered operator or the cell nearby, if available
+	NetworkType           string `json:"network_type"`            // Codes: 1xRTT, CDMA, EDGE, EHRPD, EVDO_0, EVDO_A, EVDO_B, GPRS, HSDPA, HSPA, HSPAP, HSUPA, IDEN, LTE, UMTS, UNKNOWN
+	NetworkRoaming        bool   `json:"network_roaming"`         // True if the device is considered roaming on the current network, for GSM purposes
+	SimCountryIso         string `json:"sim_country_iso"`         // The ISO country code equivalent for the SIM provider's country code
+	SimOperator           string `json:"sim_operator"`            // The MCC+MNC (mobile country code + mobile network code) of the provider of the SIM. 5 or 6 decimal digits
+	SimOperatorName       string `json:"sim_operator_name"`       // The Service Provider Name (SPN)
+	SimSerialNumber       string `json:"sim_serial_number"`       // The serial number of the SIM, if applicable
+	SimSubscriberID       string `json:"sim_subscriber_id"`       // The unique subscriber ID, for example, the IMSI for a GSM phone
+	SimState              string `json:"sim_state"`               // States: ABSENT, NETWORK_LOCKED, PIN_REQUIRED, PUK_REQUIRED, READY, UNKNOWN
+}
