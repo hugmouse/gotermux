@@ -110,23 +110,19 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-share
 
-- [ ] termux-sms-list 
-
-- [ ] termux-sms-send
-
 - [ ] termux-storage-get
 
 - [ ] termux-telephony-call
 
-- [ ] termux-telephony-cellinfo
+- [x] termux-telephony-cellinfo
 
 - [ ] termux-telephony-deviceinfo
 
 - [ ] termux-toast
 
-- [ ] termux-torch
+- [x] termux-torch
 
-- [ ] termux-tts-engines
+- [x] termux-tts-engines
 
 - [ ] termux-tts-speak
 
@@ -134,13 +130,13 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-volume
 
-- [ ] termux-wallpaper
+- [x] termux-wallpaper
 
 - [x] termux-wifi-connectioninfo
 
-- [ ] termux-wifi-enable
+- [x] termux-wifi-enable
 
-- [ ] termux-wifi-scaninfo
+- [x] termux-wifi-scaninfo
 
 ## Termux API tests
 
@@ -155,3 +151,10 @@ go get -u github.com/hugmouse/gotermux
   - [x] dialog-speech
   - [ ] dialog-text
   - [ ] dialog-time
+
+## Things that no longer permitted by Google
+
+**And probably im not going to add functions for them**
+
+- termux-sms-list
+- termux-sms-send

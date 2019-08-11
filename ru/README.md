@@ -54,7 +54,6 @@ go get -u github.com/hugmouse/gotermux
 - [ ] Добавить более подробное описание функций
 
 ### По Termux API
-
 - [x] termux-battery-status
 
 - [x] termux-brightness
@@ -95,7 +94,7 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-location
 
 - [x] termux-media-player
-  - [x] termux-media-player play
+  - [x] termux-media-player play <file>
   - [x] termux-media-player play (resume)
   - [x] termux-media-player info
   - [x] termux-media-player pause
@@ -105,45 +104,41 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-microphone-record
 
-- [ ] termux-sensor
+- [ ] termux-notification
 
-- [ ] termux-messages-remove
+- [ ] termux-notification-remove
 
 - [ ] termux-sensor
 
 - [x] termux-share
 
-- [ ] termux-sms-list
-
-- [ ] termux-sms-send
-
 - [ ] termux-storage-get
 
 - [ ] termux-telephony-call
 
-- [ ] termux-telephony-cellinfo
+- [x] termux-telephony-cellinfo
 
 - [ ] termux-telephony-deviceinfo
 
 - [ ] termux-toast
 
-- [ ] termux-torch
+- [x] termux-torch
 
-- [ ] termux-tts-engine
+- [x] termux-tts-engines
 
-- [ ] termux-telephony-call
+- [ ] termux-tts-speak
 
 - [x] termux-vibrate
 
 - [x] termux-volume
 
-- [ ] termux-wallpaper
+- [x] termux-wallpaper
 
 - [x] termux-wifi-connectioninfo
 
-- [ ] termux-wifi-enable
+- [x] termux-wifi-enable
 
-- [ ] termux-wifi-scaninfo
+- [x] termux-wifi-scaninfo
 
 ## Тесты функций Termux API
 
@@ -157,3 +152,10 @@ go get -u github.com/hugmouse/gotermux
   - [ ] dialog-text
   - [x] dialog-speech
   - [ ] dialog-time
+  
+## Вещи, которые больше не разрешил использовать Google
+
+**И я скорее всего не буду добавлять их поддержку**
+
+- termux-sms-list
+- termux-sms-send
