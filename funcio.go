@@ -476,6 +476,17 @@ func TermuxWallpaper(w TWallpaper) bool {
 	}
 }
 
+// TermuxTTSEngines get information about the available text-to-speech (TTS) engines
+func TermuxTTSEngines() []TTTSEngine {
+	var tts []TTTSEngine
+	command := ExecAndListen("termux-tts-engines", nil)
+	err := json.Unmarshal(command, &tts)
+	if err != nil {
+		log.Println(err)
+	}
+	return tts
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output

@@ -161,18 +161,25 @@ type TConnection struct {
 
 // TConnectionScan used in TermuxWifiScanInfo
 type TConnectionScan struct {
-	BSSID string `json:"Bssid"` // Basic service set identifier
-	FrequencyMhz int `json:"Frequency_mhz"` // The current frequency
-	RSSI int `json:"Rssi"` // The received signal strength indicator of the current 802.11 network, in dBm
-	SSID string `json:"Ssid"` // The service set identifier
-	Timestamp int64 `json:"Timestamp"`
+	BSSID               string `json:"Bssid"`         // Basic service set identifier
+	FrequencyMhz        int    `json:"Frequency_mhz"` // The current frequency
+	RSSI                int    `json:"Rssi"`          // The received signal strength indicator of the current 802.11 network, in dBm
+	SSID                string `json:"Ssid"`          // The service set identifier
+	Timestamp           int64  `json:"Timestamp"`
 	ChannelBandwidthMhz string `json:"Channel_bandwidth_mhz"` // 20, 40, 80, 80+80, 160 or unknown
-	CenterFrequencyMhz int `json:"Center_frequency_mhz"`
+	CenterFrequencyMhz  int    `json:"Center_frequency_mhz"`
 }
 
 // TWallpaper used in TermuxWallpaper function
 type TWallpaper struct {
-	Path string // Absolute path
-	URL string
+	Path       string // Absolute path
+	URL        string
 	Lockscreen bool
+}
+
+// TTTSEngine used in TermuxTTSEngines function
+type TTTSEngine struct {
+	Name    string `json:"name"` // Something like "com.google.android.tts"
+	Label   string `json:"label"`
+	Default bool   `json:"default"`
 }
