@@ -504,6 +504,17 @@ func TermuxTorch(on bool) {
 	}
 }
 
+// TermuxTelephonyCellInfo gets information about all observed cell information from all radios on the device including the primary and neighboring cells
+func TermuxTelephonyCellInfo() []TCellInfo {
+	var tci []TCellInfo
+	command := ExecAndListen("termux-telephony-cellinfo", nil)
+	err := json.Unmarshal(command, &tci)
+	if err != nil {
+		log.Println(err)
+	}
+	return tci
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output

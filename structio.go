@@ -183,3 +183,33 @@ type TTTSEngine struct {
 	Label   string `json:"label"`
 	Default bool   `json:"default"`
 }
+
+// TCellInfo used in TermuxTelephonyCellInfo function
+//
+// You can read more about each thing here at https://developer.android.com/reference/android/telephony/package-summary
+type TCellInfo struct {
+	Type          string  `json:"type"`
+	Registered    bool    `json:"registered"`
+	ASU           int     `json:"asu"`            // The RSSI in ASU. Asu is calculated based on 3GPP RSSI. Refer to 3GPP 27.007 (Ver 10.3.0) Sec 8.69
+	DBM           int     `json:"dbm"`            // The signal strength as dBm
+	Level         int     `json:"level"`          // An abstract level value for the overall signal quality
+	TimingAdvance int     `json:"timing_advance"` // The GSM timing advance between 0..219 symbols (normally 0..63)
+	CID           int     `json:"cid"`            // 16-bit GSM Cell Identity described in TS 27.007
+	LAC           int     `json:"lac"`            // 16-bit Location Area Code, GSM only
+	TAC           int     `json:"tac"`            // 16-bit Tracking Area Code, LTE only
+	MCC           int     `json:"mcc"`            // Mobile Country Code
+	MNC           int     `json:"mnc"`            // 2 or 3-digit Mobile Network Code
+	CDMADBM       int     `json:"cdma_dbm"`       // The CDMA RSSI value in dBm
+	CDMAECIO      int     `json:"cdma_ecio"`      // The CDMA Ec/Io value in dB*10
+	CDMALevel     int     `json:"cdma_level"`     // CDMA as level 0..4
+	CDMAdBm       int     `json:"cdm_dbm"`        // The signal strength as dBm
+	EVDOdBm       int     `json:"evdo_dbm"`       // The EVDO RSSI value in dBm
+	EVDOECIO      int     `json:"evdo_ecio"`      // The EVDO Ec/Io value in dB*10
+	EVDOLevel     int     `json:"evdo_level"`     // EVDO as level 0..4
+	EVDOSNR       int     `json:"evdo_snr"`       // The signal to noise ratio. Valid values are 0-8. 8 is the highest.
+	BasestationID int     `json:"basestation"`    // Base Station Id 0..65535
+	Latitude      float64 `json:"latitude"`       // Base station latitude, which is a decimal number as specified in 3GPP2 C.S0005-A v6.0
+	Longitude     float64 `json:"longitude"`      // Base station longitude, which is a decimal number as specified in 3GPP2 C.S0005-A v6.0
+	NetworkID     int     `json:"network"`        // Network Id 0..65535
+	SystemID      int     `json:"system"`         // System Id 0..32767
+}
