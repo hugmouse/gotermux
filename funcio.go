@@ -493,6 +493,17 @@ func TermuxTTSEngines() []TTTSEngine {
 	return tts
 }
 
+// TermuxTorch toggles LED Torch on device
+//
+// Set true for enable torch and false for disable it
+func TermuxTorch(on bool) {
+	if on == true {
+		ExecAndListen("termux-torch", []string{"on"})
+	} else {
+		ExecAndListen("termux-torch", []string{"off"})
+	}
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output
