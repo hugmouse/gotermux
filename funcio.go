@@ -411,6 +411,16 @@ func TermuxContactList() []TContact {
 	return c
 }
 
+// TermuxWifiEnable toggles Wi-Fi on/off
+func TermuxWifiEnable(on bool) {
+	var command []string
+	if on == true {
+		command = append(command, "true")
+	} else {
+		command = append(command, "false")
+	}
+	ExecAndListen("termux-wifi-enable", command)
+}
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output
