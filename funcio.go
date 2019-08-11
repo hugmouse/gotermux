@@ -442,6 +442,8 @@ func TermuxWifiScanInfo() []TConnectionScan {
 // If you changing wallpaper via URL then the timeout is 30 seconds
 //
 // Returns true if wallpapers changed successfully
+//
+// This function looks horrible. I need to rewrite this someday
 func TermuxWallpaper(w TWallpaper) bool {
 	var command []string
 
@@ -453,6 +455,10 @@ func TermuxWallpaper(w TWallpaper) bool {
 	if w.Path == "" && w.URL == "" {
 		log.Println("Nothing in path or URL is specified")
 		return false
+	}
+
+	if w.URL != "" {
+		command = append(command, "-u", w.URL)
 	}
 
 	if _, err := os.Stat(w.Path); err == nil {
