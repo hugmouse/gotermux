@@ -421,6 +421,20 @@ func TermuxWifiEnable(on bool) {
 	}
 	ExecAndListen("termux-wifi-enable", command)
 }
+
+// TermuxWifiScanInfo retrieves last wifi scan information
+//
+// Note that this API does not perform scanning. Instead, it retrieves information about last scan done by Android OS
+func TermuxWifiScanInfo() []TConnectionScan {
+	var tc []TConnectionScan
+	command := ExecAndListen("termux-wifi-scaninfo", nil)
+	err := json.Unmarshal(command, &tc)
+	if err != nil {
+		log.Println(err)
+	}
+	return tc
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output

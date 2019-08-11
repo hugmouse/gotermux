@@ -158,3 +158,14 @@ type TConnection struct {
 	HiddenSSID      bool   `json:"Ssid_hidden"`      // True if this network does not broadcast its SSID, so an SSID-specific probe request must be used for scans
 	SupplicantState string `json:"Supplicant_state"` // The detailed state of the supplicant's negotiation with an access point
 }
+
+// TConnectionScan used in TermuxWifiScanInfo
+type TConnectionScan struct {
+	BSSID string `json:"Bssid"` // Basic service set identifier
+	FrequencyMhz int `json:"Frequency_mhz"` // The current frequency
+	RSSI int `json:"Rssi"` // The received signal strength indicator of the current 802.11 network, in dBm
+	SSID string `json:"Ssid"` // The service set identifier
+	Timestamp int64 `json:"Timestamp"`
+	ChannelBandwidthMhz string `json:"Channel_bandwidth_mhz"` // 20, 40, 80, 80+80, 160 or unknown
+	CenterFrequencyMhz int `json:"Center_frequency_mhz"`
+}
