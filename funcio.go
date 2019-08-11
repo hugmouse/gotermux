@@ -498,8 +498,10 @@ func TermuxTTSEngines() []TTTSEngine {
 // Set true for enable torch and false for disable it
 func TermuxTorch(on bool) {
 	if on == true {
+		log.Println("Turning on the LED torch")
 		ExecAndListen("termux-torch", []string{"on"})
 	} else {
+		log.Println("Turning off the LED torch")
 		ExecAndListen("termux-torch", []string{"off"})
 	}
 }
@@ -524,6 +526,17 @@ func TermuxTelephonyDeviceInfo() TDevice {
         log.Println(err)
     }
     return t
+}
+
+func TermuxTelephoneCall(number string) TResult {
+	var check TResult
+	command := ExecAndListen("termux-telephony-call", []string{number})
+	err := json.Unmarshal(command, &check)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return check
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"
