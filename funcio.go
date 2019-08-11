@@ -435,6 +435,47 @@ func TermuxWifiScanInfo() []TConnectionScan {
 	return tc
 }
 
+// TermuxWallpaperFromURL changes wallpaper on your device
+//
+// Specify only ONE image at the time (only one from URL or local file). If more than one image specified function will warn you about that with log.
+//
+// If you changing wallpaper via URL then the timeout is 30 seconds
+//
+// Returns true if wallpapers changed successfully
+func TermuxWallpaper(w TWallpaper) bool {
+	var command []string
+
+	if w.Path != "" && w.URL != "" {
+		log.Println("Cannot use more than one source at the time!")
+		return false
+	}
+
+	if w.Path == "" && w.URL == "" {
+		log.Println("Nothing in path or URL is specified")
+		return false
+	}
+
+	if _, err := os.Stat(w.Path); err == nil {
+		command = append(command, "-f", w.Path)
+	} else {
+		log.Println("File not exist")
+		return false
+	}
+
+	if w.Lockscreen == true {
+		command = append(command, "-l")
+	}
+
+	// Because termux does not return any json we need to read stdout and check it with something
+	executed := (string)(ExecAndListen("termux-wallpaper", command))
+	if strings.Contains(executed, "successfully") {
+		return true
+	} else {
+		log.Printf("Where did we go so wrong?\nError:%s", executed)
+		return false
+	}
+}
+
 // ExecAndListen is a function, that build around "exec.Command()"
 //
 // returns cmd output

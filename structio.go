@@ -169,3 +169,10 @@ type TConnectionScan struct {
 	ChannelBandwidthMhz string `json:"Channel_bandwidth_mhz"` // 20, 40, 80, 80+80, 160 or unknown
 	CenterFrequencyMhz int `json:"Center_frequency_mhz"`
 }
+
+// TWallpaper used in TermuxWallpaper function
+type TWallpaper struct {
+	Path string // Absolute path
+	URL string
+	Lockscreen bool
+}
