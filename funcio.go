@@ -476,10 +476,10 @@ func TermuxWallpaper(w TWallpaper) bool {
 	executed := (string)(ExecAndListen("termux-wallpaper", command))
 	if strings.Contains(executed, "successfully") {
 		return true
-	} else {
-		log.Printf("Where did we go so wrong?\nError:%s", executed)
-		return false
 	}
+
+	log.Printf("Where did we go so wrong?\nError:%s", executed)
+	return false
 }
 
 // TermuxTTSEngines get information about the available text-to-speech (TTS) engines

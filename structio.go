@@ -188,8 +188,8 @@ type TTTSEngine struct {
 //
 // You can read more about each thing here at https://developer.android.com/reference/android/telephony/package-summary
 type TCellInfo struct {
-	Type          string  `json:"type"`
-	Registered    bool    `json:"registered"`
+	Type          string  `json:"type"`           // LTE, GSM, CDMA, NR, TDSCDMA, WCDMA
+	Registered    bool    `json:"registered"`     // True if the phone is registered to a mobile network that provides service on this cell and this cell is being used or would be used for network signaling
 	ASU           int     `json:"asu"`            // The RSSI in ASU. Asu is calculated based on 3GPP RSSI. Refer to 3GPP 27.007 (Ver 10.3.0) Sec 8.69
 	DBM           int     `json:"dbm"`            // The signal strength as dBm
 	Level         int     `json:"level"`          // An abstract level value for the overall signal quality
@@ -206,7 +206,7 @@ type TCellInfo struct {
 	EVDOdBm       int     `json:"evdo_dbm"`       // The EVDO RSSI value in dBm
 	EVDOECIO      int     `json:"evdo_ecio"`      // The EVDO Ec/Io value in dB*10
 	EVDOLevel     int     `json:"evdo_level"`     // EVDO as level 0..4
-	EVDOSNR       int     `json:"evdo_snr"`       // The signal to noise ratio. Valid values are 0-8. 8 is the highest.
+	EVDOSNR       int     `json:"evdo_snr"`       // The signal to noise ratio. Valid values are 0-8. 8 is the highest
 	BasestationID int     `json:"basestation"`    // Base Station Id 0..65535
 	Latitude      float64 `json:"latitude"`       // Base station latitude, which is a decimal number as specified in 3GPP2 C.S0005-A v6.0
 	Longitude     float64 `json:"longitude"`      // Base station longitude, which is a decimal number as specified in 3GPP2 C.S0005-A v6.0
