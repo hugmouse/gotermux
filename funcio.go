@@ -400,7 +400,7 @@ func TermuxWifiConnectionInfo() TConnection {
 	return t
 }
 
-// TermuxConctactList returns list of all contacts
+// TermuxContactList returns list of all contacts
 func TermuxContactList() []TContact {
 	var c []TContact
 	command := ExecAndListen("termux-contact-list", nil)
@@ -435,7 +435,7 @@ func TermuxWifiScanInfo() []TConnectionScan {
 	return tc
 }
 
-// TermuxWallpaperFromURL changes wallpaper on your device
+// TermuxWallpaper changes wallpaper on your device
 //
 // Specify only ONE image at the time (only one from URL or local file). If more than one image specified function will warn you about that with log.
 //
