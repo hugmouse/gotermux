@@ -13,6 +13,7 @@
 В настоящее время в активной разработке!
 
 ## Codestyle
+
 Вызов команды termux из golang выглядит так же, как в termux cmd, но без тире (-).
 
 Пример:
@@ -24,23 +25,33 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
+## Примеры работы (WIP)
+
+Примеры кода можно найти на: [gotermux.mysh.dev](https://gotermux.mysh.dev/)!
+
+Или здесь: [now.sh](https://gotermux.mysh.now.sh/)
+
 ## Установка Termux API
+
 Используйте [F-droid](https://f-droid.org/packages/com.termux.api/) или [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) для установки Termux API.
 
-**Не смешивайте установки Termux и его аддонов между Google Play и F-Droid**.
+**Не миксуйте установки Termux и аддонов для него из Google Play и F-Droid**.
 
-Чтобы использовать [termux-api](https://github.com/termux/termux-api-package) вам так же нужно установить пакет внутри Termux:
+Чтобы **использовать** Termux API вам так же нужно установить пакет [termux-api](https://github.com/termux/termux-api-package):
+
 ```shell
 pkg install termux-api
 ```
 
 ## Установка пакета
-Сначала вам нужно установить Golang:
+
+Сперва нужно установить пакет в Golang в Termux:
+
 ```shell
 pkg install golang
 ```
 
-И потом:
+Затем:
 
 ```shell
 go get -u github.com/hugmouse/gotermux
@@ -51,9 +62,10 @@ go get -u github.com/hugmouse/gotermux
 ### По проекту
 
 - [ ] Добавить примеры
-- [ ] Добавить более подробное описание функций
+- [ ] Добавить более подробное API
 
 ### По Termux API
+
 - [x] termux-battery-status
 
 - [x] termux-brightness
@@ -71,6 +83,7 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-contact-list
 
 - [x] termux-dialog
+
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
@@ -92,7 +105,8 @@ go get -u github.com/hugmouse/gotermux
 - [x] termux-location
 
 - [x] termux-media-player
-  - [x] termux-media-player play <file>
+
+  - [x] termux-media-player play
   - [x] termux-media-player play (resume)
   - [x] termux-media-player info
   - [x] termux-media-player pause
@@ -102,9 +116,9 @@ go get -u github.com/hugmouse/gotermux
 
 - [ ] termux-microphone-record
 
-- [ ] termux-notification
+- [ ] termux-sensor
 
-- [ ] termux-notification-remove
+- [ ] termux-messages-remove
 
 - [ ] termux-sensor
 
@@ -122,7 +136,7 @@ go get -u github.com/hugmouse/gotermux
 
 - [x] termux-tts-engines
 
-- [ ] termux-tts-speak
+- [ ] termux-telephony-call
 
 - [x] termux-vibrate
 
@@ -139,29 +153,30 @@ go get -u github.com/hugmouse/gotermux
 ## Тесты функций Termux API
 
 - [x] termux-dialog
+
   - [x] dialog-confirm
   - [x] dialog-checkbox
   - [x] dialog-counter
   - [ ] dialog-date
   - [x] dialog-sheet
   - [x] dialog-spinner
-  - [ ] dialog-text
   - [x] dialog-speech
+  - [ ] dialog-text
   - [ ] dialog-time
-  
-## Вещи, которые больше не разрешил использовать Google
 
-**И я скорее всего не буду добавлять их поддержку**
+## Штуки, которые Google больше не поддерживает
+
+**И я скорее всего не буду добавлять такие функции**
 
 - termux-sms-list
 - termux-sms-send
 
-## Штуки, которые я не могу протестировать и запустить на своем смартфоне
+## Не смог протестировать или использовать
 
-**Так как я не могу их протестировать - то я не могу это враппнуть так, чтобы оно работало.**
+**Штуки, которые не работают на моем телефоне и я не могу их протестировать**
 
-Поэтому следующих API в моем пакете нет:
+Так что по этой причине (невозможности протестировать) в моем пакете нет следующих функций:
 
 - termux-storage-get
 
-- termux-fingerprint (по неизвестным мне причинам)
+- termux-fingerprint (не работает по неизвестным мне причинам)
