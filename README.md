@@ -23,6 +23,12 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
+## Examples (WIP)
+
+Code examples can be found at: [gotermux.mysh.dev](https://gotermux.mysh.dev/)!
+
+Or here: [now.sh](https://gotermux.mysh.now.sh/)
+
 ## Installing Termux API
 Use [F-droid](https://f-droid.org/packages/com.termux.api/) or [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) to install Termux API.
 
