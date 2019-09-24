@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hugmouse/gotermux/Development/icon/logo.webp.webp" height="256">
+    <img src="https://raw.githubusercontent.com/hugmouse/gotermux/Development/icon/logo.webp" height="256">
 </p>
 
 # GoTermux
@@ -11,7 +11,7 @@
 **Documentation reference:**
 [![GoDoc](https://godoc.org/github.com/hugmouse/gotermux?status.svg)](https://godoc.org/github.com/hugmouse/gotermux)
 
-**Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](gotermux.mysh.dev)
+**Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](https://gotermux.mysh.dev)
 
 `GoTermux` gives you the opportunity to execute your scripts in `Termux` using `Golang`. All from `Go` and `Termux API` features in your hands!
 
