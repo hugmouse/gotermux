@@ -3,14 +3,24 @@
 </p>
 
 # GoTermux
-
+**Code quality checks:**
+[![CodeFactor](https://www.codefactor.io/repository/github/hugmouse/gotermux/badge)](https://www.codefactor.io/repository/github/hugmouse/gotermux)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugmouse/gotermux&amp;utm_campaign=Badge_Grade)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hugmouse/gotermux)](https://goreportcard.com/report/github.com/hugmouse/gotermux)
+
+**Documentation reference:**
 [![GoDoc](https://godoc.org/github.com/hugmouse/gotermux?status.svg)](https://godoc.org/github.com/hugmouse/gotermux)
 
-`Simple wrapper around Termux API`
+**Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](gotermux.mysh.dev)
 
-Currently in active development!
+`GoTermux` gives you the opportunity to execute your scripts in `Termux` using `Golang`. All from `Go` and `Termux API` features in your hands!
+
+- GoTermux package
+  - [Codestyle](#codestyle)
+  - [Examples](#examples)
+  - [Installing Termux API](#installing-termux-api)
+  - [Installing the package](#installing-the-package)
+  - [TODO](#todo)
 
 ## Codestyle
 Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
@@ -23,7 +33,7 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-## Examples (WIP)
+## Examples
 
 Code examples can be found at: [gotermux.mysh.dev](https://gotermux.mysh.dev/)!
 
@@ -40,6 +50,7 @@ pkg install termux-api
 ```
 
 ## Installing the package
+
 First of all you need install golang:
 ```shell
 pkg install golang
@@ -53,120 +64,4 @@ go get -u github.com/hugmouse/gotermux
 
 ## TODO
 
-### More project related
-- [ ] Add examples
-- [ ] Add better description of API
-
-### Termux API
-- [x] termux-battery-status
-
-- [x] termux-brightness
-
-- [x] termux-call-log
-
-- [ ] termux-camera-info
-
-- [ ] termux-camera-photo
-
-- [x] termux-clipboard-get
-
-- [x] termux-clipboard-set
-
-- [x] termux-contact-list
-
-- [x] termux-dialog
-  - [x] dialog-confirm
-  - [x] dialog-checkbox
-  - [x] dialog-counter
-  - [ ] dialog-date
-  - [x] dialog-sheet
-  - [x] dialog-spinner
-  - [x] dialog-speech
-  - [x] dialog-text
-  - [x] dialog-time
-
-- [x] termux-download
-
-- [x] termux-infrared-frequencies
-
-- [x] termux-infrared-transmit
-
-- [ ] termux-job-scheduler
-
-- [x] termux-location
-
-- [x] termux-media-player
-  - [x] termux-media-player play <file>
-  - [x] termux-media-player play (resume)
-  - [x] termux-media-player info
-  - [x] termux-media-player pause
-  - [x] termux-media-player stop
-
-- [x] termux-media-scan
-
-- [ ] termux-microphone-record
-
-- [ ] termux-notification
-
-- [ ] termux-notification-remove
-
-- [ ] termux-sensor
-
-- [x] termux-share
-
-- [x] termux-telephony-call
-
-- [x] termux-telephony-cellinfo
-
-- [x] termux-telephony-deviceinfo
-
-- [ ] termux-toast
-
-- [x] termux-torch
-
-- [x] termux-tts-engines
-
-- [ ] termux-tts-speak
-
-- [x] termux-vibrate
-
-- [x] termux-volume
-
-- [x] termux-wallpaper
-
-- [x] termux-wifi-connectioninfo
-
-- [x] termux-wifi-enable
-
-- [x] termux-wifi-scaninfo
-
-## Termux API tests
-
-- [x] termux-dialog
-
-  - [x] dialog-confirm
-  - [x] dialog-checkbox
-  - [x] dialog-counter
-  - [ ] dialog-date
-  - [x] dialog-sheet
-  - [x] dialog-spinner
-  - [x] dialog-speech
-  - [ ] dialog-text
-  - [ ] dialog-time
-
-## Things that no longer permitted by Google
-
-**And probably im not going to add functions for them**
-
-- termux-sms-list
-- termux-sms-send
-
-## Cannot test or use 
-
-**Things that won't work on my smartphone at all**
-
-So, my package does not have this APIs:
-
-- termux-storage-get
-
-- termux-fingerprint (for unknown reasons)
+Now all the implemented, as well as the planned features are now [here](https://github.com/hugmouse/gotermux/projects/1)!
