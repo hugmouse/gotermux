@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hugmouse/gotermux/Development/icon/logo.webp" height="256">
+    <img src="https://raw.githubusercontent.com/hugmouse/gotermux/Development/icon/logo.webp">
 </p>
 
 # GoTermux
