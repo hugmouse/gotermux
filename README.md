@@ -12,6 +12,13 @@
 
 Currently in active development!
 
+- GoTermux package
+  - [Codestyle](#codestyle)
+  - [Examples](#examples)
+  - [Installing Termux API](#installing-termux-api)
+  - [Installing the package](#installing-the-package)
+  - [TODO](#todo)
+
 ## Codestyle
 Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
 
@@ -23,7 +30,7 @@ termux-battery-status
 TermuxBatteryStatus()
 ```
 
-## Examples (WIP)
+## Examples
 
 Code examples can be found at: [gotermux.mysh.dev](https://gotermux.mysh.dev/)!
 
@@ -53,120 +60,4 @@ go get -u github.com/hugmouse/gotermux
 
 ## TODO
 
-### More project related
-- [ ] Add examples
-- [ ] Add better description of API
-
-### Termux API
-- [x] termux-battery-status
-
-- [x] termux-brightness
-
-- [x] termux-call-log
-
-- [ ] termux-camera-info
-
-- [ ] termux-camera-photo
-
-- [x] termux-clipboard-get
-
-- [x] termux-clipboard-set
-
-- [x] termux-contact-list
-
-- [x] termux-dialog
-  - [x] dialog-confirm
-  - [x] dialog-checkbox
-  - [x] dialog-counter
-  - [ ] dialog-date
-  - [x] dialog-sheet
-  - [x] dialog-spinner
-  - [x] dialog-speech
-  - [x] dialog-text
-  - [x] dialog-time
-
-- [x] termux-download
-
-- [x] termux-infrared-frequencies
-
-- [x] termux-infrared-transmit
-
-- [ ] termux-job-scheduler
-
-- [x] termux-location
-
-- [x] termux-media-player
-  - [x] termux-media-player play <file>
-  - [x] termux-media-player play (resume)
-  - [x] termux-media-player info
-  - [x] termux-media-player pause
-  - [x] termux-media-player stop
-
-- [x] termux-media-scan
-
-- [ ] termux-microphone-record
-
-- [ ] termux-notification
-
-- [ ] termux-notification-remove
-
-- [ ] termux-sensor
-
-- [x] termux-share
-
-- [x] termux-telephony-call
-
-- [x] termux-telephony-cellinfo
-
-- [x] termux-telephony-deviceinfo
-
-- [ ] termux-toast
-
-- [x] termux-torch
-
-- [x] termux-tts-engines
-
-- [ ] termux-tts-speak
-
-- [x] termux-vibrate
-
-- [x] termux-volume
-
-- [x] termux-wallpaper
-
-- [x] termux-wifi-connectioninfo
-
-- [x] termux-wifi-enable
-
-- [x] termux-wifi-scaninfo
-
-## Termux API tests
-
-- [x] termux-dialog
-
-  - [x] dialog-confirm
-  - [x] dialog-checkbox
-  - [x] dialog-counter
-  - [ ] dialog-date
-  - [x] dialog-sheet
-  - [x] dialog-spinner
-  - [x] dialog-speech
-  - [ ] dialog-text
-  - [ ] dialog-time
-
-## Things that no longer permitted by Google
-
-**And probably im not going to add functions for them**
-
-- termux-sms-list
-- termux-sms-send
-
-## Cannot test or use 
-
-**Things that won't work on my smartphone at all**
-
-So, my package does not have this APIs:
-
-- termux-storage-get
-
-- termux-fingerprint (for unknown reasons)
+Now all the implemented, as well as the planned features are now [here](https://github.com/hugmouse/gotermux/projects/1)!
