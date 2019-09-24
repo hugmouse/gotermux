@@ -3,14 +3,17 @@
 </p>
 
 # GoTermux
-
+**Code quality checks:**
+[![CodeFactor](https://www.codefactor.io/repository/github/hugmouse/gotermux/badge)](https://www.codefactor.io/repository/github/hugmouse/gotermux)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hugmouse/gotermux&amp;utm_campaign=Badge_Grade)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hugmouse/gotermux)](https://goreportcard.com/report/github.com/hugmouse/gotermux)
+
+**Documentation reference:**
 [![GoDoc](https://godoc.org/github.com/hugmouse/gotermux?status.svg)](https://godoc.org/github.com/hugmouse/gotermux)
 
-`Simple wrapper around Termux API`
+**Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](gotermux.mysh.dev)
 
-Currently in active development!
+`GoTermux` gives you the opportunity to execute your scripts in `Termux` using `Golang`. All from `Go` and `Termux API` features in your hands!
 
 - GoTermux package
   - [Codestyle](#codestyle)
@@ -47,6 +50,7 @@ pkg install termux-api
 ```
 
 ## Installing the package
+
 First of all you need install golang:
 ```shell
 pkg install golang
