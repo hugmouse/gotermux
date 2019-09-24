@@ -178,7 +178,7 @@ type TWallpaper struct {
 }
 
 // TTTSEngine used in TermuxTTSEngines function
-type TTTSEngine struct {
+type TTSEngine struct {
 	Name    string `json:"name"` // Something like "com.google.android.tts"
 	Label   string `json:"label"`
 	Default bool   `json:"default"`
