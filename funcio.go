@@ -3,6 +3,7 @@ package gotermux
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -20,13 +21,34 @@ var (
 // ShareAction from termux-share
 //
 // Used for TShareView/TShareEdit/TShareSend constants
-type ShareAction uint8
+type ShareAction int
+
+// Color for Toast thing
+type Color int
+
+// Position for Toast
+type Position int
 
 // Some constants for better readability when you going to use functions
 const (
-	TShareView ShareAction = iota // TermuxShare's action "View" flag
-	TShareEdit                    // TermuxShare's action "Edit" flag
-	TShareSend                    // TermuxShare's action "Send" flag
+	TShareView  ShareAction = iota // TermuxShare's action "View" flag
+	TShareEdit                     // TermuxShare's action "Edit" flag
+	TShareSend                     // TermuxShare's action "Send" flag
+	Black       Color       = iota // Toast's color "BLACK"
+	Blue                           // Toast's color "BLUE"
+	Cyan                           // Toast's color "CYAN"
+	DarkGray                       // Toast's color "DKGRAY"
+	Gray                           // Toast's color "GRAY", also default
+	Green                          // Toast's color "GREEN"
+	LightGray                      // Toast's color "LTGRAY"
+	Magenta                        // Toast's color "MAGENTA"
+	Red                            // Toast's color "RED"
+	Transparent                    // Toast's color "TRANSPARENT"
+	White                          // Toast's color "WHITE"
+	Yellow                         // Toast's color "YELLOW"
+	Top         Position    = iota // Toast's position "TOP"
+	Middle                         // Toast's position "MIDDLE", also default
+	Bottom                         // Toast's position "BOTTOM"
 )
 
 // TermuxDialog spawns new dialog with only title in it
@@ -360,6 +382,121 @@ func TermuxShare(t TShare) string {
 	return string(ExecAndListen("termux-share", command))
 }
 
+// TermuxToast shows text in a Toast (a transient popup)
+//
+// Returns error in plaintext
+func TermuxToast(t TToast) error {
+	var command []string
+
+	// Background color switch
+	switch t.BackgroundColor {
+	default:
+		command = append(command, "-b GRAY")
+	case Black:
+		command = append(command, "-b BLACK")
+		break
+	case Gray:
+		command = append(command, "-b GRAY")
+		break
+	case DarkGray:
+		command = append(command,"-b DKGRAY")
+		break
+	case LightGray:
+		command = append(command, "-b LTGRAY")
+		break
+	case Blue:
+		command = append(command, "-b BLUE")
+		break
+	case Cyan:
+		command = append(command, "-b CYAN")
+		break
+	case Green:
+		command = append(command, "-b GREEN")
+		break
+	case Magenta:
+		command = append(command, "-b MAGENTA")
+		break
+	case Red:
+		command = append(command, "-b RED")
+		break
+	case Transparent:
+		command = append(command, "-b TRANSPARENT")
+		break
+	case Yellow:
+		command = append(command, "-b YELLOW")
+		break
+	case White:
+		command = append(command, "-b WHITE")
+		break
+	}
+
+	// Text color switch
+	switch t.TextColor {
+	default:
+		command = append(command, "-c WHITE")
+	case Black:
+		command = append(command, "-c BLACK")
+		break
+	case Gray:
+		command = append(command, "-c GRAY")
+		break
+	case DarkGray:
+		command = append(command,"-c DKGRAY")
+		break
+	case LightGray:
+		command = append(command, "-c LTGRAY")
+		break
+	case Blue:
+		command = append(command, "-c BLUE")
+		break
+	case Cyan:
+		command = append(command, "-c CYAN")
+		break
+	case Green:
+		command = append(command, "-c GREEN")
+		break
+	case Magenta:
+		command = append(command, "-c MAGENTA")
+		break
+	case Red:
+		command = append(command, "-c RED")
+		break
+	case Transparent:
+		command = append(command, "-c TRANSPARENT")
+		break
+	case Yellow:
+		command = append(command, "-c YELLOW")
+		break
+	case White:
+		command = append(command, "-c WHITE")
+		break
+	}
+
+	// Position switch
+	switch t.ToastPosition {
+	default:
+		command = append(command, "-g MIDDLE")
+	case Top:
+		command = append(command, "-g TOP")
+	case Middle:
+		command = append(command, "-g MIDDLE")
+	case Bottom:
+		command = append(command, "-g BOTTOM")
+	}
+
+	// Check for "show the toast for a short while"
+	if t.Short == true {
+		command = append(command, "-s")
+	}
+
+	executed := ExecAndListen("termux-toast", command)
+
+	if len(executed) > 3 {
+		return errors.New(string(executed))
+	}
+	return nil
+}
+
 // TermuxVibrate vibrate the device
 func TermuxVibrate(t TVibrate) {
 	command := []string{"-t", string(t.Duration)}
@@ -519,13 +656,13 @@ func TermuxTelephonyCellInfo() []TCellInfo {
 
 // TermuxTelephonyDeviceInfo gets information about the telephony device
 func TermuxTelephonyDeviceInfo() TDevice {
-    var t TDevice
-    command := ExecAndListen("termux-telephony-deviceinfo", nil)
-    err := json.Unmarshal(command, &t)
-    if err != nil {
-        log.Println(err)
-    }
-    return t
+	var t TDevice
+	command := ExecAndListen("termux-telephony-deviceinfo", nil)
+	err := json.Unmarshal(command, &t)
+	if err != nil {
+		log.Println(err)
+	}
+	return t
 }
 
 func TermuxTelephoneCall(number string) TResult {

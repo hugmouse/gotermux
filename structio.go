@@ -124,6 +124,14 @@ type TShare struct {
 	TDialogTitle             // Name of the window
 }
 
+// TToast used in TermuxToast function
+type TToast struct {
+	BackgroundColor Color // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	TextColor Color // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	ToastPosition Position // TOP, MIDDLE (default), BOTTOM
+	Short bool // Only show the toast for a short while?
+}
+
 // TVibrate used in TermuxVibrate function
 type TVibrate struct {
 	Duration         uint // the duration to vibrate in ms
