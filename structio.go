@@ -130,6 +130,7 @@ type TToast struct {
 	TextColor       Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
 	ToastPosition   Position // TOP, MIDDLE (default), BOTTOM
 	Short           bool     // Only show the toast for a short while?
+	Text            string   // Text to be displayed
 }
 
 // TRecording used for TermuxMicrophone related functions
@@ -202,10 +203,21 @@ type TWallpaper struct {
 }
 
 // TTSEngine used in TermuxTTSEngines function
-type TTSEngine struct {
+type TTSEngine []struct {
 	Name    string `json:"name"` // Something like "com.google.android.tts"
 	Label   string `json:"label"`
 	Default bool   `json:"default"`
+}
+
+// TTSSpeak struct used for TTSSpeak function
+type TTSSpeak struct {
+	Engine       string
+	Lang         string
+	Region       string
+	Variant      string
+	Rate         float64
+	Stream       AudioStream
+	TextToSpeech string
 }
 
 // TCellInfo used in TermuxTelephonyCellInfo function

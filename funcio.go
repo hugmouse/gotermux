@@ -35,36 +35,55 @@ type Encoder int
 // Channel Mono or Stereo audio
 type Channel int
 
+// AudioStream
+type AudioStream int
+
 // Some constants for better readability when you going to use functions
 const (
-	TShareView  ShareAction = iota     // TermuxShare's action "View" flag
-	TShareEdit                         // TermuxShare's action "Edit" flag
-	TShareSend                         // TermuxShare's action "Send" flag
-	Black       Color       = iota     // Toast's color "BLACK"
-	Blue                               // Toast's color "BLUE"
-	Cyan                               // Toast's color "CYAN"
-	DarkGray                           // Toast's color "DKGRAY"
-	Gray                               // Toast's color "GRAY", also default
-	Green                              // Toast's color "GREEN"
-	LightGray                          // Toast's color "LTGRAY"
-	Magenta                            // Toast's color "MAGENTA"
-	Red                                // Toast's color "RED"
-	Transparent                        // Toast's color "TRANSPARENT"
-	White                              // Toast's color "WHITE"
-	Yellow                             // Toast's color "YELLOW"
-	Top         Position    = iota     // Toast's position "TOP"
-	Middle                             // Toast's position "MIDDLE", also default
-	Bottom                             // Toast's position "BOTTOM"
-	AAC         Encoder     = iota     // Advanced Audio Coding 			(max sample rate = 192000, max bit rate = 529 kbit/s)
-	AACELD                             // Enhanced Low Delay AAC 			(max sample rate = 48000,  max bit rate = 24(?) kbit/s)
-	HEAAC                              // High Efficiency AAC 				(max sample rate = 96000,  max bit rate = 80 kbit/s)
-	AMRWB                              // Adaptive Multi Rate Wide Band 	(max sample rate = 16000,  max bit rate = 23.85 kbit/s)
-	AMRNB                              // Adaptive Multi Rate Narrow Band 	(max sample rate = 8000,   max bit rate = 23.85(?) kbit/s)
-	OPUS                               // Opus audio codec 					(max sample rate = 48000,  max bit rate = 510 kbit/s)
-	Vorbis                             // Ogg Vorbis audio codec 			(max sample rate = 192000, max bit rate = 500 kbit/s)
-	Mono        Channel     = iota + 1 // 1 for Mono channel
-	Stereo                             // 2 for Stereo channel
+	TShareView   ShareAction = iota     // TermuxShare's action "View" flag
+	TShareEdit                          // TermuxShare's action "Edit" flag
+	TShareSend                          // TermuxShare's action "Send" flag
+	Black        Color       = iota     // Toast's color "BLACK"
+	Blue                                // Toast's color "BLUE"
+	Cyan                                // Toast's color "CYAN"
+	DarkGray                            // Toast's color "DKGRAY"
+	Gray                                // Toast's color "GRAY", also default
+	Green                               // Toast's color "GREEN"
+	LightGray                           // Toast's color "LTGRAY"
+	Magenta                             // Toast's color "MAGENTA"
+	Red                                 // Toast's color "RED"
+	Transparent                         // Toast's color "TRANSPARENT"
+	White                               // Toast's color "WHITE"
+	Yellow                              // Toast's color "YELLOW"
+	Top          Position    = iota     // Toast's position "TOP"
+	Middle                              // Toast's position "MIDDLE", also default
+	Bottom                              // Toast's position "BOTTOM"
+	AAC          Encoder     = iota     // Advanced Audio Coding 		   (max sample rate = 192000, max bit rate = 529 kbit/s)
+	AACELD                              // Enhanced Low Delay AAC 		   (max sample rate = 48000,  max bit rate = 24(?) kbit/s)
+	HEAAC                               // High Efficiency AAC 			   (max sample rate = 96000,  max bit rate = 80 kbit/s)
+	AMRWB                               // Adaptive Multi Rate Wide Band   (max sample rate = 16000,  max bit rate = 23.85 kbit/s)
+	AMRNB                               // Adaptive Multi Rate Narrow Band (max sample rate = 8000,   max bit rate = 23.85(?) kbit/s)
+	OPUS                                // Opus audio codec 			   (max sample rate = 48000,  max bit rate = 510 kbit/s)
+	Vorbis                              // Ogg Vorbis audio codec 		   (max sample rate = 192000, max bit rate = 500 kbit/s)
+	Mono         Channel     = iota + 1 // 1 for Mono channel
+	Stereo                              // 2 for Stereo channel
+	Notification AudioStream = iota     // Identify the volume of audio streams for notification playback
+	Alarm                               // Identify the volume of audio streams for alarm playback
+	Music                               // Identify the volume of audio streams for music playback
+	Ring                                // Identify the volume of audio streams for ring playback
+	System                              // Identify the volume of audio streams for system playback
+	VoiceCall                           // Identify the volume of audio streams for voice call playback
 )
+
+// MapOfAudioStreams used for selecting specific audio stream on device
+var MapOfAudioStreams = map[AudioStream]string{
+	Notification: "NOTIFICATION",
+	Alarm:        "ALARM",
+	Music:        "MUSIC",
+	Ring:         "RING",
+	System:       "SYSTEM",
+	VoiceCall:    "VOICE_CALL",
+}
 
 // MapOfColors used for TermuxToast
 var MapOfColors = map[Color]string{
@@ -466,11 +485,15 @@ func TermuxToast(t TToast) error {
 		command = append(command, "-s")
 	}
 
+	// Forgot to add le text, now fixed
+	command = append(command, t.Text)
+
 	executed := ExecAndListen("termux-toast", command)
 
 	if len(executed) > 3 {
 		return errors.New(string(executed))
 	}
+
 	return nil
 }
 
@@ -528,6 +551,7 @@ func TermuxMicrophoneRecordInfo() (rec TRecordingInfo, err error) {
 func TermuxMicrophoneRecordQuit() error {
 	executed := ExecAndListen("Termux-microphone-record -q", nil)
 
+	// Because this thing always returns plaintext!
 	if !strings.Contains(string(executed), "finished") {
 		return errors.New(string(executed))
 	}
@@ -658,8 +682,8 @@ func TermuxWallpaper(w TWallpaper) bool {
 }
 
 // TermuxTTSEngines get information about the available text-to-speech (TTS) engines
-func TermuxTTSEngines() []TTSEngine {
-	var tts []TTSEngine
+func TermuxTTSEngines() TTSEngine {
+	var tts TTSEngine
 	command := ExecAndListen("termux-tts-engines", nil)
 	err := json.Unmarshal(command, &tts)
 	if err != nil {
@@ -713,6 +737,41 @@ func TermuxTelephonyCall(number string) TResult {
 	}
 
 	return check
+}
+
+// TermuxTTSSpeak speaks text with a system text-to-speech (TTS) engine
+func TermuxTTSSpeak(t TTSSpeak) error {
+	var command []string
+	// Even if the user specified float equal to "0.6969", the number will be "0.69"
+	pitch := strconv.FormatFloat(t.Rate, 'f', 2, 64)
+
+	command = append(command,
+		"-e", t.Engine,
+		"-l", t.Lang,
+		"-n", t.Region,
+		"-v", t.Variant,
+		"-p", pitch,
+	)
+
+	// Validating audio stream
+	stream, ok := MapOfAudioStreams[t.Stream]
+	if !ok {
+		return errors.New("invalid audio stream")
+	} else {
+		command = append(command, "-s", stream)
+	}
+
+	// Finally adding text-to-speech
+	command = append(command, t.TextToSpeech)
+
+	executed := ExecAndListen("Termux-tts-speak", command)
+
+	// 6 different errors and all of them are plaintext
+	if len(executed) > 3 {
+		return errors.New(string(executed))
+	}
+
+	return nil
 }
 
 // ExecAndListen is a function, that build around "exec.Command()"
