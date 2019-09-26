@@ -756,7 +756,8 @@ func TermuxTelephonyDeviceInfo() TDevice {
 	return t
 }
 
-func TermuxTelephoneCall(number string) TResult {
+// TermuxTelephonyCall calls a telephony number
+func TermuxTelephonyCall(number string) TResult {
 	var check TResult
 	command := ExecAndListen("termux-telephony-call", []string{number})
 	err := json.Unmarshal(command, &check)
