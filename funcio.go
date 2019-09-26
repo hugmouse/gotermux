@@ -29,26 +29,41 @@ type Color int
 // Position for Toast
 type Position int
 
+// Encoder for recording
+type Encoder int
+
+// Mono or Stereo audio channel
+type Channel int
+
 // Some constants for better readability when you going to use functions
 const (
-	TShareView  ShareAction = iota // TermuxShare's action "View" flag
-	TShareEdit                     // TermuxShare's action "Edit" flag
-	TShareSend                     // TermuxShare's action "Send" flag
-	Black       Color       = iota // Toast's color "BLACK"
-	Blue                           // Toast's color "BLUE"
-	Cyan                           // Toast's color "CYAN"
-	DarkGray                       // Toast's color "DKGRAY"
-	Gray                           // Toast's color "GRAY", also default
-	Green                          // Toast's color "GREEN"
-	LightGray                      // Toast's color "LTGRAY"
-	Magenta                        // Toast's color "MAGENTA"
-	Red                            // Toast's color "RED"
-	Transparent                    // Toast's color "TRANSPARENT"
-	White                          // Toast's color "WHITE"
-	Yellow                         // Toast's color "YELLOW"
-	Top         Position    = iota // Toast's position "TOP"
-	Middle                         // Toast's position "MIDDLE", also default
-	Bottom                         // Toast's position "BOTTOM"
+	TShareView  ShareAction = iota     // TermuxShare's action "View" flag
+	TShareEdit                         // TermuxShare's action "Edit" flag
+	TShareSend                         // TermuxShare's action "Send" flag
+	Black       Color       = iota     // Toast's color "BLACK"
+	Blue                               // Toast's color "BLUE"
+	Cyan                               // Toast's color "CYAN"
+	DarkGray                           // Toast's color "DKGRAY"
+	Gray                               // Toast's color "GRAY", also default
+	Green                              // Toast's color "GREEN"
+	LightGray                          // Toast's color "LTGRAY"
+	Magenta                            // Toast's color "MAGENTA"
+	Red                                // Toast's color "RED"
+	Transparent                        // Toast's color "TRANSPARENT"
+	White                              // Toast's color "WHITE"
+	Yellow                             // Toast's color "YELLOW"
+	Top         Position    = iota     // Toast's position "TOP"
+	Middle                             // Toast's position "MIDDLE", also default
+	Bottom                             // Toast's position "BOTTOM"
+	AAC         Encoder     = iota     // Advanced Audio Coding 			(max sample rate = 192000, max bit rate = 529 kbit/s)
+	AACELD                             // Enhanced Low Delay AAC 			(max sample rate = 48000,  max bit rate = 24(?) kbit/s)
+	HEAAC                              // High Efficiency AAC 				(max sample rate = 96000,  max bit rate = 80 kbit/s)
+	AMRWB                              // Adaptive Multi Rate Wide Band 	(max sample rate = 16000,  max bit rate = 23.85 kbit/s)
+	AMRNB                              // Adaptive Multi Rate Narrow Band 	(max sample rate = 8000,   max bit rate = 23.85(?) kbit/s)
+	OPUS                               // Opus audio codec 					(max sample rate = 48000,  max bit rate = 510 kbit/s)
+	Vorbis                             // Ogg Vorbis audio codec 			(max sample rate = 192000, max bit rate = 500 kbit/s)
+	Mono        Channel     = iota + 1 // 1 for Mono channel
+	Stereo                             // 2 for Stereo channel
 )
 
 // TermuxDialog spawns new dialog with only title in it
@@ -399,7 +414,7 @@ func TermuxToast(t TToast) error {
 		command = append(command, "-b GRAY")
 		break
 	case DarkGray:
-		command = append(command,"-b DKGRAY")
+		command = append(command, "-b DKGRAY")
 		break
 	case LightGray:
 		command = append(command, "-b LTGRAY")
@@ -441,7 +456,7 @@ func TermuxToast(t TToast) error {
 		command = append(command, "-c GRAY")
 		break
 	case DarkGray:
-		command = append(command,"-c DKGRAY")
+		command = append(command, "-c DKGRAY")
 		break
 	case LightGray:
 		command = append(command, "-c LTGRAY")
@@ -478,10 +493,13 @@ func TermuxToast(t TToast) error {
 		command = append(command, "-g MIDDLE")
 	case Top:
 		command = append(command, "-g TOP")
+		break
 	case Middle:
 		command = append(command, "-g MIDDLE")
+		break
 	case Bottom:
 		command = append(command, "-g BOTTOM")
+		break
 	}
 
 	// Check for "show the toast for a short while"
@@ -494,6 +512,79 @@ func TermuxToast(t TToast) error {
 	if len(executed) > 3 {
 		return errors.New(string(executed))
 	}
+	return nil
+}
+
+// TermuxMicrophoneRecord records using microphone on your device
+//
+// Use "0" in time limit for unlimited recording
+//
+// Please note this article for your own safety: https://wikipedia.org/wiki/Audio_file_format
+func TermuxMicrophoneRecord(rec TRecording) error {
+	time := strconv.FormatInt(int64(rec.TimeLimit), 10)
+	bit := strconv.FormatInt(int64(rec.BitRate), 10)
+	sample := strconv.FormatInt(int64(rec.SampleRate), 10)
+	command := []string{
+		"-f", rec.Filename,
+		"-l", time,
+		"-b", bit,
+		"-r", sample,
+	}
+
+	// Encoder type
+	switch rec.Encoder {
+	default:
+		command = append(command, "-e AAC")
+	case AAC:
+		command = append(command, "-e AAC")
+	case AACELD:
+		command = append(command, "-e AAC_ELD")
+	case AMRNB:
+		command = append(command, "-e AMR_NB")
+	case AMRWB:
+		command = append(command, "-e AMR_WB")
+	case HEAAC:
+		command = append(command, "-e HE_AAC")
+	case OPUS:
+		command = append(command, "-e OPUS")
+	case Vorbis:
+		command = append(command, "-e VORBIS")
+	}
+
+	// Audio channel
+	switch rec.Channels {
+	case Mono:
+		command = append(command, "-c 1")
+	case Stereo:
+		command = append(command, "-c 2")
+	}
+
+	executed := ExecAndListen("Termux-microphone-record", command)
+
+	if len(executed) > 3 {
+		return errors.New(string(executed))
+	}
+	return nil
+}
+
+// TermuxMicrophoneRecordInfo used for get info about current recording
+func TermuxMicrophoneRecordInfo() (rec TRecordingInfo, err error) {
+	executed := ExecAndListen("Termux-microphone-record -i", nil)
+	err = json.Unmarshal(executed, &rec)
+	if err != nil {
+		return rec, err
+	}
+	return rec, nil
+}
+
+// TermuxMicrophoneRecordQuit quits recording
+func TermuxMicrophoneRecordQuit() error {
+	executed := ExecAndListen("Termux-microphone-record -q", nil)
+
+	if !strings.Contains(string(executed), "finished") {
+		return errors.New(string(executed))
+	}
+
 	return nil
 }
 

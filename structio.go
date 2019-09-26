@@ -126,10 +126,26 @@ type TShare struct {
 
 // TToast used in TermuxToast function
 type TToast struct {
-	BackgroundColor Color // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
-	TextColor Color // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
-	ToastPosition Position // TOP, MIDDLE (default), BOTTOM
-	Short bool // Only show the toast for a short while?
+	BackgroundColor Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	TextColor       Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	ToastPosition   Position // TOP, MIDDLE (default), BOTTOM
+	Short           bool     // Only show the toast for a short while?
+}
+
+// TRecording used for TermuxMicrophone related functions
+type TRecording struct {
+	Filename   string  // Specific file
+	TimeLimit  int     // Specific time limit (0 for unlimited)
+	Encoder    Encoder // Specific encoder (AAC, AACELD, HEAAC, AMRWB, AMRNB, OPUS, Vorbis)
+	BitRate    int     // The number of bits that are conveyed or processed per unit of time
+	SampleRate int     // A commonly seen unit of sampling rate is Hz, which stands for Hertz and means "samples per second".
+	Channels   Channel // 1 for Mono, 2 for Stereo
+}
+
+// TRecordingInfo used in TermuxMicrophoneRecordInfo
+type TRecordingInfo struct {
+	IsRecording bool   `json:"isRecording"` // true of false
+	OutputFile  string `json:"outputFile"`  // Absolute path
 }
 
 // TVibrate used in TermuxVibrate function
