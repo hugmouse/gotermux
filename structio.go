@@ -14,7 +14,7 @@ type TResult struct {
 	Text   string   `json:"Text,omitempty"`   // Usually just information about action
 	Index  uint     `json:"Index,omitempty"`  // With new update returns index of himself
 	Values []TValue `json:"Values,omitempty"` // Some functions returns multiple results
-	Error  string   `json:"Error"`  // Usually if there is an error - it's single element of all struct
+	Error  string   `json:"Error"`            // Usually if there is an error - it's single element of all struct
 }
 
 // TBattery is a structure for return values from TermuxBatteryStatus
@@ -201,7 +201,7 @@ type TWallpaper struct {
 	Lockscreen bool
 }
 
-// TTTSEngine used in TermuxTTSEngines function
+// TTSEngine used in TermuxTTSEngines function
 type TTSEngine struct {
 	Name    string `json:"name"` // Something like "com.google.android.tts"
 	Label   string `json:"label"`
