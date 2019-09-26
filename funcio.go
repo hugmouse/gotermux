@@ -32,7 +32,7 @@ type Position int
 // Encoder for recording
 type Encoder int
 
-// Mono or Stereo audio channel
+// Channel Mono or Stereo audio
 type Channel int
 
 // Some constants for better readability when you going to use functions
@@ -65,6 +65,33 @@ const (
 	Mono        Channel     = iota + 1 // 1 for Mono channel
 	Stereo                             // 2 for Stereo channel
 )
+
+// MapOfColors used for TermuxToast
+var MapOfColors = map[Color]string{
+	Black:       "BLACK",
+	Blue:        "BLUE",
+	Cyan:        "CYAN",
+	DarkGray:    "DKGRAY",
+	Gray:        "GRAY",
+	Green:       "GREEN",
+	LightGray:   "LTGRAY",
+	Magenta:     "MAGENTA",
+	Red:         "RED",
+	Transparent: "TRANSPARENT",
+	White:       "WHITE",
+	Yellow:      "YELLOW",
+}
+
+// MapOfEncoders used for recording function
+var MapOfEncoders = map[Encoder]string{
+	AAC:    "AAC",
+	AACELD: "AAC_ELD",
+	HEAAC:  "HE_AAC",
+	AMRWB:  "AMR_WB",
+	AMRNB:  "AMR_NB",
+	OPUS:   "OPUS",
+	Vorbis: "VORBIS",
+}
 
 // TermuxDialog spawns new dialog with only title in it
 func TermuxDialog(title string) TResult {
@@ -403,88 +430,20 @@ func TermuxShare(t TShare) string {
 func TermuxToast(t TToast) error {
 	var command []string
 
-	// Background color switch
-	switch t.BackgroundColor {
-	default:
-		command = append(command, "-b GRAY")
-	case Black:
-		command = append(command, "-b BLACK")
-		break
-	case Gray:
-		command = append(command, "-b GRAY")
-		break
-	case DarkGray:
-		command = append(command, "-b DKGRAY")
-		break
-	case LightGray:
-		command = append(command, "-b LTGRAY")
-		break
-	case Blue:
-		command = append(command, "-b BLUE")
-		break
-	case Cyan:
-		command = append(command, "-b CYAN")
-		break
-	case Green:
-		command = append(command, "-b GREEN")
-		break
-	case Magenta:
-		command = append(command, "-b MAGENTA")
-		break
-	case Red:
-		command = append(command, "-b RED")
-		break
-	case Transparent:
-		command = append(command, "-b TRANSPARENT")
-		break
-	case Yellow:
-		command = append(command, "-b YELLOW")
-		break
-	case White:
-		command = append(command, "-b WHITE")
-		break
+	// Background color check
+	color, ok := MapOfColors[t.BackgroundColor]
+	if !ok {
+		return errors.New("invalid color type")
+	} else {
+		command = append(command, "-b", color)
 	}
 
-	// Text color switch
-	switch t.TextColor {
-	default:
-		command = append(command, "-c WHITE")
-	case Black:
-		command = append(command, "-c BLACK")
-		break
-	case Gray:
-		command = append(command, "-c GRAY")
-		break
-	case DarkGray:
-		command = append(command, "-c DKGRAY")
-		break
-	case LightGray:
-		command = append(command, "-c LTGRAY")
-		break
-	case Blue:
-		command = append(command, "-c BLUE")
-		break
-	case Cyan:
-		command = append(command, "-c CYAN")
-		break
-	case Green:
-		command = append(command, "-c GREEN")
-		break
-	case Magenta:
-		command = append(command, "-c MAGENTA")
-		break
-	case Red:
-		command = append(command, "-c RED")
-		break
-	case Transparent:
-		command = append(command, "-c TRANSPARENT")
-		break
-	case Yellow:
-		command = append(command, "-c YELLOW")
-		break
-	case White:
-		command = append(command, "-c WHITE")
-		break
+	// Text color check
+	color, ok = MapOfColors[t.TextColor]
+	if !ok {
+		return errors.New("invalid color type")
+	} else {
+		command = append(command, "-c", color)
 	}
 
 	// Position switch
@@ -532,23 +491,11 @@ func TermuxMicrophoneRecord(rec TRecording) error {
 	}
 
 	// Encoder type
-	switch rec.Encoder {
-	default:
-		command = append(command, "-e AAC")
-	case AAC:
-		command = append(command, "-e AAC")
-	case AACELD:
-		command = append(command, "-e AAC_ELD")
-	case AMRNB:
-		command = append(command, "-e AMR_NB")
-	case AMRWB:
-		command = append(command, "-e AMR_WB")
-	case HEAAC:
-		command = append(command, "-e HE_AAC")
-	case OPUS:
-		command = append(command, "-e OPUS")
-	case Vorbis:
-		command = append(command, "-e VORBIS")
+	encoder, ok := MapOfEncoders[rec.Encoder]
+	if !ok {
+		return errors.New("invalid encoder type")
+	} else {
+		command = append(command, "-e", encoder)
 	}
 
 	// Audio channel
