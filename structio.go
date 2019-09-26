@@ -10,10 +10,10 @@ type TValue struct {
 
 // TResult returns some defaults fields that Termux API provides to us
 type TResult struct {
-	Code   int8     `json:"Code"`   // -2, -1 or 0 in rare cases
-	Text   string   `json:"Text"`   // Usually just information about action
-	Index  uint     `json:"Index"`  // With new update returns index of himself
-	Values []TValue `json:"Values"` // Some functions returns multiple results
+	Code   int8     `json:"Code,omitempty"`   // -2, -1 or 0 in rare cases
+	Text   string   `json:"Text,omitempty"`   // Usually just information about action
+	Index  uint     `json:"Index,omitempty"`  // With new update returns index of himself
+	Values []TValue `json:"Values,omitempty"` // Some functions returns multiple results
 	Error  string   `json:"Error"`  // Usually if there is an error - it's single element of all struct
 }
 
