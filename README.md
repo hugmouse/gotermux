@@ -14,6 +14,8 @@
 
 **Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](https://gotermux.mysh.dev)
 
+**Roadmap:** [![Roadmap](https://img.shields.io/badge/Roadmap-status-informational)](https://github.com/hugmouse/gotermux/projects/1)
+
 `GoTermux` gives you the opportunity to execute your scripts in `Termux` using `Golang`. All from `Go` and `Termux API` features in your hands!
 
 -   GoTermux package
@@ -21,7 +23,6 @@
     -   [Examples](#examples)
     -   [Installing Termux API](#installing-termux-api)
     -   [Installing the package](#installing-the-package)
-    -   [TODO](#todo)
 
 ## Codestyle
 
@@ -67,7 +68,3 @@ And then:
 ```shell
 go get -u github.com/hugmouse/gotermux
 ```
-
-## TODO
-
-Now all the implemented, as well as the planned features are now [here](https://github.com/hugmouse/gotermux/projects/1)!
