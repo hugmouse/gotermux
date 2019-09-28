@@ -35,7 +35,7 @@ type Encoder int
 // Channel Mono or Stereo audio
 type Channel int
 
-// AudioStream
+// AudioStream identifies audio stream channel
 type AudioStream int
 
 // Some constants for better readability when you going to use functions
@@ -461,9 +461,9 @@ func TermuxToast(t TToast) error {
 	color, ok = MapOfColors[t.TextColor]
 	if !ok {
 		return errors.New("invalid color type")
-	} else {
-		command = append(command, "-c", color)
 	}
+
+	command = append(command, "-c", color)
 
 	// Position switch
 	switch t.ToastPosition {
@@ -517,9 +517,9 @@ func TermuxMicrophoneRecord(rec TRecording) error {
 	encoder, ok := MapOfEncoders[rec.Encoder]
 	if !ok {
 		return errors.New("invalid encoder type")
-	} else {
-		command = append(command, "-e", encoder)
 	}
+
+	command = append(command, "-e", encoder)
 
 	// Audio channel
 	switch rec.Channels {
@@ -757,9 +757,9 @@ func TermuxTTSSpeak(t TTSSpeak) error {
 	stream, ok := MapOfAudioStreams[t.Stream]
 	if !ok {
 		return errors.New("invalid audio stream")
-	} else {
-		command = append(command, "-s", stream)
 	}
+
+	command = append(command, "-s", stream)
 
 	// Finally adding text-to-speech
 	command = append(command, t.TextToSpeech)
