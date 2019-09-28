@@ -1,0 +1,15 @@
+---
+styleguide: sourcelevel/linters
+engines:
+  fixme:
+    enabled: true
+  gofmt:
+    enabled: true
+  govet:
+    enabled: true
+  golint:
+    enabled: true
+  remark-lint:
+    enabled: true
+exclude_paths: []
+
