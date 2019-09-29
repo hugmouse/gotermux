@@ -16,10 +16,4 @@ blocks:
             - checkout
             - sem-version go 1.12
             - go build -v .
-            - 'echo "         (__) '
-            - '         (oo) '
-            - '   /------\/ '
-            - '  / |    ||   '
-            - ' *  /\---/\ '
-            - '    ~~   ~~   '
-            - '....Have you mooed today?..."'
+            - echo $'         (__) \n         (oo) \n   /------\/ \n  / |    ||   \n *  /\---/\ \n    ~~   ~~   \n....Have you mooed today?...\n'
