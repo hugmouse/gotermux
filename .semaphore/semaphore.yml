@@ -14,7 +14,7 @@ blocks:
         - name: Doing all the things to build this thing!
           commands:
             - checkout
-            - sem-version go 1.13
+            - sem-version go 1.12
             - go build -v .
             - 'echo "         (__) '
             - '         (oo) '
