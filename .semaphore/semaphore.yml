@@ -1,0 +1,25 @@
+version: v1.0
+name: Hello Semaphore
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      env_vars:
+        - name: APP_ENV
+          value: prod
+      jobs:
+        - name: Doing all the things to build this thing!
+          commands:
+            - checkout
+            - sem-version go 1.13
+            - go build -v .
+            - 'echo "         (__) '
+            - '         (oo) '
+            - '   /------\/ '
+            - '  / |    ||   '
+            - ' *  /\---/\ '
+            - '    ~~   ~~   '
+            - ....Have you mooed today?..."
