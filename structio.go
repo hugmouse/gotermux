@@ -1,5 +1,11 @@
 package gotermux
 
+import (
+	"encoding/json"
+	"reflect"
+	"strconv"
+)
+
 // TValue used in TResult's struct
 //
 // Some functions returns multiple values with "Index" and "Text" fields
@@ -19,11 +25,44 @@ type TResult struct {
 
 // TBattery is a structure for return values from TermuxBatteryStatus
 type TBattery struct {
-	Health      string  `json:"Health"`      // Different statuses: COLD, DEAD, GOOD, OVERHEAT, OVER_VOLTAGE, UNKNOWN and UNSPECIFIED_FAILURE
-	Percentage  uint    `json:"Percentage"`  // How charged your battery is
-	Plugged     string  `json:"Plugged"`     // Different statuses: UNPLUGGED, PLUGGED_AC, PLUGGED_USB, PLUGGED_WIRELESS and PLUGGED_+int (0 means it is on battery other constants are different types of power sources)
-	Status      string  `json:"Status"`      // Different statuses: CHARGING, DISCHARGING, FULL, NOT_CHARGING, UNKNOWN
-	Temperature float64 `json:"Temperature"` // Just temperature of your battery
+	Health      string      `json:"Health"`      // Different statuses: COLD, DEAD, GOOD, OVERHEAT, OVER_VOLTAGE, UNKNOWN and UNSPECIFIED_FAILURE
+	Percentage  uint        `json:"Percentage"`  // How charged your battery is
+	Plugged     string      `json:"Plugged"`     // Different statuses: UNPLUGGED, PLUGGED_AC, PLUGGED_USB, PLUGGED_WIRELESS and PLUGGED_+int (0 means it is on battery other constants are different types of power sources)
+	Status      string      `json:"Status"`      // Different statuses: CHARGING, DISCHARGING, FULL, NOT_CHARGING, UNKNOWN
+	Temperature Temperature `json:"Temperature"` // Just temperature of your battery
+}
+
+// Temperature is a custom type since termux-api changed behavior at some point,
+// see custom UnmarshalJSON function for details
+type Temperature float64
+
+// UnmarshalJSON to handle both string and float64
+//
+// At some point termux-api started to report Temperature as string instead of float64,
+// so we need to hack around that (I want to keep backward compatibility after all)
+func (t *Temperature) UnmarshalJSON(data []byte) error {
+	var i interface{}
+	if err := json.Unmarshal(data, &i); err != nil {
+		return err
+	}
+
+	switch v := i.(type) {
+	case float64:
+		*t = Temperature(v)
+		return nil
+	case string:
+		f, err := strconv.ParseFloat(v, 64)
+		if err != nil {
+			return err
+		}
+		*t = Temperature(f)
+		return nil
+	default:
+		return &json.UnmarshalTypeError{
+			Value: string(data),
+			Type:  reflect.TypeOf(*t),
+		}
+	}
 }
 
 // TClipboard used for TermuxClipboardSet function
