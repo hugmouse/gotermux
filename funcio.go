@@ -561,7 +561,7 @@ func TermuxMicrophoneRecordQuit() error {
 
 // TermuxVibrate vibrate the device
 func TermuxVibrate(t TVibrate) {
-	command := []string{"-t", string(t.Duration)}
+	command := []string{"-t", strconv.Itoa(int(t.Duration))}
 
 	if t.SilentModeIgnore == true {
 		command = append(command, "-f")
@@ -584,7 +584,7 @@ func GetTermuxVolume() []TAudioStream {
 // SetTermuxVolume sets volume for audio stream
 func SetTermuxVolume(v TAudioStream) {
 	ExecAndListen("termux-volume", []string{
-		v.Stream, string(v.Volume),
+		v.Stream, strconv.Itoa(int(v.Volume)),
 	})
 }
 
