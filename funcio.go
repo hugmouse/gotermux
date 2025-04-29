@@ -8,14 +8,14 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
 	"strconv"
 	"strings"
 )
 
-// Some vars. Gonna rid of them someday, but not today!
 var (
-	TD = "termux-dialog" // Just for saving some space
-	RT = TResult{}       // Same thing as above
+	TD = "termux-dialog"
+	RT = TResult{} // Same thing as above
 )
 
 // ShareAction from termux-share
@@ -38,7 +38,7 @@ type Channel int
 // AudioStream identifies audio stream channel
 type AudioStream int
 
-// Some constants for better readability when you going to use functions
+// Some constants for better readability when you're going to use functions
 const (
 	TShareView   ShareAction = iota     // TermuxShare's action "View" flag
 	TShareEdit                          // TermuxShare's action "Edit" flag
@@ -111,6 +111,8 @@ var MapOfEncoders = map[Encoder]string{
 	OPUS:   "OPUS",
 	Vorbis: "VORBIS",
 }
+
+const AARRGGBBRegexp = `^#(?:(?:[A-F0-9]{2}){3,4}|[A-F0-9]{3})$`
 
 // TermuxDialog spawns new dialog with only title in it
 func TermuxDialog(title string) TResult {
@@ -190,7 +192,7 @@ func TermuxDialogRadio(td TDialogRadio) TResult {
 
 // TermuxDialogSheet spawns new dialog with pick function in it
 //
-// User can pick a value from sliding bottom sheet
+// # User can pick a value from sliding bottom sheet
 //
 // Be aware that this function returns "0" in the code result, not "-1" like others (Radio, Spinner)
 func TermuxDialogSheet(td TDialogSheet) TResult {
@@ -443,27 +445,39 @@ func TermuxShare(t TShare) string {
 	return string(ExecAndListen("termux-share", command))
 }
 
+func resolveColor(colorName Color, hex string) (string, error) {
+	if color, ok := MapOfColors[colorName]; ok {
+		return color, nil
+	}
+	if matched, err := regexp.MatchString(AARRGGBBRegexp, hex); err != nil {
+		return "", err
+	} else if matched {
+		return hex, nil
+	}
+	return "", errors.New("invalid color type or format")
+}
+
 // TermuxToast shows text in a Toast (a transient popup)
 //
 // Returns error in plaintext
 func TermuxToast(t TToast) error {
 	var command []string
 
-	// Background color check
-	color, ok := MapOfColors[t.BackgroundColor]
-	if !ok {
-		return errors.New("invalid color type")
-	} else {
-		command = append(command, "-b", color)
+	bgColor, err := resolveColor(t.BackgroundColor, t.BackgroundColorAARRGGBB)
+	if err != nil {
+		return err
+	}
+	if bgColor != "" {
+		command = append(command, "-b", bgColor)
 	}
 
-	// Text color check
-	color, ok = MapOfColors[t.TextColor]
-	if !ok {
-		return errors.New("invalid color type")
+	fgColor, err := resolveColor(t.TextColor, t.TextColorAARRGGBB)
+	if err != nil {
+		return err
 	}
-
-	command = append(command, "-c", color)
+	if fgColor != "" {
+		command = append(command, "-c", fgColor)
+	}
 
 	// Position switch
 	switch t.ToastPosition {
@@ -638,9 +652,9 @@ func TermuxWifiScanInfo() []TConnectionScan {
 //
 // Specify only ONE image at the time (only one from URL or local file). If more than one image specified function will warn you about that with log.
 //
-// If you changing wallpaper via URL then the timeout is 30 seconds
+// # If you're changing wallpaper via URL then the timeout is 30 seconds
 //
-// Returns true if wallpapers changed successfully
+// # Returns true if wallpapers changed successfully
 //
 // This function looks horrible. I need to rewrite this someday
 func TermuxWallpaper(w TWallpaper) bool {

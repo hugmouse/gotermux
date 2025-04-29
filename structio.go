@@ -125,12 +125,16 @@ type TShare struct {
 }
 
 // TToast used in TermuxToast function
+//
+// For background or foreground (text color) you can use either predefined Color struct or provide a (AA)RRGGBB hex color.
 type TToast struct {
-	BackgroundColor Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
-	TextColor       Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
-	ToastPosition   Position // TOP, MIDDLE (default), BOTTOM
-	Short           bool     // Only show the toast for a short while?
-	Text            string   // Text to be displayed
+	BackgroundColor         Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	BackgroundColorAARRGGBB string   // 6 / 8 digit hex value (i.e. "#FF0000" or "#FFFF0000") where order is (AA)RRGGBB
+	TextColor               Color    // BLACK, BLUE, CYAN, DKGRAY, GRAY (default), GREEN, LTGRAY, MAGENTA, RED, TRANSPARENT, WHITE, YELLOW
+	TextColorAARRGGBB       string   // 6 / 8 digit hex value (i.e. "#FF0000" or "#FFFF0000") where order is (AA)RRGGBB
+	ToastPosition           Position // TOP, MIDDLE (default), BOTTOM
+	Short                   bool     // Only show the toast for a short while?
+	Text                    string   // Text to be displayed
 }
 
 // TRecording used for TermuxMicrophone related functions
@@ -164,7 +168,7 @@ type TAudioStream struct {
 
 // TConnection used in TermuxWifiConnectionInfo
 //
-// Note that NetworkID can be -1 if there is no currently connected network or if the caller has insufficient permissions to access the network ID
+// # Note that NetworkID can be -1 if there is no currently connected network or if the caller has insufficient permissions to access the network ID
 //
 // If the SSID can be decoded as UTF-8, it will be returned surrounded by double quotation marks. Otherwise, it is returned as a string of hex digits
 //
