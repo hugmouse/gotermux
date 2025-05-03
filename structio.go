@@ -25,11 +25,21 @@ type TResult struct {
 
 // TBattery is a structure for return values from TermuxBatteryStatus
 type TBattery struct {
-	Health      string      `json:"Health"`      // Different statuses: COLD, DEAD, GOOD, OVERHEAT, OVER_VOLTAGE, UNKNOWN and UNSPECIFIED_FAILURE
-	Percentage  uint        `json:"Percentage"`  // How charged your battery is
-	Plugged     string      `json:"Plugged"`     // Different statuses: UNPLUGGED, PLUGGED_AC, PLUGGED_USB, PLUGGED_WIRELESS and PLUGGED_+int (0 means it is on battery other constants are different types of power sources)
-	Status      string      `json:"Status"`      // Different statuses: CHARGING, DISCHARGING, FULL, NOT_CHARGING, UNKNOWN
-	Temperature Temperature `json:"Temperature"` // Just temperature of your battery
+	Present        bool        `json:"present"`         // Whether the battery is present
+	Technology     string      `json:"technology"`      // The battery technology
+	Health         string      `json:"health"`          // Different statuses: COLD, DEAD, GOOD, OVERHEAT, OVER_VOLTAGE, UNKNOWN, UNSPECIFIED_FAILURE
+	Plugged        string      `json:"plugged"`         // Different statuses: UNPLUGGED, PLUGGED_AC, PLUGGED_USB, PLUGGED_WIRELESS, PLUGGED_+int
+	Status         string      `json:"status"`          // Different statuses: CHARGING, DISCHARGING, FULL, NOT_CHARGING, UNKNOWN
+	Temperature    Temperature `json:"temperature"`     // Temperature of the battery in degrees Celsius
+	Voltage        int         `json:"voltage"`         // Voltage of the battery in millivolts
+	Current        int         `json:"current"`         // Instantaneous battery current in microamperes
+	CurrentAverage int         `json:"current_average"` // Average battery current in microamperes
+	Percentage     uint        `json:"percentage"`      // Percentage charge of the battery
+	Level          int         `json:"level"`           // Current battery level
+	Scale          int         `json:"scale"`           // Maximum battery level
+	ChargeCounter  int         `json:"charge_counter"`  // Battery charge counter in microampere-hours
+	Energy         int64       `json:"energy"`          // Energy counter in nanowatt-hours
+	Cycle          *int        `json:"cycle,omitempty"` // Battery cycle count (optional, present in Android 14+)
 }
 
 // Temperature is a custom type since termux-api changed behavior at some point,
