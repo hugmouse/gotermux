@@ -4,67 +4,38 @@
 
 # GoTermux
 
-**Code quality checks:**
-[![CodeFactor](https://www.codefactor.io/repository/github/hugmouse/gotermux/badge)](https://www.codefactor.io/repository/github/hugmouse/gotermux)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/380f19e0a1bc4fb19d3eeafa914fc1ad)](https://www.codacy.com/app/mysh/gotermux?utm_source=github.com&utm_medium=referral&utm_content=hugmouse/gotermux&utm_campaign=Badge_Grade)
-[![Go Report Card](https://goreportcard.com/badge/github.com/hugmouse/gotermux)](https://goreportcard.com/report/github.com/hugmouse/gotermux)
+GoTermux is a wrapper library around the termux-api. 
+It allows you to call `termux-*` scripts and read the their output in a convenient way.
 
-**Documentation reference:**
-[![GoDoc](https://godoc.org/github.com/hugmouse/gotermux?status.svg)](https://godoc.org/github.com/hugmouse/gotermux)
+## Example
 
-**Examples and usage of GoTermux:** [![gotermux.mysh.dev](https://img.shields.io/badge/GoTermux-examples-green)](https://gotermux.mysh.dev)
+```go
+package main
 
-**Roadmap:** [![Roadmap](https://img.shields.io/badge/Roadmap-status-informational)](https://github.com/hugmouse/gotermux/projects/1)
+import (
+    "fmt"
+    t "github.com/hugmouse/gotermux"
+)
 
-`GoTermux` gives you the opportunity to execute your scripts in `Termux` using `Golang`. All from `Go` and `Termux API` features in your hands!
-
--   GoTermux package
-    -   [Codestyle](#codestyle)
-    -   [Examples](#examples)
-    -   [Installing Termux API](#installing-termux-api)
-    -   [Installing the package](#installing-the-package)
-
-## Codestyle
-
-Calling termux command from golang looks just like in termux cmd, but without dash (`-`). 
-
-Example: 
-
-```shell
-// Termux CMD:
-termux-battery-status
-// Golang: 
-TermuxBatteryStatus()
+func main() {
+    battery := t.TermuxBatteryStatus()
+    fmt.Println(battery.Percentage) // This will print "38.0"
+}
 ```
 
-## Examples
+## Documentation
 
-Code examples can be found at: [gotermux.mysh.dev](https://gotermux.mysh.dev/)!
+<picture>
+  <source srcset="https://github.com/user-attachments/assets/38edb1d2-0067-43fb-a155-f7275d879b31" media="(prefers-color-scheme: light)">
+  <source srcset="https://github.com/user-attachments/assets/fd4c8793-7f78-42f3-b296-4cd8fa3aad10" media="(prefers-color-scheme: dark)">
+  <img src="https://github.com/user-attachments/assets/fd4c8793-7f78-42f3-b296-4cd8fa3aad10" alt="Documentation">
+</picture>
 
-Or here: [now.sh](https://gotermux.mysh.now.sh/)
 
-## Installing Termux API
+You can find a quickstart guide here: https://hugmouse.github.io/gotermux-docs/0.1/overview/
 
-Use [F-droid](https://f-droid.org/packages/com.termux.api/) or [Google Play](https://play.google.com/store/apps/details?id=com.termux.api) to install Termux API.
+Termux API reference: https://hugmouse.github.io/gotermux-docs/0.1/termux-api/
 
-**Do not mix installations of Termux and Addons between Google Play and F-Droid**.
+GoTermux reference: https://hugmouse.github.io/gotermux-docs/0.1/gotermux
 
-To **use** Termux API you also need to install the [termux-api](https://github.com/termux/termux-api-package) package:
-
-```shell
-pkg install termux-api
-```
-
-## Installing the package
-
-First of all you need install golang:
-
-```shell
-pkg install golang
-```
-
-And then: 
-
-```shell
-go get -u github.com/hugmouse/gotermux
-```
+API documentation can also be found on pkg.go.dev: https://pkg.go.dev/github.com/hugmouse/gotermux
