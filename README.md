@@ -4,6 +4,9 @@
 
 # GoTermux
 
+> [!WARNING]
+> This library is no longer supported and will not receive any updates. Feel free to browse available methods and documentation, but nothing new will be added.
+
 GoTermux is a wrapper library around the termux-api. 
 It allows you to call `termux-*` scripts and read the their output in a convenient way.
 
